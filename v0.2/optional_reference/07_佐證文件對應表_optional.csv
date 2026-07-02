@@ -1,0 +1,337 @@
+﻿evidence_rule_id,rule_id,evidence_type,evidence_name,description,related_system_code,related_cad_task_type,source_page,source_excerpt,requires_human_review
+EV-001,IB2024-I01-001,drawing,配線/置規劃昇位圖說,用於佐證 1.1.1 資通訊網路垂直主幹光纖化架構 的需求、設計、竣工、測試或平台畫面。,LAN,riser;cable_route;evidence_doc,"14,76",垂直主幹佈線採用光纖化架構,true
+EV-002,IB2024-I01-001,drawing,配線/置竣工昇位圖說,用於佐證 1.1.1 資通訊網路垂直主幹光纖化架構 的需求、設計、竣工、測試或平台畫面。,LAN,riser;cable_route;evidence_doc,"14,76",垂直主幹佈線採用光纖化架構,true
+EV-003,IB2024-I01-001,photo,佐證照片,用於佐證 1.1.1 資通訊網路垂直主幹光纖化架構 的需求、設計、竣工、測試或平台畫面。,LAN,riser;cable_route;evidence_doc,"14,76",垂直主幹佈線採用光纖化架構,true
+EV-004,IB2024-I01-002,drawing,規劃架構圖說,用於佐證 1.1.2 水平佈線支援不同系統需求 的需求、設計、竣工、測試或平台畫面。,LAN;CCTV;ACS;INTERCOM;PARKING;FAS;BMS,system_diagram;riser;layout;cable_route,"14,76",監視攝影、門禁管理、保全、對講、停車管理,true
+EV-005,IB2024-I01-002,drawing,配線規劃昇位圖說,用於佐證 1.1.2 水平佈線支援不同系統需求 的需求、設計、竣工、測試或平台畫面。,LAN;CCTV;ACS;INTERCOM;PARKING;FAS;BMS,system_diagram;riser;layout;cable_route,"14,76",監視攝影、門禁管理、保全、對講、停車管理,true
+EV-006,IB2024-I01-002,drawing,配線規劃平面圖說,用於佐證 1.1.2 水平佈線支援不同系統需求 的需求、設計、竣工、測試或平台畫面。,LAN;CCTV;ACS;INTERCOM;PARKING;FAS;BMS,system_diagram;riser;layout;cable_route,"14,76",監視攝影、門禁管理、保全、對講、停車管理,true
+EV-007,IB2024-I01-002,drawing,竣工架構圖說,用於佐證 1.1.2 水平佈線支援不同系統需求 的需求、設計、竣工、測試或平台畫面。,LAN;CCTV;ACS;INTERCOM;PARKING;FAS;BMS,system_diagram;riser;layout;cable_route,"14,76",監視攝影、門禁管理、保全、對講、停車管理,true
+EV-008,IB2024-I01-003,drawing,配線規劃昇位圖說,用於佐證 1.1.3 公眾行動通信涵蓋 的需求、設計、竣工、測試或平台畫面。,TEL;LAN,riser;layout;evidence_doc,"14-15,76-77",建物室內地上、地下各層及電梯內行動通訊,true
+EV-009,IB2024-I01-003,drawing,配線規劃平面圖說,用於佐證 1.1.3 公眾行動通信涵蓋 的需求、設計、竣工、測試或平台畫面。,TEL;LAN,riser;layout;evidence_doc,"14-15,76-77",建物室內地上、地下各層及電梯內行動通訊,true
+EV-010,IB2024-I01-003,report,測試報告,用於佐證 1.1.3 公眾行動通信涵蓋 的需求、設計、竣工、測試或平台畫面。,TEL;LAN,riser;layout;evidence_doc,"14-15,76-77",建物室內地上、地下各層及電梯內行動通訊,true
+EV-011,IB2024-I01-003,photo,佐證照片,用於佐證 1.1.3 公眾行動通信涵蓋 的需求、設計、竣工、測試或平台畫面。,TEL;LAN,riser;layout;evidence_doc,"14-15,76-77",建物室內地上、地下各層及電梯內行動通訊,true
+EV-012,IB2024-I01-004,drawing,規劃架構圖說,用於佐證 1.1.4 無線區域網路 的需求、設計、竣工、測試或平台畫面。,LAN,system_diagram;layout;riser,"15,77",適當公共空間或必要之工作區域,true
+EV-013,IB2024-I01-004,drawing,配置平面圖說,用於佐證 1.1.4 無線區域網路 的需求、設計、竣工、測試或平台畫面。,LAN,system_diagram;layout;riser,"15,77",適當公共空間或必要之工作區域,true
+EV-014,IB2024-I01-004,drawing,配置昇位圖說,用於佐證 1.1.4 無線區域網路 的需求、設計、竣工、測試或平台畫面。,LAN,system_diagram;layout;riser,"15,77",適當公共空間或必要之工作區域,true
+EV-015,IB2024-I01-004,drawing,竣工架構圖說,用於佐證 1.1.4 無線區域網路 的需求、設計、竣工、測試或平台畫面。,LAN,system_diagram;layout;riser,"15,77",適當公共空間或必要之工作區域,true
+EV-016,IB2024-I01-005,drawing,規劃架構圖說,用於佐證 1.1.5 無線物聯網網路 的需求、設計、竣工、測試或平台畫面。,LAN;SENSOR;IAQ;BMS,system_diagram;layout;io_point_schedule;evidence_doc,"15-16,77-78",蒐集建築物環境數據或維運管理資訊,true
+EV-017,IB2024-I01-005,drawing,配置平面圖說,用於佐證 1.1.5 無線物聯網網路 的需求、設計、竣工、測試或平台畫面。,LAN;SENSOR;IAQ;BMS,system_diagram;layout;io_point_schedule;evidence_doc,"15-16,77-78",蒐集建築物環境數據或維運管理資訊,true
+EV-018,IB2024-I01-005,spec,設計規範,用於佐證 1.1.5 無線物聯網網路 的需求、設計、竣工、測試或平台畫面。,LAN;SENSOR;IAQ;BMS,system_diagram;layout;io_point_schedule;evidence_doc,"15-16,77-78",蒐集建築物環境數據或維運管理資訊,true
+EV-019,IB2024-I01-005,other,租用服務契約,用於佐證 1.1.5 無線物聯網網路 的需求、設計、竣工、測試或平台畫面。,LAN;SENSOR;IAQ;BMS,system_diagram;layout;io_point_schedule;evidence_doc,"15-16,77-78",蒐集建築物環境數據或維運管理資訊,true
+EV-020,IB2024-I01-005,photo,佐證照片,用於佐證 1.1.5 無線物聯網網路 的需求、設計、竣工、測試或平台畫面。,LAN;SENSOR;IAQ;BMS,system_diagram;layout;io_point_schedule;evidence_doc,"15-16,77-78",蒐集建築物環境數據或維運管理資訊,true
+EV-021,IB2024-I01-006,drawing,竣工架構圖說,用於佐證 1.1.6 行動寬頻專用電信網路 的需求、設計、竣工、測試或平台畫面。,LAN;TEL,system_diagram;layout;evidence_doc,"16,78",人工智慧與物聯網等應用整合平台的專用網路,true
+EV-022,IB2024-I01-006,drawing,配置平面圖說,用於佐證 1.1.6 行動寬頻專用電信網路 的需求、設計、竣工、測試或平台畫面。,LAN;TEL,system_diagram;layout;evidence_doc,"16,78",人工智慧與物聯網等應用整合平台的專用網路,true
+EV-023,IB2024-I01-006,spec,設計規範,用於佐證 1.1.6 行動寬頻專用電信網路 的需求、設計、竣工、測試或平台畫面。,LAN;TEL,system_diagram;layout;evidence_doc,"16,78",人工智慧與物聯網等應用整合平台的專用網路,true
+EV-024,IB2024-I01-006,other,租用服務契約,用於佐證 1.1.6 行動寬頻專用電信網路 的需求、設計、竣工、測試或平台畫面。,LAN;TEL,system_diagram;layout;evidence_doc,"16,78",人工智慧與物聯網等應用整合平台的專用網路,true
+EV-025,IB2024-I01-006,photo,佐證照片,用於佐證 1.1.6 行動寬頻專用電信網路 的需求、設計、竣工、測試或平台畫面。,LAN;TEL,system_diagram;layout;evidence_doc,"16,78",人工智慧與物聯網等應用整合平台的專用網路,true
+EV-026,IB2024-I01-007,other,標示與識別規劃說明,用於佐證 1.2.1 佈線系統標示與識別 的需求、設計、竣工、測試或平台畫面。,LAN,device_schedule;evidence_doc,"16-17,79",標示與可識別機制或參考 TIA-606,true
+EV-027,IB2024-I01-007,other,竣工說明,用於佐證 1.2.1 佈線系統標示與識別 的需求、設計、竣工、測試或平台畫面。,LAN,device_schedule;evidence_doc,"16-17,79",標示與可識別機制或參考 TIA-606,true
+EV-028,IB2024-I01-007,photo,標示照片佐證,用於佐證 1.2.1 佈線系統標示與識別 的需求、設計、竣工、測試或平台畫面。,LAN,device_schedule;evidence_doc,"16-17,79",標示與可識別機制或參考 TIA-606,true
+EV-029,IB2024-I01-008,other,檢測計畫,用於佐證 1.2.2 佈線系統檢測計畫及竣工檢測報告 的需求、設計、竣工、測試或平台畫面。,LAN,evidence_doc,"17,79-80",傳輸特性測試；鏈結損失測試；無線訊號強度測試,true
+EV-030,IB2024-I01-008,report,竣工檢測報告,用於佐證 1.2.2 佈線系統檢測計畫及竣工檢測報告 的需求、設計、竣工、測試或平台畫面。,LAN,evidence_doc,"17,79-80",傳輸特性測試；鏈結損失測試；無線訊號強度測試,true
+EV-031,IB2024-I01-009,operation_document,佈線維運管理計畫,用於佐證 1.2.3 佈線系統維運管理計畫 的需求、設計、竣工、測試或平台畫面。,LAN;BMS,evidence_doc;system_diagram,"17,80-81",佈線維運管理計畫；BIM 或 3D 可視化,true
+EV-032,IB2024-I01-009,operation_document,維運管理手冊,用於佐證 1.2.3 佈線系統維運管理計畫 的需求、設計、竣工、測試或平台畫面。,LAN;BMS,evidence_doc;system_diagram,"17,80-81",佈線維運管理計畫；BIM 或 3D 可視化,true
+EV-033,IB2024-I01-009,drawing,系統截圖,用於佐證 1.2.3 佈線系統維運管理計畫 的需求、設計、竣工、測試或平台畫面。,LAN;BMS,evidence_doc;system_diagram,"17,80-81",佈線維運管理計畫；BIM 或 3D 可視化,true
+EV-034,IB2024-I01-009,drawing,BIM 或 3D 截圖,用於佐證 1.2.3 佈線系統維運管理計畫 的需求、設計、竣工、測試或平台畫面。,LAN;BMS,evidence_doc;system_diagram,"17,80-81",佈線維運管理計畫；BIM 或 3D 可視化,true
+EV-035,IB2024-I01-010,drawing,電能維運管理系統架構圖,用於佐證 1.2.4 電動車輛充電設備電能維運管理系統 的需求、設計、竣工、測試或平台畫面。,PARKING;EMS;BMS,system_diagram;layout;io_point_schedule,"18,81",停車空間導入電動車輛電能管理系統,true
+EV-036,IB2024-I01-010,drawing,電力單線圖,用於佐證 1.2.4 電動車輛充電設備電能維運管理系統 的需求、設計、竣工、測試或平台畫面。,PARKING;EMS;BMS,system_diagram;layout;io_point_schedule,"18,81",停車空間導入電動車輛電能管理系統,true
+EV-037,IB2024-I01-010,photo,系統畫面,用於佐證 1.2.4 電動車輛充電設備電能維運管理系統 的需求、設計、竣工、測試或平台畫面。,PARKING;EMS;BMS,system_diagram;layout;io_point_schedule,"18,81",停車空間導入電動車輛電能管理系統,true
+EV-038,IB2024-I01-011,other,靜態數據庫規劃內容,用於佐證 1.3.1 建築靜態數據庫 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,evidence_doc,"18,81",BIM、CAD 或 PMIS 等圖資數據,true
+EV-039,IB2024-I01-011,drawing,欄位畫面截圖,用於佐證 1.3.1 建築靜態數據庫 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,evidence_doc,"18,81",BIM、CAD 或 PMIS 等圖資數據,true
+EV-040,IB2024-I01-011,other,服務契約,用於佐證 1.3.1 建築靜態數據庫 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,evidence_doc,"18,81",BIM、CAD 或 PMIS 等圖資數據,true
+EV-041,IB2024-I01-012,other,動態數據庫規劃內容,用於佐證 1.3.2 建築動態數據庫 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR;CCTV;ACS;PARKING;INTERCOM;FAS;EMS,io_point_schedule;system_diagram;evidence_doc,"18-19,82",動態數據須具備資料介接、互通與交換,true
+EV-042,IB2024-I01-012,drawing,欄位畫面截圖,用於佐證 1.3.2 建築動態數據庫 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR;CCTV;ACS;PARKING;INTERCOM;FAS;EMS,io_point_schedule;system_diagram;evidence_doc,"18-19,82",動態數據須具備資料介接、互通與交換,true
+EV-043,IB2024-I01-012,other,服務契約,用於佐證 1.3.2 建築動態數據庫 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR;CCTV;ACS;PARKING;INTERCOM;FAS;EMS,io_point_schedule;system_diagram;evidence_doc,"18-19,82",動態數據須具備資料介接、互通與交換,true
+EV-044,IB2024-I01-013,other,備援規劃架構,用於佐證 1.3.3 備援機制 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,system_diagram;evidence_doc,"19-20,82",建築數據庫備援；網路備援；系統備援,true
+EV-045,IB2024-I01-013,other,竣工架構與功能說明,用於佐證 1.3.3 備援機制 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,system_diagram;evidence_doc,"19-20,82",建築數據庫備援；網路備援；系統備援,true
+EV-046,IB2024-I01-013,spec,設備型錄,用於佐證 1.3.3 備援機制 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,system_diagram;evidence_doc,"19-20,82",建築數據庫備援；網路備援；系統備援,true
+EV-047,IB2024-I01-013,other,服務契約,用於佐證 1.3.3 備援機制 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,system_diagram;evidence_doc,"19-20,82",建築數據庫備援；網路備援；系統備援,true
+EV-048,IB2024-I01-013,photo,照片,用於佐證 1.3.3 備援機制 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,system_diagram;evidence_doc,"19-20,82",建築數據庫備援；網路備援；系統備援,true
+EV-049,IB2024-I01-014,other,資安機制規劃架構,用於佐證 1.3.4 資訊安全 的需求、設計、竣工、測試或平台畫面。,LAN;BMS,system_diagram;evidence_doc,"20,83",網路、設備、使用者及資料系統需設置適當資訊安全機制,true
+EV-050,IB2024-I01-014,other,竣工架構與功能說明,用於佐證 1.3.4 資訊安全 的需求、設計、竣工、測試或平台畫面。,LAN;BMS,system_diagram;evidence_doc,"20,83",網路、設備、使用者及資料系統需設置適當資訊安全機制,true
+EV-051,IB2024-I01-014,other,認證資料,用於佐證 1.3.4 資訊安全 的需求、設計、竣工、測試或平台畫面。,LAN;BMS,system_diagram;evidence_doc,"20,83",網路、設備、使用者及資料系統需設置適當資訊安全機制,true
+EV-052,IB2024-I01-015,other,區塊鏈加密機制架構,用於佐證 1.3.5 區塊鏈加密機制 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;CCTV;INTERCOM,system_diagram;evidence_doc,"20-21,83",保全、門禁管理、緊急對講、監視攝影、主機登入紀錄,true
+EV-053,IB2024-I01-015,other,資料類別說明,用於佐證 1.3.5 區塊鏈加密機制 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;CCTV;INTERCOM,system_diagram;evidence_doc,"20-21,83",保全、門禁管理、緊急對講、監視攝影、主機登入紀錄,true
+EV-054,IB2024-I01-015,other,帳本展示,用於佐證 1.3.5 區塊鏈加密機制 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;CCTV;INTERCOM,system_diagram;evidence_doc,"20-21,83",保全、門禁管理、緊急對講、監視攝影、主機登入紀錄,true
+EV-055,IB2024-I02-001,drawing,智慧化系統規劃設計圖說,用於佐證 2.1.1 建築智慧化規劃設計 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;SENSOR,system_diagram;io_point_schedule;evidence_doc,"22,95",建築智慧化需求、服務目的及智慧化系統規劃設計圖說,true
+EV-056,IB2024-I02-001,schedule,智慧化功能 I/O 點數表,用於佐證 2.1.1 建築智慧化規劃設計 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;SENSOR,system_diagram;io_point_schedule;evidence_doc,"22,95",建築智慧化需求、服務目的及智慧化系統規劃設計圖說,true
+EV-057,IB2024-I02-001,drawing,竣工圖,用於佐證 2.1.1 建築智慧化規劃設計 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;SENSOR,system_diagram;io_point_schedule;evidence_doc,"22,95",建築智慧化需求、服務目的及智慧化系統規劃設計圖說,true
+EV-058,IB2024-I02-002,drawing,互動關聯性流程圖,用於佐證 2.1.2 智慧化系統需求與設計 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;CCTV;ACS;EMS;SENSOR,system_diagram;io_point_schedule,"22,95-96",跨系統整合之智慧化具體互動關聯性作為,true
+EV-059,IB2024-I02-002,schedule,I/O 功能點數表,用於佐證 2.1.2 智慧化系統需求與設計 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;CCTV;ACS;EMS;SENSOR,system_diagram;io_point_schedule,"22,95-96",跨系統整合之智慧化具體互動關聯性作為,true
+EV-060,IB2024-I02-002,other,功能說明書,用於佐證 2.1.2 智慧化系統需求與設計 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;CCTV;ACS;EMS;SENSOR,system_diagram;io_point_schedule,"22,95-96",跨系統整合之智慧化具體互動關聯性作為,true
+EV-061,IB2024-I02-002,operation_document,操作影片,用於佐證 2.1.2 智慧化系統需求與設計 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;CCTV;ACS;EMS;SENSOR,system_diagram;io_point_schedule,"22,95-96",跨系統整合之智慧化具體互動關聯性作為,true
+EV-062,IB2024-I02-003,spec,平台預警功能規範,用於佐證 2.1.3 平台管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,system_diagram;evidence_doc,"22-23,96",運轉資訊異常預警通知；網路資訊異常警示,true
+EV-063,IB2024-I02-003,spec,網路異常警示規範,用於佐證 2.1.3 平台管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,system_diagram;evidence_doc,"22-23,96",運轉資訊異常預警通知；網路資訊異常警示,true
+EV-064,IB2024-I02-003,operation_document,操作畫面或影片,用於佐證 2.1.3 平台管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,system_diagram;evidence_doc,"22-23,96",運轉資訊異常預警通知；網路資訊異常警示,true
+EV-065,IB2024-I02-004,spec,固定資產管理規範,用於佐證 2.1.4 使用管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,device_schedule;evidence_doc,"23-24,96-97",智慧化設施設備(含感測器)管理維護規範,true
+EV-066,IB2024-I02-004,spec,智慧化設施設備維護規範,用於佐證 2.1.4 使用管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,device_schedule;evidence_doc,"23-24,96-97",智慧化設施設備(含感測器)管理維護規範,true
+EV-067,IB2024-I02-004,other,績效評估標準,用於佐證 2.1.4 使用管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,device_schedule;evidence_doc,"23-24,96-97",智慧化設施設備(含感測器)管理維護規範,true
+EV-068,IB2024-I02-005,spec,維運管理系統規範,用於佐證 2.1.5 維運管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"24-25,97-98",網頁(WEB)化維運管理系統；5 年維護計畫,true
+EV-069,IB2024-I02-005,other,5 年修繕計畫,用於佐證 2.1.5 維運管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"24-25,97-98",網頁(WEB)化維運管理系統；5 年維護計畫,true
+EV-070,IB2024-I02-005,other,危機處理與緊急應變計畫,用於佐證 2.1.5 維運管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"24-25,97-98",網頁(WEB)化維運管理系統；5 年維護計畫,true
+EV-071,IB2024-I02-005,operation_document,操作畫面,用於佐證 2.1.5 維運管理計畫 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"24-25,97-98",網頁(WEB)化維運管理系統；5 年維護計畫,true
+EV-072,IB2024-I02-006,drawing,架構圖說,用於佐證 2.2.1 工地安全管理 的需求、設計、竣工、測試或平台畫面。,SENSOR;CCTV,system_diagram;layout;evidence_doc,"25,98-99",防墜落偵測感應、工地煙火偵測或開挖觀測,true
+EV-073,IB2024-I02-006,other,管理計畫書,用於佐證 2.2.1 工地安全管理 的需求、設計、竣工、測試或平台畫面。,SENSOR;CCTV,system_diagram;layout;evidence_doc,"25,98-99",防墜落偵測感應、工地煙火偵測或開挖觀測,true
+EV-074,IB2024-I02-006,spec,系統或設備規格書,用於佐證 2.2.1 工地安全管理 的需求、設計、竣工、測試或平台畫面。,SENSOR;CCTV,system_diagram;layout;evidence_doc,"25,98-99",防墜落偵測感應、工地煙火偵測或開挖觀測,true
+EV-075,IB2024-I02-006,photo,現場照片,用於佐證 2.2.1 工地安全管理 的需求、設計、竣工、測試或平台畫面。,SENSOR;CCTV,system_diagram;layout;evidence_doc,"25,98-99",防墜落偵測感應、工地煙火偵測或開挖觀測,true
+EV-076,IB2024-I02-006,photo,影片,用於佐證 2.2.1 工地安全管理 的需求、設計、竣工、測試或平台畫面。,SENSOR;CCTV,system_diagram;layout;evidence_doc,"25,98-99",防墜落偵測感應、工地煙火偵測或開挖觀測,true
+EV-077,IB2024-I02-006,photo,系統畫面,用於佐證 2.2.1 工地安全管理 的需求、設計、竣工、測試或平台畫面。,SENSOR;CCTV,system_diagram;layout;evidence_doc,"25,98-99",防墜落偵測感應、工地煙火偵測或開挖觀測,true
+EV-078,IB2024-I02-007,drawing,架構圖說,用於佐證 2.2.2 工地人員管理 的需求、設計、竣工、測試或平台畫面。,ACS;SENSOR,system_diagram;layout;evidence_doc,"25,99",實名制管理、定位追蹤,true
+EV-079,IB2024-I02-007,other,管理計畫書,用於佐證 2.2.2 工地人員管理 的需求、設計、竣工、測試或平台畫面。,ACS;SENSOR,system_diagram;layout;evidence_doc,"25,99",實名制管理、定位追蹤,true
+EV-080,IB2024-I02-007,spec,規格書,用於佐證 2.2.2 工地人員管理 的需求、設計、竣工、測試或平台畫面。,ACS;SENSOR,system_diagram;layout;evidence_doc,"25,99",實名制管理、定位追蹤,true
+EV-081,IB2024-I02-007,photo,現場照片,用於佐證 2.2.2 工地人員管理 的需求、設計、竣工、測試或平台畫面。,ACS;SENSOR,system_diagram;layout;evidence_doc,"25,99",實名制管理、定位追蹤,true
+EV-082,IB2024-I02-007,photo,影片,用於佐證 2.2.2 工地人員管理 的需求、設計、竣工、測試或平台畫面。,ACS;SENSOR,system_diagram;layout;evidence_doc,"25,99",實名制管理、定位追蹤,true
+EV-083,IB2024-I02-007,photo,系統畫面,用於佐證 2.2.2 工地人員管理 的需求、設計、竣工、測試或平台畫面。,ACS;SENSOR,system_diagram;layout;evidence_doc,"25,99",實名制管理、定位追蹤,true
+EV-084,IB2024-I02-008,drawing,架構圖說,用於佐證 2.2.3 工地資材管理 的需求、設計、竣工、測試或平台畫面。,UNKNOWN,evidence_doc,"25-26,99-100",資材庫存管理、物料追蹤管理,true
+EV-085,IB2024-I02-008,other,管理計畫書,用於佐證 2.2.3 工地資材管理 的需求、設計、竣工、測試或平台畫面。,UNKNOWN,evidence_doc,"25-26,99-100",資材庫存管理、物料追蹤管理,true
+EV-086,IB2024-I02-008,spec,規格書,用於佐證 2.2.3 工地資材管理 的需求、設計、竣工、測試或平台畫面。,UNKNOWN,evidence_doc,"25-26,99-100",資材庫存管理、物料追蹤管理,true
+EV-087,IB2024-I02-008,photo,現場照片,用於佐證 2.2.3 工地資材管理 的需求、設計、竣工、測試或平台畫面。,UNKNOWN,evidence_doc,"25-26,99-100",資材庫存管理、物料追蹤管理,true
+EV-088,IB2024-I02-008,photo,影片,用於佐證 2.2.3 工地資材管理 的需求、設計、竣工、測試或平台畫面。,UNKNOWN,evidence_doc,"25-26,99-100",資材庫存管理、物料追蹤管理,true
+EV-089,IB2024-I02-008,photo,系統畫面,用於佐證 2.2.3 工地資材管理 的需求、設計、竣工、測試或平台畫面。,UNKNOWN,evidence_doc,"25-26,99-100",資材庫存管理、物料追蹤管理,true
+EV-090,IB2024-I02-009,spec,平台規範,用於佐證 2.3.1 智慧建築監控 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;FAS;CCTV;ACS;EMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"26,100-101",資訊採集或遠端操控；主動通報；即時影像連動跳圖,true
+EV-091,IB2024-I02-009,drawing,平台架構圖(含整合協定),用於佐證 2.3.1 智慧建築監控 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;FAS;CCTV;ACS;EMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"26,100-101",資訊採集或遠端操控；主動通報；即時影像連動跳圖,true
+EV-092,IB2024-I02-009,schedule,智慧化功能 I/O 點數表,用於佐證 2.3.1 智慧建築監控 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;FAS;CCTV;ACS;EMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"26,100-101",資訊採集或遠端操控；主動通報；即時影像連動跳圖,true
+EV-093,IB2024-I02-009,operation_document,操作畫面,用於佐證 2.3.1 智慧建築監控 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;FAS;CCTV;ACS;EMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"26,100-101",資訊採集或遠端操控；主動通報；即時影像連動跳圖,true
+EV-094,IB2024-I02-009,other,使用說明書,用於佐證 2.3.1 智慧建築監控 的需求、設計、竣工、測試或平台畫面。,BMS;LAN;FAS;CCTV;ACS;EMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"26,100-101",資訊採集或遠端操控；主動通報；即時影像連動跳圖,true
+EV-095,IB2024-I02-010,spec,建築維運管理規範,用於佐證 2.3.2 建築維運管理 的需求、設計、竣工、測試或平台畫面。,BMS,evidence_doc,"27,101",故障紀錄功能並供使用者查詢；產製管理報表,true
+EV-096,IB2024-I02-010,operation_document,操作畫面,用於佐證 2.3.2 建築維運管理 的需求、設計、竣工、測試或平台畫面。,BMS,evidence_doc,"27,101",故障紀錄功能並供使用者查詢；產製管理報表,true
+EV-097,IB2024-I02-010,photo,使用說明書或影片,用於佐證 2.3.2 建築維運管理 的需求、設計、竣工、測試或平台畫面。,BMS,evidence_doc,"27,101",故障紀錄功能並供使用者查詢；產製管理報表,true
+EV-098,IB2024-I02-011,spec,行動裝置軟體規範,用於佐證 2.3.3 行動化管理 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;PARKING,system_diagram;evidence_doc,"27,101-102",行動裝置應用程式上提供管理者能即時掌握相關資訊,true
+EV-099,IB2024-I02-011,drawing,系統架構圖,用於佐證 2.3.3 行動化管理 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;PARKING,system_diagram;evidence_doc,"27,101-102",行動裝置應用程式上提供管理者能即時掌握相關資訊,true
+EV-100,IB2024-I02-011,operation_document,操作照片或影片,用於佐證 2.3.3 行動化管理 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;PARKING,system_diagram;evidence_doc,"27,101-102",行動裝置應用程式上提供管理者能即時掌握相關資訊,true
+EV-101,IB2024-I02-011,drawing,竣工圖,用於佐證 2.3.3 行動化管理 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;PARKING,system_diagram;evidence_doc,"27,101-102",行動裝置應用程式上提供管理者能即時掌握相關資訊,true
+EV-102,IB2024-I02-012,photo,BIM 整合功能畫面,用於佐證 2.3.4 建築資訊模型 BIM 整合 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"27-28,102",BIM 視覺化瀏覽並提供即時設備資訊顯示,true
+EV-103,IB2024-I02-012,report,設計規劃成果,用於佐證 2.3.4 建築資訊模型 BIM 整合 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"27-28,102",BIM 視覺化瀏覽並提供即時設備資訊顯示,true
+EV-104,IB2024-I02-012,spec,產品規格書,用於佐證 2.3.4 建築資訊模型 BIM 整合 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"27-28,102",BIM 視覺化瀏覽並提供即時設備資訊顯示,true
+EV-105,IB2024-I02-012,operation_document,操作照片或影片,用於佐證 2.3.4 建築資訊模型 BIM 整合 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"27-28,102",BIM 視覺化瀏覽並提供即時設備資訊顯示,true
+EV-106,IB2024-I02-013,other,營運數據分析規劃,用於佐證 2.3.5 營運數據應用 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR;FAS,io_point_schedule;system_diagram;evidence_doc,"28,102",營運數據後端分析與推估預測功能,true
+EV-107,IB2024-I02-013,schedule,相關點數表,用於佐證 2.3.5 營運數據應用 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR;FAS,io_point_schedule;system_diagram;evidence_doc,"28,102",營運數據後端分析與推估預測功能,true
+EV-108,IB2024-I02-013,other,預期成效,用於佐證 2.3.5 營運數據應用 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR;FAS,io_point_schedule;system_diagram;evidence_doc,"28,102",營運數據後端分析與推估預測功能,true
+EV-109,IB2024-I02-013,operation_document,操作照片或影片,用於佐證 2.3.5 營運數據應用 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR;FAS,io_point_schedule;system_diagram;evidence_doc,"28,102",營運數據後端分析與推估預測功能,true
+EV-110,IB2024-I03-001,drawing,消防設備配置圖,用於佐證 3.1.1.1 火警偵知 的需求、設計、竣工、測試或平台畫面。,FAS;BMS,layout;system_diagram;io_point_schedule,"29,109",火警可靠的監測數據和警報資訊,true
+EV-111,IB2024-I03-001,spec,火警偵知規範,用於佐證 3.1.1.1 火警偵知 的需求、設計、竣工、測試或平台畫面。,FAS;BMS,layout;system_diagram;io_point_schedule,"29,109",火警可靠的監測數據和警報資訊,true
+EV-112,IB2024-I03-001,drawing,BMS 架構圖,用於佐證 3.1.1.1 火警偵知 的需求、設計、竣工、測試或平台畫面。,FAS;BMS,layout;system_diagram;io_point_schedule,"29,109",火警可靠的監測數據和警報資訊,true
+EV-113,IB2024-I03-001,schedule,I/O 點數表,用於佐證 3.1.1.1 火警偵知 的需求、設計、竣工、測試或平台畫面。,FAS;BMS,layout;system_diagram;io_point_schedule,"29,109",火警可靠的監測數據和警報資訊,true
+EV-114,IB2024-I03-002,drawing,可監視防火門啟閉狀態設備配置圖,用於佐證 3.1.1.2 防火門狀態偵知 的需求、設計、竣工、測試或平台畫面。,FAS;SENSOR;BMS,layout;io_point_schedule;system_diagram,"29-30,109-110",監視防火門之啟閉狀態,true
+EV-115,IB2024-I03-002,drawing,BMS 架構圖,用於佐證 3.1.1.2 防火門狀態偵知 的需求、設計、竣工、測試或平台畫面。,FAS;SENSOR;BMS,layout;io_point_schedule;system_diagram,"29-30,109-110",監視防火門之啟閉狀態,true
+EV-116,IB2024-I03-002,schedule,I/O 點數表,用於佐證 3.1.1.2 防火門狀態偵知 的需求、設計、竣工、測試或平台畫面。,FAS;SENSOR;BMS,layout;io_point_schedule;system_diagram,"29-30,109-110",監視防火門之啟閉狀態,true
+EV-117,IB2024-I03-003,drawing,電力迴路單線圖,用於佐證 3.1.1.3 用電異常偵測 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;layout,"30,110",用電異常訊號整合至智慧建築管理系統,true
+EV-118,IB2024-I03-003,drawing,設備配置圖,用於佐證 3.1.1.3 用電異常偵測 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;layout,"30,110",用電異常訊號整合至智慧建築管理系統,true
+EV-119,IB2024-I03-003,spec,用電管理功能規範,用於佐證 3.1.1.3 用電異常偵測 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;layout,"30,110",用電異常訊號整合至智慧建築管理系統,true
+EV-120,IB2024-I03-003,photo,系統畫面,用於佐證 3.1.1.3 用電異常偵測 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;layout,"30,110",用電異常訊號整合至智慧建築管理系統,true
+EV-121,IB2024-I03-004,drawing,消防設備配置圖,用於佐證 3.1.1.4 室內溫度異常火警告警 的需求、設計、竣工、測試或平台畫面。,FAS;SENSOR;BMS,layout;io_point_schedule,"30,110",依據室內溫度記錄判斷異常,true
+EV-122,IB2024-I03-004,spec,火警偵知規範,用於佐證 3.1.1.4 室內溫度異常火警告警 的需求、設計、竣工、測試或平台畫面。,FAS;SENSOR;BMS,layout;io_point_schedule,"30,110",依據室內溫度記錄判斷異常,true
+EV-123,IB2024-I03-004,drawing,竣工圖,用於佐證 3.1.1.4 室內溫度異常火警告警 的需求、設計、竣工、測試或平台畫面。,FAS;SENSOR;BMS,layout;io_point_schedule,"30,110",依據室內溫度記錄判斷異常,true
+EV-124,IB2024-I03-004,photo,系統畫面,用於佐證 3.1.1.4 室內溫度異常火警告警 的需求、設計、竣工、測試或平台畫面。,FAS;SENSOR;BMS,layout;io_point_schedule,"30,110",依據室內溫度記錄判斷異常,true
+EV-125,IB2024-I03-005,drawing,漏水感測設備配置圖,用於佐證 3.1.1.5 漏水偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;io_point_schedule,"30,111",漏水偵知訊號，整合至智慧建築管理平台,true
+EV-126,IB2024-I03-005,spec,規範,用於佐證 3.1.1.5 漏水偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;io_point_schedule,"30,111",漏水偵知訊號，整合至智慧建築管理平台,true
+EV-127,IB2024-I03-005,drawing,竣工圖,用於佐證 3.1.1.5 漏水偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;io_point_schedule,"30,111",漏水偵知訊號，整合至智慧建築管理平台,true
+EV-128,IB2024-I03-005,photo,系統畫面,用於佐證 3.1.1.5 漏水偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;io_point_schedule,"30,111",漏水偵知訊號，整合至智慧建築管理平台,true
+EV-129,IB2024-I03-006,drawing,地震偵測器配置圖,用於佐證 3.1.1.6 地震偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;io_point_schedule,"30-31,111",地震偵知訊號整合至智慧建築管理平台,true
+EV-130,IB2024-I03-006,spec,規範,用於佐證 3.1.1.6 地震偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;io_point_schedule,"30-31,111",地震偵知訊號整合至智慧建築管理平台,true
+EV-131,IB2024-I03-006,drawing,竣工圖,用於佐證 3.1.1.6 地震偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;io_point_schedule,"30-31,111",地震偵知訊號整合至智慧建築管理平台,true
+EV-132,IB2024-I03-006,photo,系統畫面,用於佐證 3.1.1.6 地震偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;io_point_schedule,"30-31,111",地震偵知訊號整合至智慧建築管理平台,true
+EV-133,IB2024-I03-007,drawing,多媒體顯示裝置配置圖,用於佐證 3.1.2.1 災害告警訊息顯示 的需求、設計、竣工、測試或平台畫面。,AV;INTERCOM;BMS;FAS,layout;system_diagram,"31,112",公共空間之顯示裝置上，提供災害告警訊息,true
+EV-134,IB2024-I03-007,drawing,影音對講配置圖,用於佐證 3.1.2.1 災害告警訊息顯示 的需求、設計、竣工、測試或平台畫面。,AV;INTERCOM;BMS;FAS,layout;system_diagram,"31,112",公共空間之顯示裝置上，提供災害告警訊息,true
+EV-135,IB2024-I03-007,photo,系統畫面,用於佐證 3.1.2.1 災害告警訊息顯示 的需求、設計、竣工、測試或平台畫面。,AV;INTERCOM;BMS;FAS,layout;system_diagram,"31,112",公共空間之顯示裝置上，提供災害告警訊息,true
+EV-136,IB2024-I03-007,photo,佐證照片,用於佐證 3.1.2.1 災害告警訊息顯示 的需求、設計、竣工、測試或平台畫面。,AV;INTERCOM;BMS;FAS,layout;system_diagram,"31,112",公共空間之顯示裝置上，提供災害告警訊息,true
+EV-137,IB2024-I03-008,drawing,多媒體顯示裝置配置圖,用於佐證 3.1.2.2 連動設備狀態顯示 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;FAS;EMS,system_diagram;io_point_schedule,"31-32,112",顯示連動設備狀態訊息,true
+EV-138,IB2024-I03-008,drawing,系統連動邏輯圖,用於佐證 3.1.2.2 連動設備狀態顯示 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;FAS;EMS,system_diagram;io_point_schedule,"31-32,112",顯示連動設備狀態訊息,true
+EV-139,IB2024-I03-008,photo,系統畫面,用於佐證 3.1.2.2 連動設備狀態顯示 的需求、設計、竣工、測試或平台畫面。,BMS;ACS;FAS;EMS,system_diagram;io_point_schedule,"31-32,112",顯示連動設備狀態訊息,true
+EV-140,IB2024-I03-009,drawing,門禁系統配置圖,用於佐證 3.1.3.1 消防連動門禁及昇降機 的需求、設計、竣工、測試或平台畫面。,FAS;ACS;BMS,system_diagram;layout,"32,113",連動解除主要逃生動線上之門禁管制設備,true
+EV-141,IB2024-I03-009,spec,昇降機火警管控規範,用於佐證 3.1.3.1 消防連動門禁及昇降機 的需求、設計、竣工、測試或平台畫面。,FAS;ACS;BMS,system_diagram;layout,"32,113",連動解除主要逃生動線上之門禁管制設備,true
+EV-142,IB2024-I03-009,drawing,系統連動邏輯圖,用於佐證 3.1.3.1 消防連動門禁及昇降機 的需求、設計、竣工、測試或平台畫面。,FAS;ACS;BMS,system_diagram;layout,"32,113",連動解除主要逃生動線上之門禁管制設備,true
+EV-143,IB2024-I03-010,drawing,空調配置圖,用於佐證 3.1.3.2 消防系統與空調及地下室送排風連動 的需求、設計、竣工、測試或平台畫面。,FAS;BMS,system_diagram;layout,"32,113",消防系統需與空調及地下室送排風設備整合連動,true
+EV-144,IB2024-I03-010,drawing,地下室送排風配置圖,用於佐證 3.1.3.2 消防系統與空調及地下室送排風連動 的需求、設計、竣工、測試或平台畫面。,FAS;BMS,system_diagram;layout,"32,113",消防系統需與空調及地下室送排風設備整合連動,true
+EV-145,IB2024-I03-010,drawing,系統連動邏輯圖,用於佐證 3.1.3.2 消防系統與空調及地下室送排風連動 的需求、設計、竣工、測試或平台畫面。,FAS;BMS,system_diagram;layout,"32,113",消防系統需與空調及地下室送排風設備整合連動,true
+EV-146,IB2024-I03-010,photo,連動影片,用於佐證 3.1.3.2 消防系統與空調及地下室送排風連動 的需求、設計、竣工、測試或平台畫面。,FAS;BMS,system_diagram;layout,"32,113",消防系統需與空調及地下室送排風設備整合連動,true
+EV-147,IB2024-I03-011,drawing,電力迴路單線圖,用於佐證 3.1.3.3 用電異常自動斷電 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule,"32-33,114",具備用電異常自動斷電功能,true
+EV-148,IB2024-I03-011,drawing,插座配置圖,用於佐證 3.1.3.3 用電異常自動斷電 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule,"32-33,114",具備用電異常自動斷電功能,true
+EV-149,IB2024-I03-011,spec,用電管理規範,用於佐證 3.1.3.3 用電異常自動斷電 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule,"32-33,114",具備用電異常自動斷電功能,true
+EV-150,IB2024-I03-011,photo,系統畫面,用於佐證 3.1.3.3 用電異常自動斷電 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule,"32-33,114",具備用電異常自動斷電功能,true
+EV-151,IB2024-I03-012,drawing,避難方向指示燈配置圖,用於佐證 3.1.3.4 火災避難引導連動 的需求、設計、竣工、測試或平台畫面。,FAS;AV;BMS,layout;system_diagram,"33,114",閃滅或聲響型避難方向指示燈引導人員避難,true
+EV-152,IB2024-I03-012,drawing,避難引導設計圖,用於佐證 3.1.3.4 火災避難引導連動 的需求、設計、竣工、測試或平台畫面。,FAS;AV;BMS,layout;system_diagram,"33,114",閃滅或聲響型避難方向指示燈引導人員避難,true
+EV-153,IB2024-I03-012,photo,系統畫面,用於佐證 3.1.3.4 火災避難引導連動 的需求、設計、竣工、測試或平台畫面。,FAS;AV;BMS,layout;system_diagram,"33,114",閃滅或聲響型避難方向指示燈引導人員避難,true
+EV-154,IB2024-I03-013,drawing,監視系統配置圖,用於佐證 3.1.3.5 火災預警連動監視器影像 的需求、設計、竣工、測試或平台畫面。,FAS;CCTV;BMS,layout;system_diagram,"33,115",系統可連動監視器顯示現場影像,true
+EV-155,IB2024-I03-013,drawing,系統連動邏輯圖,用於佐證 3.1.3.5 火災預警連動監視器影像 的需求、設計、竣工、測試或平台畫面。,FAS;CCTV;BMS,layout;system_diagram,"33,115",系統可連動監視器顯示現場影像,true
+EV-156,IB2024-I03-013,drawing,竣工圖,用於佐證 3.1.3.5 火災預警連動監視器影像 的需求、設計、竣工、測試或平台畫面。,FAS;CCTV;BMS,layout;system_diagram,"33,115",系統可連動監視器顯示現場影像,true
+EV-157,IB2024-I03-013,photo,系統畫面,用於佐證 3.1.3.5 火災預警連動監視器影像 的需求、設計、竣工、測試或平台畫面。,FAS;CCTV;BMS,layout;system_diagram,"33,115",系統可連動監視器顯示現場影像,true
+EV-158,IB2024-I03-014,drawing,漏水感測配置圖,用於佐證 3.1.3.6 漏水連動監視器影像 的需求、設計、竣工、測試或平台畫面。,SENSOR;CCTV;BMS,layout;system_diagram,"34,115",漏水偵知可連動監視器顯示現場影像,true
+EV-159,IB2024-I03-014,drawing,監視系統配置圖,用於佐證 3.1.3.6 漏水連動監視器影像 的需求、設計、竣工、測試或平台畫面。,SENSOR;CCTV;BMS,layout;system_diagram,"34,115",漏水偵知可連動監視器顯示現場影像,true
+EV-160,IB2024-I03-014,drawing,系統連動邏輯圖,用於佐證 3.1.3.6 漏水連動監視器影像 的需求、設計、竣工、測試或平台畫面。,SENSOR;CCTV;BMS,layout;system_diagram,"34,115",漏水偵知可連動監視器顯示現場影像,true
+EV-161,IB2024-I03-015,drawing,地震偵測器配置圖,用於佐證 3.1.3.7 地震偵知連動解除門禁 的需求、設計、竣工、測試或平台畫面。,SENSOR;ACS;BMS,layout;system_diagram,"34,116",地震偵知可連動解除門禁,true
+EV-162,IB2024-I03-015,drawing,門禁系統配置圖,用於佐證 3.1.3.7 地震偵知連動解除門禁 的需求、設計、竣工、測試或平台畫面。,SENSOR;ACS;BMS,layout;system_diagram,"34,116",地震偵知可連動解除門禁,true
+EV-163,IB2024-I03-015,drawing,系統連動邏輯圖,用於佐證 3.1.3.7 地震偵知連動解除門禁 的需求、設計、竣工、測試或平台畫面。,SENSOR;ACS;BMS,layout;system_diagram,"34,116",地震偵知可連動解除門禁,true
+EV-164,IB2024-I03-016,drawing,語音或影音對講裝置配置圖,用於佐證 3.2.1.1 公共空間即時語音服務 的需求、設計、竣工、測試或平台畫面。,INTERCOM,layout;system_diagram,"35,117",公共空間提供即時語音服務,true
+EV-165,IB2024-I03-016,drawing,竣工圖,用於佐證 3.2.1.1 公共空間即時語音服務 的需求、設計、竣工、測試或平台畫面。,INTERCOM,layout;system_diagram,"35,117",公共空間提供即時語音服務,true
+EV-166,IB2024-I03-016,photo,佐證照片,用於佐證 3.2.1.1 公共空間即時語音服務 的需求、設計、竣工、測試或平台畫面。,INTERCOM,layout;system_diagram,"35,117",公共空間提供即時語音服務,true
+EV-167,IB2024-I03-017,drawing,對講裝置配置圖,用於佐證 3.2.1.2 對講整合行動通訊服務 的需求、設計、竣工、測試或平台畫面。,INTERCOM;TEL,system_diagram;layout,"35,117",語音對講裝置整合行動通訊服務,true
+EV-168,IB2024-I03-017,spec,行動通訊整合規範,用於佐證 3.2.1.2 對講整合行動通訊服務 的需求、設計、竣工、測試或平台畫面。,INTERCOM;TEL,system_diagram;layout,"35,117",語音對講裝置整合行動通訊服務,true
+EV-169,IB2024-I03-017,photo,系統畫面,用於佐證 3.2.1.2 對講整合行動通訊服務 的需求、設計、竣工、測試或平台畫面。,INTERCOM;TEL,system_diagram;layout,"35,117",語音對講裝置整合行動通訊服務,true
+EV-170,IB2024-I03-018,drawing,門禁系統配置圖,用於佐證 3.2.1.3 門禁出入安全管制 的需求、設計、竣工、測試或平台畫面。,ACS,layout;device_schedule;system_diagram,"35-36,118",主要出入口、重要空間具備門禁管制功能,true
+EV-171,IB2024-I03-018,spec,規範,用於佐證 3.2.1.3 門禁出入安全管制 的需求、設計、竣工、測試或平台畫面。,ACS,layout;device_schedule;system_diagram,"35-36,118",主要出入口、重要空間具備門禁管制功能,true
+EV-172,IB2024-I03-018,drawing,竣工圖,用於佐證 3.2.1.3 門禁出入安全管制 的需求、設計、竣工、測試或平台畫面。,ACS,layout;device_schedule;system_diagram,"35-36,118",主要出入口、重要空間具備門禁管制功能,true
+EV-173,IB2024-I03-018,photo,系統畫面,用於佐證 3.2.1.3 門禁出入安全管制 的需求、設計、竣工、測試或平台畫面。,ACS,layout;device_schedule;system_diagram,"35-36,118",主要出入口、重要空間具備門禁管制功能,true
+EV-174,IB2024-I03-019,drawing,停車管理系統配置圖,用於佐證 3.2.1.4 車輛出入安全管制 的需求、設計、竣工、測試或平台畫面。,PARKING,layout;system_diagram,"36,118",停車空間應具備車輛進出管制及辨識功能,true
+EV-175,IB2024-I03-019,spec,規範,用於佐證 3.2.1.4 車輛出入安全管制 的需求、設計、竣工、測試或平台畫面。,PARKING,layout;system_diagram,"36,118",停車空間應具備車輛進出管制及辨識功能,true
+EV-176,IB2024-I03-019,drawing,竣工圖,用於佐證 3.2.1.4 車輛出入安全管制 的需求、設計、竣工、測試或平台畫面。,PARKING,layout;system_diagram,"36,118",停車空間應具備車輛進出管制及辨識功能,true
+EV-177,IB2024-I03-019,photo,系統畫面,用於佐證 3.2.1.4 車輛出入安全管制 的需求、設計、竣工、測試或平台畫面。,PARKING,layout;system_diagram,"36,118",停車空間應具備車輛進出管制及辨識功能,true
+EV-178,IB2024-I03-020,drawing,監視系統配置圖,用於佐證 3.2.1.5 影像安全防護與紀錄 的需求、設計、竣工、測試或平台畫面。,CCTV,layout;device_schedule;system_diagram,"36,119",規劃影像監視系統並錄影紀錄,true
+EV-179,IB2024-I03-020,spec,規範,用於佐證 3.2.1.5 影像安全防護與紀錄 的需求、設計、竣工、測試或平台畫面。,CCTV,layout;device_schedule;system_diagram,"36,119",規劃影像監視系統並錄影紀錄,true
+EV-180,IB2024-I03-020,drawing,竣工圖,用於佐證 3.2.1.5 影像安全防護與紀錄 的需求、設計、竣工、測試或平台畫面。,CCTV,layout;device_schedule;system_diagram,"36,119",規劃影像監視系統並錄影紀錄,true
+EV-181,IB2024-I03-020,photo,系統畫面,用於佐證 3.2.1.5 影像安全防護與紀錄 的需求、設計、竣工、測試或平台畫面。,CCTV,layout;device_schedule;system_diagram,"36,119",規劃影像監視系統並錄影紀錄,true
+EV-182,IB2024-I03-021,drawing,BMS 架構圖,用於佐證 3.2.1.6 防盜入侵主動告警 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR;ACS,layout;io_point_schedule;system_diagram,"36-37,119",防盜入侵警報功能，並將訊號整合至智慧建築管理平台,true
+EV-183,IB2024-I03-021,schedule,I/O 點數表,用於佐證 3.2.1.6 防盜入侵主動告警 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR;ACS,layout;io_point_schedule;system_diagram,"36-37,119",防盜入侵警報功能，並將訊號整合至智慧建築管理平台,true
+EV-184,IB2024-I03-021,drawing,防盜保全裝置配置圖,用於佐證 3.2.1.6 防盜入侵主動告警 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR;ACS,layout;io_point_schedule;system_diagram,"36-37,119",防盜入侵警報功能，並將訊號整合至智慧建築管理平台,true
+EV-185,IB2024-I03-021,photo,系統畫面,用於佐證 3.2.1.6 防盜入侵主動告警 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR;ACS,layout;io_point_schedule;system_diagram,"36-37,119",防盜入侵警報功能，並將訊號整合至智慧建築管理平台,true
+EV-186,IB2024-I03-022,drawing,安全管理系統配置圖,用於佐證 3.2.1.7 安全防範辨識運算分析 的需求、設計、竣工、測試或平台畫面。,CCTV;ACS;BMS,layout;system_diagram,"37,120",安全防範具備辨識、運算及分析功能,true
+EV-187,IB2024-I03-022,spec,規範,用於佐證 3.2.1.7 安全防範辨識運算分析 的需求、設計、竣工、測試或平台畫面。,CCTV;ACS;BMS,layout;system_diagram,"37,120",安全防範具備辨識、運算及分析功能,true
+EV-188,IB2024-I03-022,drawing,竣工圖,用於佐證 3.2.1.7 安全防範辨識運算分析 的需求、設計、竣工、測試或平台畫面。,CCTV;ACS;BMS,layout;system_diagram,"37,120",安全防範具備辨識、運算及分析功能,true
+EV-189,IB2024-I03-022,photo,系統畫面,用於佐證 3.2.1.7 安全防範辨識運算分析 的需求、設計、竣工、測試或平台畫面。,CCTV;ACS;BMS,layout;system_diagram,"37,120",安全防範具備辨識、運算及分析功能,true
+EV-190,IB2024-I03-023,drawing,BMS 架構圖,用於佐證 3.2.2.1 緊急求救位置顯示 的需求、設計、竣工、測試或平台畫面。,INTERCOM;BMS;SENSOR,layout;io_point_schedule;system_diagram,"37-38,120",顯示求救訊號之樓層及位置於智慧建築管理平台,true
+EV-191,IB2024-I03-023,schedule,I/O 點數表,用於佐證 3.2.2.1 緊急求救位置顯示 的需求、設計、竣工、測試或平台畫面。,INTERCOM;BMS;SENSOR,layout;io_point_schedule;system_diagram,"37-38,120",顯示求救訊號之樓層及位置於智慧建築管理平台,true
+EV-192,IB2024-I03-023,drawing,緊急求救系統配置圖,用於佐證 3.2.2.1 緊急求救位置顯示 的需求、設計、竣工、測試或平台畫面。,INTERCOM;BMS;SENSOR,layout;io_point_schedule;system_diagram,"37-38,120",顯示求救訊號之樓層及位置於智慧建築管理平台,true
+EV-193,IB2024-I03-023,photo,系統畫面,用於佐證 3.2.2.1 緊急求救位置顯示 的需求、設計、竣工、測試或平台畫面。,INTERCOM;BMS;SENSOR,layout;io_point_schedule;system_diagram,"37-38,120",顯示求救訊號之樓層及位置於智慧建築管理平台,true
+EV-194,IB2024-I03-024,drawing,防盜保全配置圖,用於佐證 3.2.2.2 防盜入侵警報行動顯示 的需求、設計、竣工、測試或平台畫面。,ACS;BMS;TEL,system_diagram;evidence_doc,"38,121",於行動通訊裝置顯示防盜告警訊息,true
+EV-195,IB2024-I03-024,spec,行動通訊整合規範,用於佐證 3.2.2.2 防盜入侵警報行動顯示 的需求、設計、竣工、測試或平台畫面。,ACS;BMS;TEL,system_diagram;evidence_doc,"38,121",於行動通訊裝置顯示防盜告警訊息,true
+EV-196,IB2024-I03-024,photo,系統畫面,用於佐證 3.2.2.2 防盜入侵警報行動顯示 的需求、設計、竣工、測試或平台畫面。,ACS;BMS;TEL,system_diagram;evidence_doc,"38,121",於行動通訊裝置顯示防盜告警訊息,true
+EV-197,IB2024-I03-025,drawing,緊急求救系統配置圖,用於佐證 3.2.3.1 緊急求救連動即時影像 的需求、設計、竣工、測試或平台畫面。,INTERCOM;CCTV;BMS,layout;system_diagram,"38,121",緊急求救與影像整合連動功能,true
+EV-198,IB2024-I03-025,drawing,監視系統配置圖,用於佐證 3.2.3.1 緊急求救連動即時影像 的需求、設計、竣工、測試或平台畫面。,INTERCOM;CCTV;BMS,layout;system_diagram,"38,121",緊急求救與影像整合連動功能,true
+EV-199,IB2024-I03-025,drawing,系統連動邏輯圖,用於佐證 3.2.3.1 緊急求救連動即時影像 的需求、設計、竣工、測試或平台畫面。,INTERCOM;CCTV;BMS,layout;system_diagram,"38,121",緊急求救與影像整合連動功能,true
+EV-200,IB2024-I03-026,drawing,防盜保全配置圖,用於佐證 3.2.3.2 防盜警報整合影像及環境設備 的需求、設計、竣工、測試或平台畫面。,CCTV;PA;BMS;SENSOR,layout;system_diagram,"38-39,121",照明、廣播、聲光警報或其他整合連動,true
+EV-201,IB2024-I03-026,drawing,監視系統配置圖,用於佐證 3.2.3.2 防盜警報整合影像及環境設備 的需求、設計、竣工、測試或平台畫面。,CCTV;PA;BMS;SENSOR,layout;system_diagram,"38-39,121",照明、廣播、聲光警報或其他整合連動,true
+EV-202,IB2024-I03-026,drawing,環境周遭設備配置圖,用於佐證 3.2.3.2 防盜警報整合影像及環境設備 的需求、設計、竣工、測試或平台畫面。,CCTV;PA;BMS;SENSOR,layout;system_diagram,"38-39,121",照明、廣播、聲光警報或其他整合連動,true
+EV-203,IB2024-I03-026,drawing,系統連動邏輯圖,用於佐證 3.2.3.2 防盜警報整合影像及環境設備 的需求、設計、竣工、測試或平台畫面。,CCTV;PA;BMS;SENSOR,layout;system_diagram,"38-39,121",照明、廣播、聲光警報或其他整合連動,true
+EV-204,IB2024-I03-027,drawing,BMS 架構圖,用於佐證 3.2.4.1 有害氣體偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;IAQ,layout;io_point_schedule;system_diagram,"39,122",瓦斯、一氧化碳或其他有害氣體感測器,true
+EV-205,IB2024-I03-027,schedule,I/O 點數表,用於佐證 3.2.4.1 有害氣體偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;IAQ,layout;io_point_schedule;system_diagram,"39,122",瓦斯、一氧化碳或其他有害氣體感測器,true
+EV-206,IB2024-I03-027,drawing,有害氣體感測裝置配置圖,用於佐證 3.2.4.1 有害氣體偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;IAQ,layout;io_point_schedule;system_diagram,"39,122",瓦斯、一氧化碳或其他有害氣體感測器,true
+EV-207,IB2024-I03-027,photo,系統畫面,用於佐證 3.2.4.1 有害氣體偵知 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;IAQ,layout;io_point_schedule;system_diagram,"39,122",瓦斯、一氧化碳或其他有害氣體感測器,true
+EV-208,IB2024-I03-028,drawing,有害氣體排除裝置配置圖,用於佐證 3.2.4.2 排除有害氣體 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;system_diagram,"39,122",具備排除或阻斷有害氣體之功能,true
+EV-209,IB2024-I03-028,drawing,竣工圖,用於佐證 3.2.4.2 排除有害氣體 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;system_diagram,"39,122",具備排除或阻斷有害氣體之功能,true
+EV-210,IB2024-I03-028,photo,佐證照片,用於佐證 3.2.4.2 排除有害氣體 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;system_diagram,"39,122",具備排除或阻斷有害氣體之功能,true
+EV-211,IB2024-I04-001,drawing,立面及剖面圖,用於佐證 4.2.1 建築外層智慧化節能 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;EMS,system_diagram;layout;evidence_doc,"41-42,141-142",感應控制之動作關聯圖,true
+EV-212,IB2024-I04-001,drawing,感應控制關聯圖,用於佐證 4.2.1 建築外層智慧化節能 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;EMS,system_diagram;layout;evidence_doc,"41-42,141-142",感應控制之動作關聯圖,true
+EV-213,IB2024-I04-001,test_record,節能技術驗證計畫,用於佐證 4.2.1 建築外層智慧化節能 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;EMS,system_diagram;layout;evidence_doc,"41-42,141-142",感應控制之動作關聯圖,true
+EV-214,IB2024-I04-001,report,驗證報告,用於佐證 4.2.1 建築外層智慧化節能 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;EMS,system_diagram;layout;evidence_doc,"41-42,141-142",感應控制之動作關聯圖,true
+EV-215,IB2024-I04-002,drawing,空調節能系統圖說,用於佐證 4.2.2 空調系統智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR,system_diagram;io_point_schedule;device_schedule,"42,142-143",空調智慧化節能系統圖說；I/O點數表,true
+EV-216,IB2024-I04-002,drawing,空調節能控制圖說,用於佐證 4.2.2 空調系統智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR,system_diagram;io_point_schedule;device_schedule,"42,142-143",空調智慧化節能系統圖說；I/O點數表,true
+EV-217,IB2024-I04-002,schedule,I/O 點數表,用於佐證 4.2.2 空調系統智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR,system_diagram;io_point_schedule;device_schedule,"42,142-143",空調智慧化節能系統圖說；I/O點數表,true
+EV-218,IB2024-I04-002,report,控制系統驗證報告,用於佐證 4.2.2 空調系統智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR,system_diagram;io_point_schedule;device_schedule,"42,142-143",空調智慧化節能系統圖說；I/O點數表,true
+EV-219,IB2024-I04-003,drawing,照明/插座節能系統圖說,用於佐證 4.2.3 照明與插座智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR,system_diagram;io_point_schedule;device_schedule,"42-43,143-144",照明及插座採智慧化控制,true
+EV-220,IB2024-I04-003,drawing,控制圖說,用於佐證 4.2.3 照明與插座智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR,system_diagram;io_point_schedule;device_schedule,"42-43,143-144",照明及插座採智慧化控制,true
+EV-221,IB2024-I04-003,schedule,I/O 點數表,用於佐證 4.2.3 照明與插座智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR,system_diagram;io_point_schedule;device_schedule,"42-43,143-144",照明及插座採智慧化控制,true
+EV-222,IB2024-I04-003,schedule,數量表,用於佐證 4.2.3 照明與插座智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR,system_diagram;io_point_schedule;device_schedule,"42-43,143-144",照明及插座採智慧化控制,true
+EV-223,IB2024-I04-003,report,驗證報告,用於佐證 4.2.3 照明與插座智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR,system_diagram;io_point_schedule;device_schedule,"42-43,143-144",照明及插座採智慧化控制,true
+EV-224,IB2024-I04-004,drawing,動力設施節能系統圖說,用於佐證 4.2.4 動力設施智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;PARKING;SENSOR,system_diagram;io_point_schedule;device_schedule,"43-44,144-145",偵知單元及連動控制可達節能效益,true
+EV-225,IB2024-I04-004,drawing,控制圖說,用於佐證 4.2.4 動力設施智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;PARKING;SENSOR,system_diagram;io_point_schedule;device_schedule,"43-44,144-145",偵知單元及連動控制可達節能效益,true
+EV-226,IB2024-I04-004,schedule,I/O 點數表,用於佐證 4.2.4 動力設施智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;PARKING;SENSOR,system_diagram;io_point_schedule;device_schedule,"43-44,144-145",偵知單元及連動控制可達節能效益,true
+EV-227,IB2024-I04-004,schedule,數量表,用於佐證 4.2.4 動力設施智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;PARKING;SENSOR,system_diagram;io_point_schedule;device_schedule,"43-44,144-145",偵知單元及連動控制可達節能效益,true
+EV-228,IB2024-I04-004,report,驗證報告,用於佐證 4.2.4 動力設施智慧化節能 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;PARKING;SENSOR,system_diagram;io_point_schedule;device_schedule,"43-44,144-145",偵知單元及連動控制可達節能效益,true
+EV-229,IB2024-I04-005,drawing,給水昇位圖,用於佐證 4.2.5 水資源資訊揭露 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;layout;io_point_schedule,"44,145",智慧水表；用水量資訊即時視覺化,true
+EV-230,IB2024-I04-005,other,水表設置說明,用於佐證 4.2.5 水資源資訊揭露 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;layout;io_point_schedule,"44,145",智慧水表；用水量資訊即時視覺化,true
+EV-231,IB2024-I04-005,drawing,水表平面圖,用於佐證 4.2.5 水資源資訊揭露 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;layout;io_point_schedule,"44,145",智慧水表；用水量資訊即時視覺化,true
+EV-232,IB2024-I04-005,schedule,I/O 點數表,用於佐證 4.2.5 水資源資訊揭露 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;layout;io_point_schedule,"44,145",智慧水表；用水量資訊即時視覺化,true
+EV-233,IB2024-I04-005,photo,佐證照片,用於佐證 4.2.5 水資源資訊揭露 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;layout;io_point_schedule,"44,145",智慧水表；用水量資訊即時視覺化,true
+EV-234,IB2024-I04-006,drawing,水平衡圖,用於佐證 4.2.6 水資源流向監測與管理 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;system_diagram;io_point_schedule,"44-45,146",水平衡圖；用水流向資訊,true
+EV-235,IB2024-I04-006,drawing,給水昇位圖,用於佐證 4.2.6 水資源流向監測與管理 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;system_diagram;io_point_schedule,"44-45,146",水平衡圖；用水流向資訊,true
+EV-236,IB2024-I04-006,drawing,排水昇位圖,用於佐證 4.2.6 水資源流向監測與管理 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;system_diagram;io_point_schedule,"44-45,146",水平衡圖；用水流向資訊,true
+EV-237,IB2024-I04-006,drawing,雨水回收系統圖,用於佐證 4.2.6 水資源流向監測與管理 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;system_diagram;io_point_schedule,"44-45,146",水平衡圖；用水流向資訊,true
+EV-238,IB2024-I04-006,schedule,I/O 點數表,用於佐證 4.2.6 水資源流向監測與管理 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;system_diagram;io_point_schedule,"44-45,146",水平衡圖；用水流向資訊,true
+EV-239,IB2024-I04-006,operation_document,平台手冊,用於佐證 4.2.6 水資源流向監測與管理 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,riser;system_diagram;io_point_schedule,"44-45,146",水平衡圖；用水流向資訊,true
+EV-240,IB2024-I04-007,other,再生能源設備位置,用於佐證 4.2.7 綠能技術 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45,147",能源管理系統架構圖、智慧化功能 I/O點數表,true
+EV-241,IB2024-I04-007,spec,規格容量說明,用於佐證 4.2.7 綠能技術 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45,147",能源管理系統架構圖、智慧化功能 I/O點數表,true
+EV-242,IB2024-I04-007,other,儲能控制說明,用於佐證 4.2.7 綠能技術 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45,147",能源管理系統架構圖、智慧化功能 I/O點數表,true
+EV-243,IB2024-I04-007,drawing,EMS 架構圖,用於佐證 4.2.7 綠能技術 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45,147",能源管理系統架構圖、智慧化功能 I/O點數表,true
+EV-244,IB2024-I04-007,schedule,I/O 點數表,用於佐證 4.2.7 綠能技術 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45,147",能源管理系統架構圖、智慧化功能 I/O點數表,true
+EV-245,IB2024-I04-008,drawing,電力單線圖,用於佐證 4.3.1 能源視覺化監視 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45-46,147-148",建築總用電、空調、照明、動力用電及總用水量即時視覺化,true
+EV-246,IB2024-I04-008,drawing,給水昇位圖,用於佐證 4.3.1 能源視覺化監視 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45-46,147-148",建築總用電、空調、照明、動力用電及總用水量即時視覺化,true
+EV-247,IB2024-I04-008,schedule,I/O 點數表,用於佐證 4.3.1 能源視覺化監視 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45-46,147-148",建築總用電、空調、照明、動力用電及總用水量即時視覺化,true
+EV-248,IB2024-I04-008,drawing,平台架構圖,用於佐證 4.3.1 能源視覺化監視 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45-46,147-148",建築總用電、空調、照明、動力用電及總用水量即時視覺化,true
+EV-249,IB2024-I04-008,drawing,圖控畫面,用於佐證 4.3.1 能源視覺化監視 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"45-46,147-148",建築總用電、空調、照明、動力用電及總用水量即時視覺化,true
+EV-250,IB2024-I04-009,drawing,EMS 架構圖,用於佐證 4.3.2 空調效能持續監測與紀錄 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"46,148-149",偵知冰水溫差並記錄運轉偏差率,true
+EV-251,IB2024-I04-009,schedule,I/O 點數表,用於佐證 4.3.2 空調效能持續監測與紀錄 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"46,148-149",偵知冰水溫差並記錄運轉偏差率,true
+EV-252,IB2024-I04-009,test_record,空調效能測試計畫,用於佐證 4.3.2 空調效能持續監測與紀錄 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"46,148-149",偵知冰水溫差並記錄運轉偏差率,true
+EV-253,IB2024-I04-009,report,測試報告,用於佐證 4.3.2 空調效能持續監測與紀錄 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"46,148-149",偵知冰水溫差並記錄運轉偏差率,true
+EV-254,IB2024-I04-010,other,卸載控制說明,用於佐證 4.3.3 智慧需量控制 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"46-47,149",即時進行用電設施卸載、再生能源或儲能設施管理,true
+EV-255,IB2024-I04-010,test_record,測試計畫,用於佐證 4.3.3 智慧需量控制 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"46-47,149",即時進行用電設施卸載、再生能源或儲能設施管理,true
+EV-256,IB2024-I04-010,report,儲能/創能控制測試報告,用於佐證 4.3.3 智慧需量控制 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"46-47,149",即時進行用電設施卸載、再生能源或儲能設施管理,true
+EV-257,IB2024-I04-010,report,AI 技術成果報告,用於佐證 4.3.3 智慧需量控制 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule;evidence_doc,"46-47,149",即時進行用電設施卸載、再生能源或儲能設施管理,true
+EV-258,IB2024-I04-011,drawing,電力單線圖,用於佐證 4.3.4 用電資訊視覺化顯示 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule,"47-48,150",建築分項用電即時視覺化顯示與紀錄,true
+EV-259,IB2024-I04-011,schedule,I/O 點數表,用於佐證 4.3.4 用電資訊視覺化顯示 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule,"47-48,150",建築分項用電即時視覺化顯示與紀錄,true
+EV-260,IB2024-I04-011,drawing,平台架構圖,用於佐證 4.3.4 用電資訊視覺化顯示 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule,"47-48,150",建築分項用電即時視覺化顯示與紀錄,true
+EV-261,IB2024-I04-011,report,採用率計算說明,用於佐證 4.3.4 用電資訊視覺化顯示 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule,"47-48,150",建築分項用電即時視覺化顯示與紀錄,true
+EV-262,IB2024-I04-011,drawing,圖控畫面,用於佐證 4.3.4 用電資訊視覺化顯示 的需求、設計、竣工、測試或平台畫面。,EMS;BMS,system_diagram;io_point_schedule,"47-48,150",建築分項用電即時視覺化顯示與紀錄,true
+EV-263,IB2024-I04-012,schedule,I/O 點數表,用於佐證 4.3.5 智慧用電管理 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"48,150",整合感知參數與連動結果進行用電效能分析預測,true
+EV-264,IB2024-I04-012,other,控制系統功能說明,用於佐證 4.3.5 智慧用電管理 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"48,150",整合感知參數與連動結果進行用電效能分析預測,true
+EV-265,IB2024-I04-012,other,節能效益評估,用於佐證 4.3.5 智慧用電管理 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"48,150",整合感知參數與連動結果進行用電效能分析預測,true
+EV-266,IB2024-I04-012,other,模擬計畫,用於佐證 4.3.5 智慧用電管理 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"48,150",整合感知參數與連動結果進行用電效能分析預測,true
+EV-267,IB2024-I04-012,report,效益報告,用於佐證 4.3.5 智慧用電管理 的需求、設計、竣工、測試或平台畫面。,EMS;BMS;SENSOR,system_diagram;io_point_schedule;evidence_doc,"48,150",整合感知參數與連動結果進行用電效能分析預測,true
+EV-268,IB2024-I04-013,drawing,電力單線圖,用於佐證 4.3.6 能源流向有效管理 的需求、設計、竣工、測試或平台畫面。,EMS,evidence_doc;system_diagram,"48-49,150-151",能源績效指標；能源分攤機制,true
+EV-269,IB2024-I04-013,other,能源分攤機制說明,用於佐證 4.3.6 能源流向有效管理 的需求、設計、竣工、測試或平台畫面。,EMS,evidence_doc;system_diagram,"48-49,150-151",能源績效指標；能源分攤機制,true
+EV-270,IB2024-I04-013,other,能源績效指標規劃,用於佐證 4.3.6 能源流向有效管理 的需求、設計、竣工、測試或平台畫面。,EMS,evidence_doc;system_diagram,"48-49,150-151",能源績效指標；能源分攤機制,true
+EV-271,IB2024-I04-013,drawing,圖控畫面,用於佐證 4.3.6 能源流向有效管理 的需求、設計、竣工、測試或平台畫面。,EMS,evidence_doc;system_diagram,"48-49,150-151",能源績效指標；能源分攤機制,true
+EV-272,IB2024-I04-013,other,教育訓練,用於佐證 4.3.6 能源流向有效管理 的需求、設計、竣工、測試或平台畫面。,EMS,evidence_doc;system_diagram,"48-49,150-151",能源績效指標；能源分攤機制,true
+EV-273,IB2024-I05-001,drawing,環境感測設施設置平面圖,用於佐證 5.1.1.1 熱環境及二氧化碳濃度狀態偵知 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,layout;io_point_schedule,"50,157",溫熱環境感測設施；二氧化碳濃度設施,true
+EV-274,IB2024-I05-001,schedule,I/O 點數表,用於佐證 5.1.1.1 熱環境及二氧化碳濃度狀態偵知 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,layout;io_point_schedule,"50,157",溫熱環境感測設施；二氧化碳濃度設施,true
+EV-275,IB2024-I05-001,spec,規範與系統說明,用於佐證 5.1.1.1 熱環境及二氧化碳濃度狀態偵知 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,layout;io_point_schedule,"50,157",溫熱環境感測設施；二氧化碳濃度設施,true
+EV-276,IB2024-I05-001,spec,設備型錄,用於佐證 5.1.1.1 熱環境及二氧化碳濃度狀態偵知 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,layout;io_point_schedule,"50,157",溫熱環境感測設施；二氧化碳濃度設施,true
+EV-277,IB2024-I05-002,drawing,感測設施平面圖,用於佐證 5.1.1.2 空氣品質、光環境、水環境或室外環境狀態偵知 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,layout;io_point_schedule,"51-52,158-159",PM2.5、TVOC、照度、水質、室外環境,true
+EV-278,IB2024-I05-002,schedule,I/O 點數表,用於佐證 5.1.1.2 空氣品質、光環境、水環境或室外環境狀態偵知 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,layout;io_point_schedule,"51-52,158-159",PM2.5、TVOC、照度、水質、室外環境,true
+EV-279,IB2024-I05-002,spec,感測設施規範,用於佐證 5.1.1.2 空氣品質、光環境、水環境或室外環境狀態偵知 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,layout;io_point_schedule,"51-52,158-159",PM2.5、TVOC、照度、水質、室外環境,true
+EV-280,IB2024-I05-002,photo,系統畫面照片,用於佐證 5.1.1.2 空氣品質、光環境、水環境或室外環境狀態偵知 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,layout;io_point_schedule,"51-52,158-159",PM2.5、TVOC、照度、水質、室外環境,true
+EV-281,IB2024-I05-003,other,環境感測資訊紀錄、查詢、分析及主動異常提醒方式說明,用於佐證 5.1.2.1 溫熱環境資訊顯示 的需求、設計、竣工、測試或平台畫面。,IAQ;BMS;AV,system_diagram;evidence_doc,"52,159",顯示溫熱環境偵測資訊,true
+EV-282,IB2024-I05-003,photo,系統畫面,用於佐證 5.1.2.1 溫熱環境資訊顯示 的需求、設計、竣工、測試或平台畫面。,IAQ;BMS;AV,system_diagram;evidence_doc,"52,159",顯示溫熱環境偵測資訊,true
+EV-283,IB2024-I05-004,other,資訊紀錄查詢分析說明,用於佐證 5.1.2.2 空氣品質環境資訊顯示 的需求、設計、竣工、測試或平台畫面。,IAQ;BMS;AV,system_diagram;evidence_doc,"52-53,159-160",顯示空氣品質環境偵測資訊,true
+EV-284,IB2024-I05-004,photo,系統畫面照片,用於佐證 5.1.2.2 空氣品質環境資訊顯示 的需求、設計、竣工、測試或平台畫面。,IAQ;BMS;AV,system_diagram;evidence_doc,"52-53,159-160",顯示空氣品質環境偵測資訊,true
+EV-285,IB2024-I05-005,other,資訊紀錄查詢分析說明,用於佐證 5.1.2.3 光環境資訊顯示 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;AV,system_diagram;evidence_doc,"53,160",顯示光環境偵測資訊,true
+EV-286,IB2024-I05-005,photo,系統畫面照片,用於佐證 5.1.2.3 光環境資訊顯示 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;AV,system_diagram;evidence_doc,"53,160",顯示光環境偵測資訊,true
+EV-287,IB2024-I05-006,other,資訊紀錄查詢分析說明,用於佐證 5.1.2.4 水環境資訊顯示 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,system_diagram;evidence_doc,"53-54,160",水箱水質偵測；納入智慧建築管理平台,true
+EV-288,IB2024-I05-006,photo,系統畫面照片,用於佐證 5.1.2.4 水環境資訊顯示 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,system_diagram;evidence_doc,"53-54,160",水箱水質偵測；納入智慧建築管理平台,true
+EV-289,IB2024-I05-007,drawing,智慧化主動連動圖,用於佐證 5.1.3.1 溫熱或空氣品質控制設施連動控制 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,system_diagram;layout;io_point_schedule,"54,161",依據環境感測結果，連動溫熱環境控制設施,true
+EV-290,IB2024-I05-007,spec,連動設施設備規範,用於佐證 5.1.3.1 溫熱或空氣品質控制設施連動控制 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,system_diagram;layout;io_point_schedule,"54,161",依據環境感測結果，連動溫熱環境控制設施,true
+EV-291,IB2024-I05-007,drawing,設置平面圖,用於佐證 5.1.3.1 溫熱或空氣品質控制設施連動控制 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,system_diagram;layout;io_point_schedule,"54,161",依據環境感測結果，連動溫熱環境控制設施,true
+EV-292,IB2024-I05-007,test_record,現場測試照片或影片,用於佐證 5.1.3.1 溫熱或空氣品質控制設施連動控制 的需求、設計、竣工、測試或平台畫面。,IAQ;SENSOR;BMS,system_diagram;layout;io_point_schedule,"54,161",依據環境感測結果，連動溫熱環境控制設施,true
+EV-293,IB2024-I05-008,drawing,智慧化主動連動圖,用於佐證 5.1.3.2 光環境控制設施連動控制 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,system_diagram;layout,"54,161",連動光環境控制設施,true
+EV-294,IB2024-I05-008,spec,設備規範,用於佐證 5.1.3.2 光環境控制設施連動控制 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,system_diagram;layout,"54,161",連動光環境控制設施,true
+EV-295,IB2024-I05-008,drawing,設置平面圖,用於佐證 5.1.3.2 光環境控制設施連動控制 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,system_diagram;layout,"54,161",連動光環境控制設施,true
+EV-296,IB2024-I05-008,test_record,現場測試照片或影片,用於佐證 5.1.3.2 光環境控制設施連動控制 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,system_diagram;layout,"54,161",連動光環境控制設施,true
+EV-297,IB2024-I05-009,drawing,設施設置位置平面圖,用於佐證 5.2.1.3 降低病毒入侵風險設施 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;ACS,layout;system_diagram,"56,163",體溫偵測、口罩配戴辨識、滅菌通道或換氣,true
+EV-298,IB2024-I05-009,spec,規範與系統說明,用於佐證 5.2.1.3 降低病毒入侵風險設施 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;ACS,layout;system_diagram,"56,163",體溫偵測、口罩配戴辨識、滅菌通道或換氣,true
+EV-299,IB2024-I05-009,spec,設備型錄,用於佐證 5.2.1.3 降低病毒入侵風險設施 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;ACS,layout;system_diagram,"56,163",體溫偵測、口罩配戴辨識、滅菌通道或換氣,true
+EV-300,IB2024-I05-009,photo,現場建置照片,用於佐證 5.2.1.3 降低病毒入侵風險設施 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS;ACS,layout;system_diagram,"56,163",體溫偵測、口罩配戴辨識、滅菌通道或換氣,true
+EV-301,IB2024-I05-010,drawing,非接觸性設施設置平面圖,用於佐證 5.2.1.4 非接觸性設備 的需求、設計、竣工、測試或平台畫面。,SENSOR;ACS;BMS,layout;system_diagram,"56,164",聲控設備、掃描辨識服務,true
+EV-302,IB2024-I05-010,spec,規範與系統說明,用於佐證 5.2.1.4 非接觸性設備 的需求、設計、竣工、測試或平台畫面。,SENSOR;ACS;BMS,layout;system_diagram,"56,164",聲控設備、掃描辨識服務,true
+EV-303,IB2024-I05-010,spec,設備型錄,用於佐證 5.2.1.4 非接觸性設備 的需求、設計、竣工、測試或平台畫面。,SENSOR;ACS;BMS,layout;system_diagram,"56,164",聲控設備、掃描辨識服務,true
+EV-304,IB2024-I05-010,photo,照片,用於佐證 5.2.1.4 非接觸性設備 的需求、設計、竣工、測試或平台畫面。,SENSOR;ACS;BMS,layout;system_diagram,"56,164",聲控設備、掃描辨識服務,true
+EV-305,IB2024-I05-011,drawing,智慧化措施設置平面圖,用於佐證 5.2.1.5 自我保護智慧化措施 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;system_diagram,"57,164",水流感測器、共用物品主動消毒、使用者密度管制,true
+EV-306,IB2024-I05-011,other,系統說明,用於佐證 5.2.1.5 自我保護智慧化措施 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;system_diagram,"57,164",水流感測器、共用物品主動消毒、使用者密度管制,true
+EV-307,IB2024-I05-011,spec,設備型錄,用於佐證 5.2.1.5 自我保護智慧化措施 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;system_diagram,"57,164",水流感測器、共用物品主動消毒、使用者密度管制,true
+EV-308,IB2024-I05-011,photo,照片,用於佐證 5.2.1.5 自我保護智慧化措施 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;system_diagram,"57,164",水流感測器、共用物品主動消毒、使用者密度管制,true
+EV-309,IB2024-I05-012,drawing,照護服務設施設備或平台架構圖,用於佐證 5.2.2.1 照護服務設施設備或系統平台 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"58,165",照護服務設施設備或系統平台,true
+EV-310,IB2024-I05-012,photo,現況照片,用於佐證 5.2.2.1 照護服務設施設備或系統平台 的需求、設計、竣工、測試或平台畫面。,BMS,system_diagram;evidence_doc,"58,165",照護服務設施設備或系統平台,true
+EV-311,IB2024-I05-013,drawing,遠距照護服務系統設備及架構圖,用於佐證 5.2.2.2 遠距照護服務系統 的需求、設計、竣工、測試或平台畫面。,BMS;TEL,system_diagram;evidence_doc,"58,165",遠距照護服務系統,true
+EV-312,IB2024-I05-013,photo,設置現況照片,用於佐證 5.2.2.2 遠距照護服務系統 的需求、設計、竣工、測試或平台畫面。,BMS;TEL,system_diagram;evidence_doc,"58,165",遠距照護服務系統,true
+EV-313,IB2024-I05-014,other,便利生活服務架構及功能說明,用於佐證 5.3.1.1 便利生活整合性應用服務 的需求、設計、竣工、測試或平台畫面。,BMS;AV,system_diagram;evidence_doc,"59,166",整合性應用服務平台或 APP,true
+EV-314,IB2024-I05-014,photo,現場建置照片,用於佐證 5.3.1.1 便利生活整合性應用服務 的需求、設計、竣工、測試或平台畫面。,BMS;AV,system_diagram;evidence_doc,"59,166",整合性應用服務平台或 APP,true
+EV-315,IB2024-I05-015,other,服務架構及功能說明,用於佐證 5.3.1.2 個人化提醒服務 的需求、設計、竣工、測試或平台畫面。,BMS;PARKING,system_diagram;evidence_doc,"59-60,166",個別繳費提醒、郵件提取、用藥、停車充電提醒,true
+EV-316,IB2024-I05-015,photo,現場建置照片,用於佐證 5.3.1.2 個人化提醒服務 的需求、設計、竣工、測試或平台畫面。,BMS;PARKING,system_diagram;evidence_doc,"59-60,166",個別繳費提醒、郵件提取、用藥、停車充電提醒,true
+EV-317,IB2024-I05-016,other,主動調適服務架構,用於佐證 5.3.2.2 個別化主動調適服務 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,system_diagram;io_point_schedule,"60,167",溫度、照度等個別化主動調適機制,true
+EV-318,IB2024-I05-016,other,功能說明,用於佐證 5.3.2.2 個別化主動調適服務 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,system_diagram;io_point_schedule,"60,167",溫度、照度等個別化主動調適機制,true
+EV-319,IB2024-I05-016,photo,現場建置照片,用於佐證 5.3.2.2 個別化主動調適服務 的需求、設計、竣工、測試或平台畫面。,BMS;SENSOR,system_diagram;io_point_schedule,"60,167",溫度、照度等個別化主動調適機制,true
+EV-320,IB2024-I06-001,other,創新加值服務設計說明,用於佐證 6.1.1 智慧創新設計手法、設備或系統 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR;LAN,system_diagram;evidence_doc,"61,173",安全、健康、便利、效率及維護等具有效益,true
+EV-321,IB2024-I06-001,drawing,裝置圖說,用於佐證 6.1.1 智慧創新設計手法、設備或系統 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR;LAN,system_diagram;evidence_doc,"61,173",安全、健康、便利、效率及維護等具有效益,true
+EV-322,IB2024-I06-001,other,系統及情境控制說明,用於佐證 6.1.1 智慧創新設計手法、設備或系統 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR;LAN,system_diagram;evidence_doc,"61,173",安全、健康、便利、效率及維護等具有效益,true
+EV-323,IB2024-I06-001,spec,規格表,用於佐證 6.1.1 智慧創新設計手法、設備或系統 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR;LAN,system_diagram;evidence_doc,"61,173",安全、健康、便利、效率及維護等具有效益,true
+EV-324,IB2024-I06-001,operation_document,操作手冊,用於佐證 6.1.1 智慧創新設計手法、設備或系統 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;SENSOR;LAN,system_diagram;evidence_doc,"61,173",安全、健康、便利、效率及維護等具有效益,true
+EV-325,IB2024-I06-002,spec,智慧建材名稱規格功能說明,用於佐證 6.3.1 採用智慧建材 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;evidence_doc,"63,176",具有感知、處理、致動、辨識、自預警或自修復,true
+EV-326,IB2024-I06-002,other,平立剖標示,用於佐證 6.3.1 採用智慧建材 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;evidence_doc,"63,176",具有感知、處理、致動、辨識、自預警或自修復,true
+EV-327,IB2024-I06-002,photo,施工及竣工照片,用於佐證 6.3.1 採用智慧建材 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;evidence_doc,"63,176",具有感知、處理、致動、辨識、自預警或自修復,true
+EV-328,IB2024-I06-002,other,第三方認證,用於佐證 6.3.1 採用智慧建材 的需求、設計、竣工、測試或平台畫面。,SENSOR;BMS,layout;evidence_doc,"63,176",具有感知、處理、致動、辨識、自預警或自修復,true
+EV-329,IB2024-I06-003,spec,招標文件或規範說明,用於佐證 6.4.1 採用資料格式標準 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,evidence_doc,"64,177",TAICS TS-0054 v1.0,true
+EV-330,IB2024-I06-003,report,標準資料格式驗測報告,用於佐證 6.4.1 採用資料格式標準 的需求、設計、竣工、測試或平台畫面。,BMS;LAN,evidence_doc,"64,177",TAICS TS-0054 v1.0,true
+EV-331,IB2024-I06-004,other,雲平台系統架構,用於佐證 6.5.1 採用智慧管理雲平台 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;LAN,system_diagram;evidence_doc,"64-65,178",資料能定時匯入智慧管理雲平台數據庫,true
+EV-332,IB2024-I06-004,spec,功能規格,用於佐證 6.5.1 採用智慧管理雲平台 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;LAN,system_diagram;evidence_doc,"64-65,178",資料能定時匯入智慧管理雲平台數據庫,true
+EV-333,IB2024-I06-004,operation_document,操作介面,用於佐證 6.5.1 採用智慧管理雲平台 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;LAN,system_diagram;evidence_doc,"64-65,178",資料能定時匯入智慧管理雲平台數據庫,true
+EV-334,IB2024-I06-004,operation_document,維運方式,用於佐證 6.5.1 採用智慧管理雲平台 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;LAN,system_diagram;evidence_doc,"64-65,178",資料能定時匯入智慧管理雲平台數據庫,true
+EV-335,IB2024-I06-004,spec,資安規範,用於佐證 6.5.1 採用智慧管理雲平台 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;LAN,system_diagram;evidence_doc,"64-65,178",資料能定時匯入智慧管理雲平台數據庫,true
+EV-336,IB2024-I06-004,other,現勘確認,用於佐證 6.5.1 採用智慧管理雲平台 的需求、設計、竣工、測試或平台畫面。,BMS;EMS;LAN,system_diagram;evidence_doc,"64-65,178",資料能定時匯入智慧管理雲平台數據庫,true
