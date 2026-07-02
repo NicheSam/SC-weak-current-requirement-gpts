@@ -1,0 +1,40 @@
+# local/runtime files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.log
+*.cache
+
+# secrets and local config
+.env
+.env.*
+*secret*
+*credential*
+*token*
+*.pem
+*.p12
+*.pfx
+
+# generated outputs
+demand_map.html
+to_xmind.md
+todo_handoff.md
+m1_5_data_package.zip
+outputs/
+project_outputs/
+logs/
+runtime/
+
+# dependency/build folders
+node_modules/
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+dist/
+build/
+bin/
+obj/
+release/
+

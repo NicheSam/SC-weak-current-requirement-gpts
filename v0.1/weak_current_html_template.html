@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{專案名稱}}｜弱電需求圖譜</title>
+  <style>
+    :root {
+      --blue: #2563eb;
+      --green: #16a34a;
+      --orange: #f97316;
+      --purple: #7c3aed;
+      --red: #dc2626;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --bg: #f8fafc;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "Noto Sans TC", system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 24px 56px;
+    }
+
+    section {
+      margin: 0 0 18px;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      line-height: 1.25;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 800;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 3px 8px;
+      margin: 2px 4px 2px 0;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #1e40af;
+      font-size: 12px;
+      border: 1px solid #c7d2fe;
+    }
+
+    .mini-count {
+      display: inline-block;
+      margin-top: 6px;
+      margin-right: 4px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #075985;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .mini-count.danger {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    td a {
+      color: #2563eb;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    td a:hover {
+      text-decoration: underline;
+    }
+
+    .mindmap {
+      overflow: hidden;
+    }
+
+    .mindmap-root > .tree-node {
+      margin-bottom: 14px;
+    }
+
+    .mindmap-branches {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tree-category,
+    .tree-system {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 5px 18px rgba(20, 50, 90, 0.04);
+      scroll-margin-top: 145px;
+    }
+
+    .tree-category > summary,
+    .tree-system > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 13px;
+      background: #fafdff;
+      border-radius: 14px;
+    }
+
+    .tree-category > summary::-webkit-details-marker,
+    .tree-system > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .tree-category > summary::after,
+    .tree-system > summary::after {
+      content: "＋";
+      font-weight: 900;
+      color: #73839a;
+    }
+
+    .tree-category[open] > summary::after,
+    .tree-system[open] > summary::after {
+      content: "−";
+    }
+
+    .tree-category[open] > summary,
+    .tree-system[open] > summary {
+      border-bottom: 1px solid var(--border);
+      border-radius: 14px 14px 0 0;
+    }
+
+    .tree-system-list {
+      padding: 10px 12px 14px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .tree-system {
+      box-shadow: none;
+    }
+
+    .tree-system > summary {
+      padding: 10px 12px;
+    }
+
+    .tree-system ul,
+    .tree-list,
+    .tree-list ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 22px;
+      position: relative;
+    }
+
+    .tree-system ul::before,
+    .tree-list ul::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 12px;
+      border-left: 1px dashed #b7c9dd;
+    }
+
+    .tree-system li,
+    .tree-list li {
+      position: relative;
+      margin: 8px 0;
+    }
+
+    .tree-system li::before,
+    .tree-list li::before {
+      content: "";
+      position: absolute;
+      left: -14px;
+      top: 15px;
+      width: 12px;
+      border-top: 1px dashed #b7c9dd;
+    }
+
+    .tree-node {
+      display: inline-block;
+      border-radius: 9px;
+      padding: 7px 9px;
+      font-weight: 760;
+      font-size: 13px;
+    }
+
+    .tree-node.level-1 {
+      background: #0f172a;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .tree-node.level-2 {
+      background: #e8f1ff;
+      color: #174e95;
+    }
+
+    .tree-node.level-3 {
+      background: #ecf8f3;
+      color: #176b54;
+    }
+
+    .tree-node.level-4 {
+      background: #fff5e8;
+      color: #8a4b04;
+    }
+
+    .tree-node.level-5 {
+      background: #f7f3ff;
+      color: #5d3e9f;
+      font-size: 12px;
+    }
+
+    details {
+      margin: 12px 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      font-weight: 800;
+      background: #f8fafc;
+    }
+
+    .details-body {
+      padding: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .tab-shell {
+      margin-top: 22px;
+    }
+
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px;
+      margin-bottom: 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .tab-button {
+      appearance: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 12px;
+      background: #f8fafc;
+      color: var(--text);
+      font: inherit;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .tab-button:hover {
+      border-color: #bfdbfe;
+      background: #eff6ff;
+    }
+
+    .tab-button.active {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @media (max-width: 800px) {
+      main {
+        padding: 18px 14px 42px;
+      }
+
+      .tab-nav {
+        margin-left: -4px;
+        margin-right: -4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>{{專案名稱}}｜弱電需求圖譜</h1>
+      <p>本 HTML 僅供需求整理與設計前置溝通；智慧建築僅為可能對應，不代表符合、得分或通過。</p>
+    </header>
+
+    <div class="tab-shell">
+      <nav class="tab-nav" role="tablist" aria-label="需求圖譜頁籤">
+        <button class="tab-button active" type="button" role="tab" aria-selected="true" aria-controls="tab-summary" id="tabbtn-summary" data-tab="tab-summary">摘要總覽</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="tab-project" id="tabbtn-project" data-tab="tab-project">1-2 專案總覽</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="tab-smart" id="tabbtn-smart" data-tab="tab-smart">3-4 智慧建築</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="tab-weak-overview" id="tabbtn-weak-overview" data-tab="tab-weak-overview">弱電總覽</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="tab-weak-tree" id="tabbtn-weak-tree" data-tab="tab-weak-tree">6 需求樹</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="tab-system-details" id="tabbtn-system-details" data-tab="tab-system-details">7 系統細節</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="tab-equipment-overview" id="tabbtn-equipment-overview" data-tab="tab-equipment-overview">8 設備總覽</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="tab-equipment-details" id="tabbtn-equipment-details" data-tab="tab-equipment-details">9 設備細節</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="tab-todo" id="tabbtn-todo" data-tab="tab-todo">10 待辦釐清</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="tab-review-comments" id="tabbtn-review-comments" data-tab="tab-review-comments">11 審查意見</button>
+      </nav>
+
+      <div class="tab-panel active" id="tab-summary" role="tabpanel" aria-labelledby="tabbtn-summary">
+        <section id="analysis-summary">
+          <h2>摘要總覽</h2>
+          {{摘要總覽}}
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tab-project" role="tabpanel" aria-labelledby="tabbtn-project">
+        <section id="dashboard">
+          <h2>1. 全案 Dashboard</h2>
+          {{全案Dashboard}}
+        </section>
+
+        <section id="project-info">
+          <h2>2. 專案基本資訊</h2>
+          {{專案基本資訊}}
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tab-smart" role="tabpanel" aria-labelledby="tabbtn-smart">
+        <section id="smart-building">
+          <h2>3. 智慧建築標章規定</h2>
+          {{智慧建築標章規定}}
+        </section>
+
+        <section id="smart-matrix">
+          <h2>4. 智慧建築對應矩陣</h2>
+          {{智慧建築對應矩陣}}
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tab-weak-overview" role="tabpanel" aria-labelledby="tabbtn-weak-overview">
+        <section id="weak-overview">
+          <h2>5. 弱電系統總覽表</h2>
+          <table>
+            <tr>
+              <th>系統</th>
+              <th>需求重點</th>
+              <th>主要圖說 / 文件</th>
+              <th>智慧建築關聯</th>
+              <th>主要待確認</th>
+              <th>優先級</th>
+              <th>查看細節</th>
+            </tr>
+            {{弱電系統導覽列}}
+          </table>
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tab-weak-tree" role="tabpanel" aria-labelledby="tabbtn-weak-tree">
+        <section id="weak-tree">
+          <h2>6. 弱電需求樹狀圖 / 心智圖</h2>
+          <div class="mindmap">
+            <div class="mindmap-root">
+              <div class="tree-node level-1">{{專案名稱}}</div>
+              <div class="mindmap-branches">
+                <details class="tree-category" open>
+                  <summary><span class="tree-node level-1">弱電需求</span><span class="mini-count">{{弱電系統數}} 系統</span></summary>
+                  <div class="tree-system-list">
+                    {{弱電系統需求樹卡片}}
+                  </div>
+                </details>
+                {{特殊空間需求樹卡片}}
+                {{責任界面待確認樹卡片}}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tab-system-details" role="tabpanel" aria-labelledby="tabbtn-system-details">
+        <section id="system-details">
+          <h2>7. 依系統展開弱電需求細節</h2>
+          {{系統details區塊}}
+
+          <details id="system-bms">
+            <summary>中央監控 / 建築管理系統</summary>
+            <div class="details-body">
+              {{中央監控系統細節}}
+            </div>
+          </details>
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tab-equipment-overview" role="tabpanel" aria-labelledby="tabbtn-equipment-overview">
+        <section id="equipment-overview">
+          <h2>8. 機電設備規格總覽表</h2>
+          {{機電設備規格總覽}}
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tab-equipment-details" role="tabpanel" aria-labelledby="tabbtn-equipment-details">
+        <section id="equipment-details">
+          <h2>9. 依系統展開設備規格細節</h2>
+          {{機電設備規格細節}}
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tab-todo" role="tabpanel" aria-labelledby="tabbtn-todo">
+        <section id="todo-list">
+          <h2>10. 基本待辦與釐清清單</h2>
+          {{基本待辦與釐清清單}}
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tab-review-comments" role="tabpanel" aria-labelledby="tabbtn-review-comments">
+        <section id="review-comments">
+          <h2>11. 弱電相關審查意見問題 / 回覆對照</h2>
+          {{弱電相關審查意見問題回覆對照}}
+        </section>
+      </div>
+    </div>
+
+    <section id="footer-statement">
+      <h2>12. 頁尾聲明</h2>
+      <p>本 HTML 僅供需求整理與設計前置溝通。智慧建築內容僅為可能對應，不代表符合、得分或通過。</p>
+      <p>審查意見回覆僅供追蹤，不代表本 GPT 判定已完成修正。設備數量、位置、品牌型號、線路路徑、施工責任、合約責任與報價品項需由專業人員確認。本檔主要供人員閱讀、查核與釐清目標，不作為後續系統匯入的主要資料源。</p>
+    </section>
+
+    <script>
+      (function () {
+        var buttons = Array.prototype.slice.call(document.querySelectorAll(".tab-button"));
+        var panels = Array.prototype.slice.call(document.querySelectorAll(".tab-panel"));
+
+        function activateTab(tabId) {
+          buttons.forEach(function (button) {
+            var active = button.getAttribute("data-tab") === tabId;
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-selected", active ? "true" : "false");
+          });
+
+          panels.forEach(function (panel) {
+            panel.classList.toggle("active", panel.id === tabId);
+          });
+        }
+
+        buttons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            activateTab(button.getAttribute("data-tab"));
+          });
+        });
+
+        document.addEventListener("click", function (event) {
+          var link = event.target.closest ? event.target.closest("a[href^='#']") : null;
+          if (!link) return;
+
+          var target = document.querySelector(link.getAttribute("href"));
+          if (!target) return;
+
+          var panel = target.closest(".tab-panel");
+          if (panel) {
+            activateTab(panel.id);
+          }
+        });
+      }());
+    </script>
+  </main>
+</body>
+</html>
