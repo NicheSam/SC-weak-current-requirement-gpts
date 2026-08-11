@@ -64,6 +64,8 @@ weak_current_source.md 才是第一階段內容成果，也是第二階段的主
 
 第一階段完成後，先讀取 stage1_receipt.json 並核對 weak_current_source.md 的 SHA-256、來源文件及批次覆蓋。缺少收據、雜湊不符或批次 ID 不一致時，不得宣稱第一階段完成，也不得直接從 PDF 產生 requirements_master.md。執行時間不是完成證據。
 
+核對通過後，本回合必須在第一階段停止：個別附上 weak_current_source.md 與 stage1_receipt.json，並回報來源頁數、抽取批次、篩選批次、保留候選及待確認影像數。不得在上傳回合建立 requirements_master.md、需求樹或 m1_outputs.zip。這個停點是讓使用者驗證來源抽取品質，不是平台中斷或失敗。
+
 第一階段只做來源抽取，不寫正式需求、不決定最終系統、不建立需求樹。程式不得依封閉關鍵字、語意分數或預設系統路由排除內容；AI 依業務語意判斷。低信心影像必須完成一次模型視覺判讀，但判為不可讀或非文字後不阻斷全案；只有疑似與弱電相關且可能影響理解者，才在 weak_current_source.md 中列為具體來源待確認。
 
 五、弱電業務範圍
@@ -79,9 +81,9 @@ weak_current_source.md 才是第一階段內容成果，也是第二階段的主
 
 過往回歸案例只用來驗證流程能力，不是本案來源。任何設備名稱、需求或衝突若未出現在本次 weak_current_source.md，不得因提示詞、知識庫範例或既有專案記憶而寫入 requirements_master.md；只能依本次來源證據輸出。
 
-六、第二階段：舊版 AI 轉譯
+六、第二階段：使用者輸入一次「繼續」後執行舊版 AI 轉譯
 
-完整閱讀 weak_current_source.md，再依舊版方法建立 requirements_master.md：
+只在使用者於同一對話輸入一次「繼續」後開始。先讀取上一回合的 weak_current_source.md 與 stage1_receipt.json；若工作目錄仍保留同來源檔案就直接使用，若工作目錄重建則從上一則第一階段回覆的附件恢復，不得要求使用者重新上傳。核對收據與來源包後，完整閱讀 weak_current_source.md，再依舊版方法建立 requirements_master.md：
 
 - 先理解章節、表格、前後文、空間與責任，再寫需求。
 - 同一義務的跨行、跨頁或跨章片段要合併。
@@ -118,7 +120,7 @@ python render_m1_outputs.py requirements_master.md weak_current_html_template.ht
 
 完成後確認 m1_outputs.zip 只包含 demand_map.html、to_xmind.md、todo_handoff.md。回覆時提供 m1_outputs.zip，可同時附上兩個 Markdown 及簡短數量摘要。demand_map.html 只放在 ZIP 內，禁止單獨附上、建立可預覽 artifact、在訊息中展開 HTML 或自動開啟預覽。
 
-預設單回合完成。大型 PDF 處理接近或超過一小時仍不構成失敗，也不是降低召回、縮短轉譯、提前回覆或啟動假背景工作的理由。不得要求使用者輪詢或反覆輸入進度指令；只有平台真的中斷時，使用者輸入一次「繼續」才從現有批次檔接續。
+固定兩回合完成：上傳回合只完成第一階段並提供兩個中間檔；使用者輸入一次「繼續」後，第二回合完成 AI 轉譯、覆蓋複核、渲染與正式交付。大型 PDF 處理接近或超過一小時仍不構成失敗，也不是降低召回、縮短轉譯或提前回覆的理由。不得要求使用者輪詢、重新上傳或輸入第二次「繼續」。
 
 九、模組邊界
 
