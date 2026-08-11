@@ -71,9 +71,10 @@ def render_group(group: dict[str, Any], segment_candidate_ids: set[str]) -> str:
 
     for index, segment in enumerate(group.get("segments", []), start=1):
         candidate_ids = [str(value) for value in segment.get("candidate_ids", []) if value]
+        visual_region_ids = [str(value) for value in segment.get("visual_region_ids", []) if value]
         segment_pages = [str(value) for value in segment.get("pdf_pages", []) if value]
         lines.extend([
-            f"### {','.join(candidate_ids) or f'{group_id}-S{index:02d}'} | PDF {','.join(segment_pages) or ','.join(pages) or '?'}",
+            f"### {','.join(candidate_ids or visual_region_ids) or f'{group_id}-S{index:02d}'} | PDF {','.join(segment_pages) or ','.join(pages) or '?'}",
             "",
         ])
         headings = [clean_inline(value) for value in segment.get("context_headings", []) if clean_inline(value)]

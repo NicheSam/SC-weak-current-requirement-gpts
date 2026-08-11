@@ -1646,6 +1646,42 @@ def candidate_view(data: dict[str, object]) -> dict[str, object]:
         pending_chars += record_chars
         pending_candidates += record_candidates
     flush_group()
+    for region in data.get("visual_regions", []):
+        if not isinstance(region, dict):
+            continue
+        draft = clean_text(str(region.get("ocr_draft", "")))
+        if not draft or region.get("status") in {"read", "skipped_non_text"}:
+            continue
+        region_id = str(region.get("region_id", ""))
+        pdf_page = region.get("pdf_page")
+        heading = str(region.get("context_heading", "")) or f"來源頁 {pdf_page} 影像文字區塊"
+        evidence_groups.append(
+            {
+                "evidence_group_id": f"EGRP-{len(evidence_groups) + 1:04d}",
+                "route_candidate_ids": [],
+                "route_visual_region_ids": [region_id],
+                "pdf_pages": [pdf_page] if pdf_page else [],
+                "section_path": [heading],
+                "leading_context": None,
+                "segments": [{
+                    "candidate_ids": [],
+                    "visual_region_ids": [region_id],
+                    "pdf_pages": [pdf_page] if pdf_page else [],
+                    "context_headings": [heading],
+                    "quote": draft,
+                    "system_hints": [],
+                    "space_hints": [],
+                    "business_axes": [],
+                    "preservation_terms": source_preservation_terms(draft),
+                    "source_shape": "visual_ocr_draft",
+                    "origin_kinds": ["source_ocr_draft"],
+                    "source_confidences": [str(region.get("confidence", "low"))],
+                    "text_quality_flags": ["低信心 OCR 草稿，僅供覆核"],
+                    "signal_flags": [],
+                }],
+                "trailing_context": None,
+            }
+        )
     coverage_fields = ["candidate_ids", "evidence_group_id"]
     coverage_rows = [
         [group["route_candidate_ids"], group["evidence_group_id"]]

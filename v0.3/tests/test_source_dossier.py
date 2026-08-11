@@ -65,6 +65,69 @@ class SourceDossierTests(unittest.TestCase):
         self.assertIn("5G", record["text"])
         self.assertEqual("low_confidence_ocr", record["review_note"])
 
+    def test_low_confidence_ocr_draft_remains_visible_in_stage1_reading_pack(self) -> None:
+        data = {
+            "schema_version": "test",
+            "workflow_version": "test",
+            "source_manifest": [{"name": "sample.pdf", "sha256": "a" * 64, "page_count": 28}],
+            "pages": [{
+                "page_id": "SRC-001-P0028",
+                "source_id": "SRC-001",
+                "pdf_page": 28,
+                "printed_page": "20",
+                "section": "停車空間需求",
+                "candidate_ids": [],
+                "native_text_present": True,
+                "status": "pending",
+            }],
+            "visual_regions": [{
+                "region_id": "VR-P0028-001",
+                "page_id": "SRC-001-P0028",
+                "pdf_page": 28,
+                "image_count": 1,
+                "context_heading": "停車空間需求",
+                "context_heading_basis": "page_heading",
+                "status": "pending",
+            }],
+            "visual_audit": {"status": "pending", "pending_region_ids": ["VR-P0028-001"]},
+            "candidates": [],
+            "claims": [],
+            "evidence": [],
+            "issues": [],
+            "document_terms": [],
+            "checkpoint": {},
+            "recall_audit": {},
+            "extraction_summary": {},
+        }
+        payload = {
+            "engine": "tesseract",
+            "regions": [{
+                "region_id": "VR-P0028-001",
+                "status": "pending",
+                "text": "全地下室預留電盤及電纜槽架供後續擴充。地下室建置5G強波器。",
+                "confidence": "low",
+                "mean_confidence": 51.2,
+                "review_note": "low_confidence_ocr",
+            }],
+        }
+        merged = m1_extract_source.merge_visual_transcriptions(data, payload)
+        merged = m1_extract_source.merge_visual_transcriptions(merged, {
+            "engine": "model_vision",
+            "regions": [{
+                "region_id": "VR-P0028-001",
+                "status": "unreadable",
+                "text": "",
+                "confidence": "low",
+                "review_note": "裁切圖文字仍無法可靠確認，保留 OCR 草稿供來源覆核。",
+            }],
+        })
+        view = m1_extract_source.candidate_view(merged)
+        dossier = m1_build_source_dossier.build_dossier(view)
+        self.assertIn("VR-P0028-001", dossier)
+        self.assertIn("PDF 28", dossier)
+        self.assertIn("5G強波器", dossier)
+        self.assertIn("僅供覆核", dossier)
+
     @unittest.skipUnless(PACK.is_file(), "private candidate-pack fixture is not installed")
     def test_every_evidence_group_is_preserved(self) -> None:
         for group in self.data["evidence_groups"]:
