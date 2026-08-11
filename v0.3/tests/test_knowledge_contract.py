@@ -46,6 +46,10 @@ class KnowledgeContractTests(unittest.TestCase):
         self.assertIn("不得摘要或合併不同義務", dossier_builder)
         self.assertIn("設備規格表", dossier_builder)
 
+        extractor = (ROOT / "m1_extract_source.py").read_text(encoding="utf-8")
+        self.assertNotIn("run_semantic_freeze", extractor)
+        self.assertIn("review_source_evidence", extractor)
+
     def test_rules_have_one_control_flow(self) -> None:
         usage = (ROOT / "00_使用說明.md").read_text(encoding="utf-8")
         continuation = (ROOT / "12_M1雙階段續接資料規則.md").read_text(encoding="utf-8")

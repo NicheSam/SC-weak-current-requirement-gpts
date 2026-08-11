@@ -1125,7 +1125,7 @@ def source_pack(
             "sequence": 1,
             "state": "stage1_visual_pending" if pending_page_ids else "stage1_auditing",
             "last_passed_gate": "index",
-            "next_action": "transcribe_visual_regions" if pending_page_ids else "run_semantic_freeze",
+            "next_action": "transcribe_visual_regions" if pending_page_ids else "review_source_evidence",
             "pending_page_ids": pending_page_ids,
             "pending_candidate_ids": candidate_ids,
             "continue_count": 0,
@@ -1456,7 +1456,7 @@ def merge_visual_transcriptions(
     checkpoint.update(
         {
             "state": "stage1_visual_pending" if pending_page_ids else "stage1_auditing",
-            "next_action": "transcribe_visual_regions" if pending_page_ids else "run_semantic_freeze",
+            "next_action": "transcribe_visual_regions" if pending_page_ids else "review_source_evidence",
             "pending_page_ids": pending_page_ids,
             "pending_candidate_ids": [str(item.get("candidate_id")) for item in candidates],
             "updated_at": datetime.now(timezone.utc).isoformat(),
