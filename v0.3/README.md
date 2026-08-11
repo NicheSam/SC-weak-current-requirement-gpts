@@ -77,7 +77,7 @@ AI 負責：
 ## 本地指令
 
 ```powershell
-python m1_prepare_batches.py input.pdf m1_batches --batch-pages 5
+python m1_prepare_batches.py input.pdf m1_batches --batch-pages 25
 python m1_prepare_batches.py --run-next m1_batches/batch_manifest.json
 python m1_merge_candidate_batches.py m1_batches/batch_manifest.json source_index.json m1_candidates.json source_reading_pack.md --screening-dir m1_screening
 # AI 逐批建立 screen_result_###.md

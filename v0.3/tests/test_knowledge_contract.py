@@ -39,7 +39,8 @@ class KnowledgeContractTests(unittest.TestCase):
         self.assertIn("不得摘要或合併不同義務", human_prompt)
         self.assertIn("語意覆蓋複核", human_prompt)
         self.assertIn("m1_prepare_batches.py", human_prompt)
-        self.assertIn("--batch-pages 5", human_prompt)
+        self.assertIn("--batch-pages 25", human_prompt)
+        self.assertIn("--split-next", human_prompt)
         self.assertIn("不得由 AI 手寫", human_prompt)
 
         dossier_builder = (ROOT / "m1_build_source_dossier.py").read_text(encoding="utf-8")
@@ -65,6 +66,7 @@ class KnowledgeContractTests(unittest.TestCase):
         self.assertNotIn("--background-worker", batch_runner)
         self.assertNotIn("BACKGROUND_STARTED", batch_runner)
         self.assertNotIn("--run-complete", batch_runner)
+        self.assertIn('default=25', batch_runner)
         self.assertIn("需求", usage)
         self.assertIn("2–8 筆", classification)
         self.assertIn("renderer 只負責呈現", classification)

@@ -192,7 +192,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Prepare or advance resumable GPTS extraction batches.")
     parser.add_argument("pdf", type=Path, nargs="?")
     parser.add_argument("output_dir", type=Path, nargs="?", default=Path("m1_batches"))
-    parser.add_argument("--batch-pages", type=int, default=5)
+    parser.add_argument("--batch-pages", type=int, default=25)
     parser.add_argument("--run-next", type=Path, metavar="MANIFEST")
     parser.add_argument("--split-next", type=Path, metavar="MANIFEST")
     parser.add_argument("--defer-next-ocr", type=Path, metavar="MANIFEST")

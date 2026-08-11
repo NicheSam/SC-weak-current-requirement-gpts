@@ -35,7 +35,7 @@ python m1_build_source_dossier.py m1_candidates.json source_reading_pack.md --sc
 
 大型 PDF 執行：
 
-python m1_prepare_batches.py <PDF> m1_batches --batch-pages 5
+python m1_prepare_batches.py <PDF> m1_batches --batch-pages 25
 python m1_prepare_batches.py --run-next m1_batches/batch_manifest.json
 
 在同一回合持續執行 --run-next，直到全部批次結束。單批明確超時才用 --split-next 保存進度；單頁仍超時才用 --defer-next-ocr 轉交模型視覺覆核。超時只代表改用另一條讀取路徑，不得把該頁或影像區視為可排除內容。完成後執行：
