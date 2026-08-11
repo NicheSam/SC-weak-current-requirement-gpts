@@ -222,6 +222,18 @@ class RendererTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "source hash does not match"):
                 render_m1_outputs.validate_source_gate(document, source, receipt)
 
+    def test_large_pdf_receipt_rejects_implausible_single_extraction_batch(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            source = self.write_verified_source(root)
+            receipt = self.write_verified_receipt(root, source)
+            payload = json.loads(receipt.read_text(encoding="utf-8"))
+            payload["extraction_batch_count"] = 1
+            receipt.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+            document = render_m1_outputs.parse_master(MASTER)
+            with self.assertRaisesRegex(ValueError, "implausible extraction batch coverage"):
+                render_m1_outputs.validate_source_gate(document, source, receipt)
+
     def test_boilerplate_is_rejected(self) -> None:
         bad = MASTER.replace(
             "地下室應建置 5G 強波器，以改善地下空間行動通訊涵蓋。",

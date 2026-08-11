@@ -38,6 +38,9 @@ class KnowledgeContractTests(unittest.TestCase):
         human_prompt = (ROOT / "gpts_prompt_human_html.txt").read_text(encoding="utf-8")
         self.assertIn("不得摘要或合併不同義務", human_prompt)
         self.assertIn("語意覆蓋複核", human_prompt)
+        self.assertIn("m1_prepare_batches.py", human_prompt)
+        self.assertIn("--batch-pages 5", human_prompt)
+        self.assertIn("不得由 AI 手寫", human_prompt)
 
         dossier_builder = (ROOT / "m1_build_source_dossier.py").read_text(encoding="utf-8")
         self.assertIn("不得摘要或合併不同義務", dossier_builder)

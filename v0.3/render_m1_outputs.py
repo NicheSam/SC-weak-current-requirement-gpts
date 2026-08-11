@@ -325,8 +325,16 @@ def validate_source_gate(
     source_batch_ids = re.findall(r"<!--\s*screened:(SB-\d{3})\s*-->", source_text)
     if receipt_batch_count != total_batches or receipt_batch_ids != source_batch_ids:
         raise ValueError("source check failed: stage1 receipt batch coverage does not match source package")
-    if int(receipt["pdf_page_count"]) < 1 or int(receipt["extraction_batch_count"]) < 1:
+    pdf_page_count = int(receipt["pdf_page_count"])
+    extraction_batch_count = int(receipt["extraction_batch_count"])
+    if pdf_page_count < 1 or extraction_batch_count < 1:
         raise ValueError("source check failed: stage1 receipt has invalid PDF coverage")
+    minimum_extraction_batches = (pdf_page_count + 29) // 30
+    if extraction_batch_count < minimum_extraction_batches:
+        raise ValueError(
+            "source check failed: implausible extraction batch coverage; "
+            "large PDFs must come from the real bounded batch workflow"
+        )
     if int(receipt["screened_evidence_group_count"]) < 1:
         raise ValueError("source check failed: stage1 receipt has no screened evidence groups")
     return receipt
