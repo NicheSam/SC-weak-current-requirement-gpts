@@ -11,9 +11,9 @@ import re
 from typing import Any
 
 
-DOSSIER_VERSION = "1.1"
-SCREENING_BATCH_VERSION = "1.0"
-STAGE1_RECEIPT_VERSION = "1.0"
+DOSSIER_VERSION = "1.2"
+SCREENING_BATCH_VERSION = "1.1"
+STAGE1_RECEIPT_VERSION = "1.1"
 DEFAULT_SCREENING_MAX_GROUPS = 12
 DEFAULT_SCREENING_MAX_CHARS = 28000
 
@@ -85,7 +85,13 @@ def render_group(group: dict[str, Any], segment_candidate_ids: set[str]) -> str:
         flags = [clean_inline(value) for value in segment.get("text_quality_flags", []) if clean_inline(value)]
         if flags:
             lines.append(f"- 文字狀態：{'、'.join(flags)}")
-        if headings or spaces or flags:
+        origins = [clean_inline(value) for value in segment.get("origin_kinds", []) if clean_inline(value)]
+        confidences = [clean_inline(value) for value in segment.get("source_confidences", []) if clean_inline(value)]
+        if origins:
+            lines.append(f"- 來源形式：{'、'.join(origins)}")
+        if confidences and confidences != ["not_applicable"]:
+            lines.append(f"- 辨識信心：{'、'.join(confidences)}")
+        if headings or spaces or flags or origins or confidences:
             lines.append("")
         lines.extend(quote_block(segment.get("quote", "")))
         lines.append("")
@@ -168,9 +174,16 @@ def prepare_screening_batches(
         for segment in group.get("segments", [])
         for candidate_id in segment.get("candidate_ids", [])
     }
-    rendered = [(clean_inline(group.get("evidence_group_id")), render_group(group, segment_candidate_ids)) for group in groups]
-    batches: list[list[tuple[str, str]]] = []
-    current: list[tuple[str, str]] = []
+    rendered = [
+        (
+            clean_inline(group.get("evidence_group_id")),
+            render_group(group, segment_candidate_ids),
+            sorted({int(value) for value in group.get("pdf_pages", []) if str(value).isdigit()}),
+        )
+        for group in groups
+    ]
+    batches: list[list[tuple[str, str, list[int]]]] = []
+    current: list[tuple[str, str, list[int]]] = []
     current_chars = 0
     for item in rendered:
         item_chars = len(item[1])
@@ -190,6 +203,9 @@ def prepare_screening_batches(
         source_name = f"screen_source_{index:03d}.md"
         result_name = f"screen_result_{index:03d}.md"
         group_ids = [item[0] for item in batch]
+        pdf_pages = sorted({page for item in batch for page in item[2]})
+        reviewed_pages_marker = ",".join(str(value) for value in pdf_pages)
+        reviewed_groups_marker = ",".join(group_ids)
         header = [
             f"# {batch_id} | 弱電來源篩選",
             "",
@@ -197,11 +213,14 @@ def prepare_screening_batches(
             "",
             "## 作業要求",
             "",
-            f"1. result 第一行寫 `<!-- screened:{batch_id} -->`，表示本批已完整閱讀。",
-            "2. 只保留弱電、資訊、電視、通訊及其跨專業介面相關內容；不採封閉關鍵字清單。",
-            "3. 每個保留項目包含 PDF 頁碼、章節、候選 ID、原文及理解所需前後文。",
-            "4. 不改寫成正式需求、不分類成最終系統、不建立 ID；第二階段再由 AI 整體轉譯。",
-            "5. 若本批沒有相關內容，仍寫 marker 並註明本批未發現弱電相關來源。",
+            f"1. result 第一行寫 `<!-- screened:{batch_id} -->`。",
+            f"2. result 第二行原樣寫 `<!-- reviewed-pages:{reviewed_pages_marker} -->`。",
+            f"3. result 第三行原樣寫 `<!-- reviewed-groups:{reviewed_groups_marker} -->`。",
+            "4. 以 `保留來源`、`需第二階段判斷的上下文`、`來源待確認` 三區整理；疑似相關時預設保留，不在第一階段追求乾淨排除。",
+            "5. 每個項目包含 PDF 頁碼、證據群組 ID、候選 ID、原文及理解所需前後文。",
+            "6. 不改寫成正式需求、不分類成最終系統、不建立正式需求 ID；第二階段再由 AI 整體轉譯。",
+            "7. 寫入三個 marker 前，重新掃讀本批全部群組一次，特別檢查表格、OCR、特殊空間及跨專業介面是否漏留。",
+            "8. 若本批沒有相關內容，仍寫三個 marker 並註明本批未發現弱電相關來源。",
             "",
             "---",
             "",
@@ -213,6 +232,7 @@ def prepare_screening_batches(
             "source_file": source_name,
             "result_file": result_name,
             "evidence_group_ids": group_ids,
+            "pdf_pages": pdf_pages,
             "source_chars": len(text),
         })
 
@@ -224,6 +244,26 @@ def prepare_screening_batches(
         "extraction_batch_count": int(data.get("extraction_summary", {}).get("batch_count", 1) or 1),
         "source_candidate_count": int(data.get("candidate_count", 0) or 0),
         "evidence_group_count": len(groups),
+        "covered_pdf_pages": sorted({page for group in groups for page in group.get("pdf_pages", []) if isinstance(page, int)}),
+        "group_outline": [
+            {
+                "evidence_group_id": clean_inline(group.get("evidence_group_id")),
+                "pdf_pages": sorted({int(value) for value in group.get("pdf_pages", []) if str(value).isdigit()}),
+                "section_path": [clean_inline(value) for value in group.get("section_path", []) if clean_inline(value)],
+                "source_shapes": sorted({
+                    clean_inline(segment.get("source_shape"))
+                    for segment in group.get("segments", [])
+                    if clean_inline(segment.get("source_shape"))
+                }),
+                "origin_kinds": sorted({
+                    clean_inline(value)
+                    for segment in group.get("segments", [])
+                    for value in segment.get("origin_kinds", [])
+                    if clean_inline(value)
+                }),
+            }
+            for group in groups
+        ],
         "batch_count": len(manifest_batches),
         "max_groups": max_groups,
         "max_chars": max_chars,
@@ -243,6 +283,8 @@ def build_stage1_receipt(
     manifest: dict[str, Any],
     source_text: str,
     seen_batches: list[str],
+    seen_pages: list[int],
+    seen_group_ids: list[str],
 ) -> dict[str, Any]:
     candidate_ids = sorted(set(re.findall(r"\bCAND-[A-Z0-9-]+\b", source_text)))
     return {
@@ -254,7 +296,9 @@ def build_stage1_receipt(
         "extraction_batch_count": int(manifest.get("extraction_batch_count", 1) or 1),
         "screening_batch_count": int(manifest.get("batch_count", 0) or 0),
         "screened_batch_ids": seen_batches,
-        "screened_evidence_group_count": int(manifest.get("evidence_group_count", 0) or 0),
+        "screened_pdf_pages": seen_pages,
+        "screened_evidence_group_ids": seen_group_ids,
+        "screened_evidence_group_count": len(seen_group_ids),
         "retained_candidate_id_count": len(candidate_ids),
         "weak_current_source_sha256": sha256_text(source_text),
     }
@@ -269,6 +313,8 @@ def build_weak_current_source(
     base = manifest_path.parent
     parts: list[str] = []
     seen_batches: list[str] = []
+    seen_pages: list[int] = []
+    seen_group_ids: list[str] = []
     for batch in manifest.get("batches", []):
         batch_id = str(batch.get("batch_id", ""))
         result_path = base / str(batch.get("result_file", ""))
@@ -278,10 +324,35 @@ def build_weak_current_source(
         marker = f"<!-- screened:{batch_id} -->"
         if text.count(marker) != 1:
             raise ValueError(f"screening marker missing or duplicated in {result_path.name}: {batch_id}")
+        expected_pages = sorted({int(value) for value in batch.get("pdf_pages", [])})
+        expected_group_ids = [str(value) for value in batch.get("evidence_group_ids", [])]
+        pages_match = re.search(r"<!-- reviewed-pages:([^>]*) -->", text)
+        groups_match = re.search(r"<!-- reviewed-groups:([^>]*) -->", text)
+        actual_pages = sorted(
+            int(value.strip())
+            for value in (pages_match.group(1).split(",") if pages_match else [])
+            if value.strip().isdigit()
+        )
+        actual_group_ids = [
+            value.strip()
+            for value in (groups_match.group(1).split(",") if groups_match else [])
+            if value.strip()
+        ]
+        if actual_pages != expected_pages:
+            raise ValueError(f"reviewed page marker mismatch in {result_path.name}: {batch_id}")
+        if actual_group_ids != expected_group_ids:
+            raise ValueError(f"reviewed group marker mismatch in {result_path.name}: {batch_id}")
         seen_batches.append(batch_id)
+        seen_pages.extend(expected_pages)
+        seen_group_ids.extend(expected_group_ids)
         parts.append(text.rstrip())
     if len(seen_batches) != int(manifest.get("batch_count", -1)):
         raise ValueError("screen manifest batch count mismatch")
+    seen_pages = sorted(set(seen_pages))
+    if seen_pages != sorted({int(value) for value in manifest.get("covered_pdf_pages", [])}):
+        raise ValueError("screen manifest page coverage mismatch")
+    if len(seen_group_ids) != int(manifest.get("evidence_group_count", -1)):
+        raise ValueError("screen manifest evidence-group coverage mismatch")
     header = [
         "# 弱電來源包",
         "",
@@ -307,7 +378,11 @@ def build_weak_current_source(
         output_path.write_text(result, encoding="utf-8", newline="\n")
         receipt_output = receipt_path or output_path.with_name("stage1_receipt.json")
         receipt_output.write_text(
-            json.dumps(build_stage1_receipt(manifest, result, seen_batches), ensure_ascii=False, indent=2),
+            json.dumps(
+                build_stage1_receipt(manifest, result, seen_batches, seen_pages, seen_group_ids),
+                ensure_ascii=False,
+                indent=2,
+            ),
             encoding="utf-8",
             newline="\n",
         )

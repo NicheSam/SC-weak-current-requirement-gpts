@@ -17,6 +17,9 @@ class KnowledgeContractTests(unittest.TestCase):
             self.assertIn("requirements_master.md", text)
             self.assertIn("不得要求使用者", text)
             self.assertIn("舊版", text)
+            self.assertIn("reviewed-pages", text)
+            self.assertIn("reviewed-groups", text)
+            self.assertIn("疑似相關", text)
             self.assertNotIn("translation_ledger.md", text)
             self.assertNotIn("coverage:EGRP", text)
             self.assertNotIn("m1_scope_select.py", text)
@@ -24,6 +27,8 @@ class KnowledgeContractTests(unittest.TestCase):
             self.assertNotIn("validate_m1_resume.py", text)
         instructions = (ROOT / "gpt_instructions_weak_current_html.txt").read_text(encoding="utf-8")
         self.assertIn("--run-next", instructions)
+        self.assertIn("群組輪廓", instructions)
+        self.assertIn("只重讀疑似漏項的批次", instructions)
 
     def test_rules_have_one_control_flow(self) -> None:
         usage = (ROOT / "00_使用說明.md").read_text(encoding="utf-8")

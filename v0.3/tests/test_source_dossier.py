@@ -88,6 +88,10 @@ class SourceDossierTests(unittest.TestCase):
             self.assertEqual(expected, actual)
             self.assertTrue(all(len(batch["evidence_group_ids"]) <= 8 for batch in manifest["batches"]))
             self.assertTrue(all((output / batch["source_file"]).is_file() for batch in manifest["batches"]))
+            self.assertEqual(expected, [item["evidence_group_id"] for item in manifest["group_outline"]])
+            self.assertTrue(all(item["pdf_pages"] for item in manifest["group_outline"]))
+            self.assertTrue(all("section_path" in item for item in manifest["group_outline"]))
+            self.assertNotIn("processing_lane", json.dumps(manifest["group_outline"], ensure_ascii=False))
 
     @unittest.skipUnless(PACK.is_file(), "private candidate-pack fixture is not installed")
     def test_weak_current_source_rejects_missing_batch_result(self) -> None:
@@ -107,8 +111,12 @@ class SourceDossierTests(unittest.TestCase):
             output = Path(directory)
             manifest = m1_build_source_dossier.prepare_screening_batches(sample, output)
             for batch in manifest["batches"]:
+                reviewed_pages = ",".join(str(value) for value in batch["pdf_pages"])
+                reviewed_groups = ",".join(batch["evidence_group_ids"])
                 (output / batch["result_file"]).write_text(
-                    f"<!-- screened:{batch['batch_id']} -->\n\n"
+                    f"<!-- screened:{batch['batch_id']} -->\n"
+                    f"<!-- reviewed-pages:{reviewed_pages} -->\n"
+                    f"<!-- reviewed-groups:{reviewed_groups} -->\n\n"
                     "## 弱電相關來源\n\n- PDF 28：地下室應建置 5G 強波器。\n",
                     encoding="utf-8",
                 )
@@ -191,6 +199,122 @@ class SourceDossierTests(unittest.TestCase):
         score, systems, _ = m1_extract_source.candidate_score(text, "設備規格", set())
         axes = m1_extract_source.business_capability_hints(text)
         self.assertTrue(m1_extract_source.candidate_admitted(text, "設備規格", score, systems, axes))
+
+    def test_unknown_source_vocabulary_remains_visible_to_ai(self) -> None:
+        text = "會議室應設置智慧媒體牆，支援簡報與活動轉播。"
+        score, systems, _ = m1_extract_source.candidate_score(text, "空間需求", set())
+        axes = m1_extract_source.business_capability_hints(text)
+        self.assertTrue(m1_extract_source.candidate_admitted(text, "空間需求", score, systems, axes))
+
+    def test_unknown_visual_vocabulary_remains_visible_to_ai(self) -> None:
+        text = "服務空間應配置旅客服務柱。"
+        score, systems, matched = m1_extract_source.candidate_score(text, "空間需求", set())
+        axes = m1_extract_source.business_capability_hints(text)
+        self.assertTrue(
+            m1_extract_source.visual_candidate_admitted(text, "空間需求", score, systems, matched, axes)
+        )
+
+    def test_candidate_view_does_not_route_source_by_semantic_lane(self) -> None:
+        data = {
+            "schema_version": "test",
+            "workflow_version": "test",
+            "source_manifest": [{"name": "sample.pdf", "sha256": "abc", "page_count": 1}],
+            "pages": [{"page_id": "SRC-001-P0001", "pdf_page": 1, "candidate_ids": ["CAND-00001"]}],
+            "candidates": [{
+                "candidate_id": "CAND-00001",
+                "claim_id": "CLM-00001",
+                "page_ids": ["SRC-001-P0001"],
+                "matched_terms": [],
+                "preservation_terms": [],
+                "obligation_terms": ["應"],
+                "business_axes": [],
+                "signal_flags": [],
+            }],
+            "claims": [{
+                "claim_id": "CLM-00001",
+                "context_heading": "空間需求",
+                "context_heading_basis": "page_heading",
+                "system_hints": [],
+                "space_hints": ["會議室"],
+                "source_shape": "sentence",
+                "text_quality_flags": [],
+            }],
+            "evidence": [{
+                "claim_id": "CLM-00001",
+                "pdf_page": 1,
+                "section": "空間需求",
+                "quote": "會議室應設置智慧媒體牆。",
+                "origin_kind": "native_text",
+                "confidence": "high",
+            }],
+            "extraction_summary": {},
+            "unreadable_pages": [],
+        }
+        view = m1_extract_source.candidate_view(data)
+        self.assertNotIn("processing_lane", json.dumps(view, ensure_ascii=False))
+
+    def test_screening_receipt_proves_page_and_group_review_coverage(self) -> None:
+        view = {
+            "source_manifest": [{"name": "sample.pdf", "sha256": "abc", "page_count": 2}],
+            "extraction_summary": {"batch_count": 1},
+            "candidate_count": 2,
+            "evidence_groups": [
+                {
+                    "evidence_group_id": "EGRP-0001",
+                    "route_candidate_ids": ["CAND-00001"],
+                    "pdf_pages": [1],
+                    "section_path": ["第一章"],
+                    "segments": [{
+                        "candidate_ids": ["CAND-00001"],
+                        "pdf_pages": [1],
+                        "context_headings": ["第一章"],
+                        "quote": "會議室應設置智慧媒體牆。",
+                        "space_hints": ["會議室"],
+                        "text_quality_flags": [],
+                    }],
+                },
+                {
+                    "evidence_group_id": "EGRP-0002",
+                    "route_candidate_ids": ["CAND-00002"],
+                    "pdf_pages": [2],
+                    "section_path": ["第二章"],
+                    "segments": [{
+                        "candidate_ids": ["CAND-00002"],
+                        "pdf_pages": [2],
+                        "context_headings": ["第二章"],
+                        "quote": "服務空間應配置旅客服務柱。",
+                        "space_hints": ["服務空間"],
+                        "text_quality_flags": [],
+                    }],
+                },
+            ],
+        }
+        with TemporaryDirectory() as directory:
+            output = Path(directory)
+            manifest = m1_build_source_dossier.prepare_screening_batches(view, output)
+            batch = manifest["batches"][0]
+            self.assertEqual([1, 2], batch["pdf_pages"])
+            (output / batch["result_file"]).write_text(
+                "\n".join([
+                    f"<!-- screened:{batch['batch_id']} -->",
+                    "<!-- reviewed-pages:1,2 -->",
+                    "<!-- reviewed-groups:EGRP-0001,EGRP-0002 -->",
+                    "",
+                    "## 保留來源",
+                    "- PDF 1；EGRP-0001；CAND-00001：會議室應設置智慧媒體牆。",
+                    "",
+                    "## 需第二階段判斷的上下文",
+                    "- PDF 2；EGRP-0002；CAND-00002：服務空間應配置旅客服務柱。",
+                ]),
+                encoding="utf-8",
+            )
+            m1_build_source_dossier.build_weak_current_source(
+                output / "screen_manifest.json",
+                output / "weak_current_source.md",
+            )
+            receipt = json.loads((output / "stage1_receipt.json").read_text(encoding="utf-8"))
+            self.assertEqual([1, 2], receipt["screened_pdf_pages"])
+            self.assertEqual(["EGRP-0001", "EGRP-0002"], receipt["screened_evidence_group_ids"])
 
 
 if __name__ == "__main__":

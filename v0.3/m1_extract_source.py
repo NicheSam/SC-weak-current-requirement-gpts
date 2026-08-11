@@ -27,11 +27,6 @@ MAX_QUOTE_CHARS = 760
 CHUNK_OVERLAP = 80
 EVIDENCE_GROUP_MAX_CANDIDATES = 12
 EVIDENCE_GROUP_MAX_CHARS = 4800
-DIRECT_PROCESSING_AXES = {
-    "signal", "communication", "monitoring", "control", "sensing",
-    "identification", "display", "alarm", "integration", "interface",
-    "weak_current_infrastructure",
-}
 # 1.8x keeps ordinary document text legible for chi_tra OCR while cutting the
 # pixel workload roughly in half versus 2.5x. Low-confidence regions still go
 # to model vision, so speed is improved without silently accepting weak OCR.
@@ -859,15 +854,8 @@ def candidate_admitted(
     systems: list[str],
     business_axes: list[str],
 ) -> bool:
-    """Keep high-recall technical obligations without making a final scope decision."""
-    if score >= 2:
-        return True
-    if not matched_obligation_terms(text):
-        return False
-    searchable = semantic_key(f"{heading} {text}")
-    has_technical_context = any(semantic_key(term) in searchable for term in TECHNICAL_CONTEXT_TERMS)
-    heading_relevant = any(semantic_key(term) in semantic_key(heading) for term in HEADING_HINTS)
-    return bool(systems or business_axes or has_technical_context or heading_relevant)
+    """Keep every readable source block visible; semantic fields are hints only."""
+    return bool(clean_text(text))
 
 
 def candidate_signal_flags(text: str, systems: list[str]) -> list[str]:
@@ -987,7 +975,7 @@ def source_pack(
                     "page_ids": [page_id],
                     "topic_hint": systems[0] if systems else "弱電業務能力候選",
                     "status": "pending",
-                    "reason": "deterministic_candidate_pack",
+                    "reason": "source_reading_block",
                     "claim_id": claim_id,
                     "score": score,
                     "matched_terms": matched_terms,
@@ -1016,8 +1004,6 @@ def source_pack(
                     "system_hint_basis": "inferred" if systems else "none",
                     "space_hints": space_hints,
                     "space_hint_basis": space_hint_basis,
-                    "scope_disposition": "scope_uncertain",
-                    "scope_reason_code": "insufficient_semantics",
                     "claim_kind": "source_fragment",
                     "semantic_readiness": "meaning_unclear",
                     "source_shape": "table_block" if "\n" in chunk and len(chunk.splitlines()) >= 4 else "sentence",
@@ -1052,7 +1038,7 @@ def source_pack(
             coverage_status = "visual_pending"
         else:
             status = "candidate" if candidate_ids else ("unreadable" if not page_text else "excluded")
-            reason_code = "candidate_pack" if candidate_ids else ("no_text_layer" if not page_text else "no_elv_semantics")
+            reason_code = "source_reading_pack" if candidate_ids else ("no_text_layer" if not page_text else "no_readable_content_after_cleanup")
             coverage_status = "native_complete" if page_text else "unreadable"
         page_records.append(
             {
@@ -1147,7 +1133,7 @@ def source_pack(
             "processed_candidate_ids": [],
             "unprocessed_candidate_ids": candidate_ids,
             "settled": False,
-            "stop_reason": "candidate_pack_ready_for_single_semantic_pass",
+            "stop_reason": "source_reading_pack_ready",
         },
         "extraction_summary": {
             "engine": engine,
@@ -1192,12 +1178,8 @@ def visual_candidate_admitted(
     matched_terms: list[str],
     business_axes: list[str],
 ) -> bool:
-    if not candidate_admitted(text, heading, score, systems, business_axes):
-        return False
-    if business_axes:
-        return True
-    generic_location_terms = {"停車", "車道", "車位", "停車場", "停車空間", "進出管理", "出入口管理"}
-    return bool(systems and any(term not in generic_location_terms for term in matched_terms))
+    """Keep readable OCR text visible even when project vocabulary is unfamiliar."""
+    return bool(clean_text(text))
 
 
 def merge_visual_transcriptions(
@@ -1344,8 +1326,6 @@ def merge_visual_transcriptions(
                     "system_hint_basis": "inferred" if systems else "none",
                     "space_hints": space_hints,
                     "space_hint_basis": "explicit" if direct_space_hints else ("inherited" if inherited_space_hints else "none"),
-                    "scope_disposition": "scope_uncertain",
-                    "scope_reason_code": "insufficient_semantics",
                     "claim_kind": "source_fragment",
                     "semantic_readiness": "meaning_unclear",
                     "source_shape": "list_item" if re.match(r"^[一二三四五六七八九十百\d]+[、.]", chunk) else "sentence",
@@ -1394,7 +1374,7 @@ def merge_visual_transcriptions(
             continue
         candidate_ids = [str(value) for value in page.get("candidate_ids", []) if value]
         page["status"] = "candidate" if candidate_ids else ("excluded" if page.get("native_text_present") else "unreadable")
-        page["reason_code"] = "candidate_pack" if candidate_ids else ("no_elv_semantics" if page.get("native_text_present") else "no_text_layer")
+        page["reason_code"] = "source_reading_pack" if candidate_ids else ("no_readable_content_after_cleanup" if page.get("native_text_present") else "no_text_layer")
         page["coverage_status"] = "partial_unreadable" if unreadable else "hybrid_complete"
         combined = str(page.get("fingerprint", "")) + "\n" + "\n".join(
             str(region.get("transcribed_text", "")) for region in page_regions
@@ -1463,7 +1443,7 @@ def merge_visual_transcriptions(
         recall["new_candidate_ids"] = list(dict.fromkeys(list(recall.get("new_candidate_ids", [])) + new_candidate_ids))
         recall["unprocessed_candidate_ids"] = all_candidate_ids
         recall["stop_reason"] = (
-            "visual_transcription_pending" if pending_region_ids else "candidate_pack_ready_for_single_semantic_pass"
+            "visual_transcription_pending" if pending_region_ids else "source_reading_pack_ready"
         )
     summary = data.get("extraction_summary", {})
     if isinstance(summary, dict):
@@ -1609,33 +1589,13 @@ def candidate_view(data: dict[str, object]) -> dict[str, object]:
                 "business_axes": record["business_axes"],
                 "preservation_terms": record["preservation_terms"],
                 "source_shape": record["source_shape"],
+                "origin_kinds": record["origin_kinds"],
+                "source_confidences": record["source_confidences"],
                 "text_quality_flags": record["text_quality_flags"],
                 "signal_flags": record["signal_flags"],
-                "processing_lane": (
-                    "reconstruct"
-                    if record["text_quality_flags"] or record["source_shape"] in {"table_block", "heading_fragment"}
-                    else (
-                        "translate"
-                        if (
-                            record["system_hints"]
-                            or DIRECT_PROCESSING_AXES.intersection(record["business_axes"])
-                            or (record["preservation_terms"] and record["obligation_terms"])
-                        )
-                        else (
-                            "review"
-                            if set(record["signal_flags"]).intersection({"negation_or_exclusion", "condition_or_exception"})
-                            else "context_screen"
-                        )
-                    )
-                ),
             }
             for record in pending
         ]
-        lane_priority = {"reconstruct": 0, "translate": 1, "review": 2, "context_screen": 3}
-        group_lane = min(
-            (str(segment["processing_lane"]) for segment in segments),
-            key=lambda lane: lane_priority[lane],
-        )
         evidence_groups.append(
             {
                 "evidence_group_id": group_id,
@@ -1651,7 +1611,6 @@ def candidate_view(data: dict[str, object]) -> dict[str, object]:
                     {"candidate_ids": leading["candidate_ids"], "quote": leading["quote"]}
                     if leading is not None else None
                 ),
-                "processing_lane": group_lane,
                 "segments": segments,
                 "trailing_context": (
                     {"candidate_ids": trailing["candidate_ids"], "quote": trailing["quote"]}
@@ -1719,7 +1678,7 @@ def candidate_view(data: dict[str, object]) -> dict[str, object]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Create or complete an M1 v0.5 source-coverage checkpoint.")
+    parser = argparse.ArgumentParser(description="Create or complete an M1 source-reading pack.")
     parser.add_argument("pdf", type=Path)
     parser.add_argument("output", type=Path, nargs="?", default=Path("m1_resume.json"))
     parser.add_argument("candidate_view", type=Path, nargs="?", default=Path("m1_candidates.json"))

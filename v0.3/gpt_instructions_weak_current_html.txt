@@ -40,17 +40,21 @@ python m1_prepare_batches.py --run-next m1_batches/batch_manifest.json
 
 python m1_merge_candidate_batches.py m1_batches/batch_manifest.json source_index.json m1_candidates.json source_reading_pack.md --screening-dir m1_screening
 
-source_reading_pack.md 只是程式整理的全文閱讀材料。AI 必須逐一讀取 m1_screening/screen_source_###.md，將與弱電業務相關的原文、頁碼、候選 ID、章節與必要前後文寫入同編號 screen_result_###.md。每個 result 第一行必須是對應的 `<!-- screened:SB-### -->`。
+source_reading_pack.md 只是程式整理的全文閱讀材料。程式須讓每個可讀來源片段進入 AI 閱讀批次，既有詞表、分數、系統提示或案例名稱只能當閱讀提示，不能當納入門檻。AI 必須逐一讀取 m1_screening/screen_source_###.md，將與弱電業務相關、疑似相關或需靠第二階段上下文判斷的原文，連同頁碼、候選 ID、章節與必要前後文寫入同編號 screen_result_###.md。
+
+每個 result 前三行必須原樣保留批次指定的 `<!-- screened:SB-### -->`、`<!-- reviewed-pages:... -->` 與 `<!-- reviewed-groups:... -->`。疑似相關時預設保留，不因陌生設備名稱、跨專業章節或語意尚不完整而排除。
 
 全部批次讀完後執行：
 
 python m1_build_source_dossier.py --build-weak-current-source m1_screening/screen_manifest.json --weak-current-output weak_current_source.md --stage1-receipt stage1_receipt.json
 
-weak_current_source.md 才是第一階段內容成果，也是第二階段的主要輸入。上述指令必須同時產生 stage1_receipt.json；它記錄來源檔與 SHA、PDF 頁數、抽取及篩選批次數、已完成批次 ID、證據群組數、保留候選數及來源包雜湊。
+合併前先讀 screen_manifest.json 的群組輪廓，做一次文件級漏項複核。檢查各頁與章節是否出現表格、OCR、特殊空間、跨專業介面或整批零保留等異常；只重讀疑似漏項的批次並修正對應 result，不重跑 PDF，也不對每筆建立機械評分。
+
+weak_current_source.md 才是第一階段內容成果，也是第二階段的主要輸入。上述指令必須同時產生 stage1_receipt.json；它記錄來源檔與 SHA、PDF 頁數、抽取及篩選批次數、已完成批次 ID、已覆核頁碼與群組、證據群組數、保留候選數及來源包雜湊。
 
 第一階段完成後，先讀取 stage1_receipt.json 並核對 weak_current_source.md 的 SHA-256、來源文件及批次覆蓋。缺少收據、雜湊不符或批次 ID 不一致時，不得宣稱第一階段完成，也不得直接從 PDF 產生 requirements_master.md。執行時間不是完成證據。
 
-第一階段只做來源抽取，不寫正式需求、不決定最終系統、不建立需求樹。程式不得依封閉關鍵字排除內容；AI 依業務語意判斷。低信心或不可讀影像不阻斷全案，只有疑似與弱電相關且可能影響理解者，才在 weak_current_source.md 中列為具體來源待確認。
+第一階段只做來源抽取，不寫正式需求、不決定最終系統、不建立需求樹。程式不得依封閉關鍵字、語意分數或預設系統路由排除內容；AI 依業務語意判斷。低信心或不可讀影像不阻斷全案，只有疑似與弱電相關且可能影響理解者，才在 weak_current_source.md 中列為具體來源待確認。
 
 五、弱電業務範圍
 
@@ -85,7 +89,7 @@ weak_current_source.md 才是第一階段內容成果，也是第二階段的主
 
 程式只檢查：
 
-1. 所有來源閱讀批次都有 screened marker。
+1. 所有來源閱讀批次都有 screened、reviewed-pages、reviewed-groups marker，且頁碼與群組和 manifest 一致。
 2. weak_current_source.md 與 requirements_master.md 的來源檔名及 SHA 一致。
 3. stage1_receipt.json 與來源包的檔案雜湊、PDF 頁數及批次 ID 一致。
 4. 每筆正式需求有頁碼、短原文及必要欄位。
