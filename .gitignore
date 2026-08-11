@@ -25,6 +25,15 @@ outputs/
 project_outputs/
 logs/
 runtime/
+tmp/
+sandbox/
+output/
+local_regression/
+m1_vision_regions/
+_archive/
+_backups/
+.loops/
+.playwright-cli/
 
 # dependency/build folders
 node_modules/
@@ -37,4 +46,3 @@ build/
 bin/
 obj/
 release/
-

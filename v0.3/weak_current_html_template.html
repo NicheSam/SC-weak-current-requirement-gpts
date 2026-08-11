@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{PROJECT_NAME}} | 弱電需求圖譜</title>
+  <style>
+    :root {
+      --bg: #f3f6fa;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --ink: #172033;
+      --muted: #64748b;
+      --line: #d8e1ec;
+      --line-strong: #bdcad9;
+      --accent: #2563a9;
+      --accent-soft: #e8f1ff;
+      --system-ink: #174e95;
+      --system-soft: #e8f1ff;
+      --topic-ink: #176b54;
+      --topic-soft: #ecf8f3;
+      --requirement-ink: #7a4308;
+      --requirement-soft: #fff5e8;
+      --evidence-ink: #5d3e9f;
+      --evidence-soft: #f7f3ff;
+      --warning: #9a5a10;
+      --warning-soft: #fff5e7;
+      --success: #17684a;
+      --success-soft: #eaf7f1;
+      --radius: 12px;
+      --shadow: 0 6px 20px rgba(31, 50, 78, .07);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: auto; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+    :focus-visible { outline: 3px solid rgba(31, 95, 191, .28); outline-offset: 2px; }
+    .page-header { background: var(--surface); border-bottom: 1px solid var(--line); padding: 16px clamp(18px, 4vw, 48px); }
+    .header-inner { max-width: 1640px; margin: 0 auto; }
+    .header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+    .page-header h1 { margin: 0; font-size: clamp(22px, 2.2vw, 30px); letter-spacing: -.02em; }
+    .source-line { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 8px; color: var(--muted); font-size: 13px; }
+    .metrics { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .metric { min-width: 92px; border: 1px solid var(--line); background: var(--surface-soft); border-radius: var(--radius); padding: 7px 10px; }
+    .metric strong { display: block; color: var(--accent); font-size: 18px; line-height: 1.1; }
+    .metric span { color: var(--muted); font-size: 12px; }
+    .workspace { max-width: 1640px; margin: 0 auto; padding: 18px clamp(14px, 2.8vw, 38px) 48px; }
+    .view-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .tab-button {
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 9px 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .tab-button[aria-selected="true"] { color: #fff; border-color: var(--accent); background: var(--accent); }
+    .view-panel[hidden] { display: none; }
+    .filters {
+      display: grid;
+      grid-template-columns: minmax(260px, 1.6fr) repeat(3, minmax(150px, .7fr)) auto;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .filters input, .filters select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line-strong);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+      padding: 8px 10px;
+    }
+    .clear-button { min-height: 42px; border: 1px solid var(--line-strong); border-radius: 7px; background: var(--surface-soft); padding: 8px 13px; cursor: pointer; white-space: nowrap; }
+    .tree-workbench {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 650px;
+      height: calc(100dvh - 234px);
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 var(--radius) var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .tree-workbench.detail-open { grid-template-columns: minmax(0, 1fr) clamp(440px, 32vw, 540px); }
+    .tree-pane { min-width: 0; overflow: auto; padding: 14px; background: var(--surface-soft); }
+    .detail-pane { display: none; min-width: 0; overflow: auto; border-left: 1px solid var(--line); background: var(--surface); padding: 22px 26px 36px; }
+    .tree-workbench.detail-open .detail-pane { display: block; }
+    .result-line { display: flex; justify-content: space-between; gap: 16px; margin: 0 2px 10px; color: var(--muted); font-size: 13px; }
+    .mindmap-root > .tree-node { margin: 0 0 12px 2px; }
+    .tree-category { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+    .category-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); background: #fbfdff; }
+    .tree-system-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 12px; padding: 12px; }
+    .system-block { min-width: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; box-shadow: 0 3px 12px rgba(31, 50, 78, .04); }
+    .system-toggle { width: 100%; border: 0; background: #fbfdff; padding: 11px 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; font-weight: 800; text-align: left; }
+    .system-title { min-width: 0; font-size: 15px; }
+    .system-actions { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+    .toggle-marker { width: 9px; height: 9px; border-right: 2px solid #4a6280; border-bottom: 2px solid #4a6280; transform: rotate(45deg); transition: transform .15s ease; }
+    .system-toggle[aria-expanded="true"] .toggle-marker { transform: rotate(225deg); }
+    .count-badge, .mini-count { color: var(--system-ink); background: #fff; border: 1px solid #cbdcf4; border-radius: 999px; padding: 2px 8px; font-size: 12px; white-space: nowrap; }
+    .system-groups[hidden] { display: none; }
+    .system-summary { margin: 0; padding: 10px 14px; color: #40546d; background: #f8fbff; border-top: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+    .group-block { position: relative; margin: 0 12px; padding: 13px 0 13px 18px; border-top: 1px solid var(--line); }
+    .group-block::before { content: ""; position: absolute; left: 6px; top: 18px; bottom: 14px; border-left: 1px dashed #b7c9dd; }
+    .group-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+    .group-heading h3 { margin: 0; font-size: 14px; }
+    .group-heading p { margin: 3px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .group-count { flex: 0 0 auto; color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .requirement-list { display: grid; gap: 7px; }
+    .requirement-row { position: relative; width: 100%; border: 0; border-radius: 8px; background: transparent; padding: 0 0 0 13px; text-align: left; cursor: pointer; }
+    .requirement-row::before { content: ""; position: absolute; left: -12px; top: 18px; width: 18px; border-top: 1px dashed #b7c9dd; }
+    .requirement-row:hover .level-4 { box-shadow: 0 0 0 2px rgba(138, 75, 4, .16); }
+    .requirement-row.active .level-4 { box-shadow: 0 0 0 2px var(--accent); }
+    .requirement-row.filtered-out { display: none; }
+    .tree-node { display: inline-block; border-radius: 9px; padding: 7px 9px; font-weight: 760; }
+    .tree-node.level-1 { background: #0f172a; color: #fff; font-size: 15px; }
+    .tree-node.level-2 { background: var(--system-soft); color: var(--system-ink); }
+    .tree-node.level-3 { background: var(--topic-soft); color: var(--topic-ink); }
+    .tree-node.level-4 { background: var(--requirement-soft); color: var(--requirement-ink); }
+    .tree-node.level-5 { background: var(--evidence-soft); color: var(--evidence-ink); font-size: 12px; }
+    .requirement-text { display: block; width: 100%; font-weight: 700; line-height: 1.55; overflow-wrap: anywhere; }
+    .row-meta { display: flex; flex-wrap: wrap; gap: 5px 10px; align-items: center; width: fit-content; max-width: 100%; margin-top: 5px; color: var(--evidence-ink); }
+    .status { border-radius: 999px; padding: 1px 7px; font-weight: 700; }
+    .status-來源明示 { color: var(--success); background: var(--success-soft); }
+    .status-跨章整合 { color: var(--accent); background: var(--accent-soft); }
+    .status-需人工確認 { color: var(--warning); background: var(--warning-soft); }
+    .detail-empty { color: var(--muted); max-width: 42ch; }
+    .detail-kicker { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .detail-close { border: 1px solid var(--line-strong); background: var(--surface-soft); border-radius: 7px; padding: 5px 9px; cursor: pointer; font-size: 12px; }
+    .detail-title { margin: 0 0 10px; font-size: 21px; line-height: 1.48; overflow-wrap: anywhere; }
+    .detail-id { color: var(--muted); font-size: 12px; }
+    .detail-path { margin: 0 0 18px; color: #355270; font-size: 13px; font-weight: 700; }
+    .detail-emphasis { margin: 0 0 16px; padding: 14px 16px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 8px 8px 0; }
+    .detail-emphasis h3, .detail-section h3 { margin: 0 0 6px; font-size: 14px; color: #24496f; }
+    .detail-emphasis p, .detail-section p { margin: 0; }
+    .detail-grid { display: grid; grid-template-columns: minmax(0, 1fr); margin: 0 0 16px; border-top: 1px solid var(--line); }
+    .detail-field { min-width: 0; padding: 11px 0; border-bottom: 1px solid var(--line); }
+    .detail-field:nth-child(even) { padding-left: 0; border-left: 0; }
+    .detail-field dt { margin: 0 0 4px; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .detail-field dd { margin: 0; overflow-wrap: anywhere; }
+    .detail-section { padding: 13px 0; border-top: 1px solid var(--line); }
+    .detail-section[hidden] { display: none; }
+    .evidence-details { margin-top: 4px; border-top: 1px solid var(--line); padding-top: 12px; }
+    .evidence-details summary { cursor: pointer; color: #24496f; font-weight: 800; }
+    .evidence-meta { margin: 10px 0 0; color: var(--muted); font-size: 13px; }
+    .source-quote { margin: 8px 0 0; padding: 12px 14px; border-left: 3px solid var(--accent); background: var(--surface-soft); color: #334155; overflow-wrap: anywhere; }
+    .content-panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); padding: clamp(18px, 3vw, 34px); }
+    .content-panel h2 { margin: 0 0 16px; font-size: 23px; }
+    .summary-list { margin: 0; padding-left: 22px; }
+    .summary-list li { margin: 8px 0; }
+    .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+    .review-card, .context-card { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; background: var(--surface-soft); }
+    .review-card h3, .context-card h3 { margin: 0 0 12px; font-size: 17px; }
+    .review-card p, .context-card p { margin: 8px 0; }
+    .review-card strong, .context-card strong { display: block; color: var(--muted); font-size: 12px; }
+    .review-card blockquote { margin: 12px 0 0; padding: 10px 12px; border-left: 3px solid var(--warning); background: #fff; }
+    .empty-state { color: var(--muted); }
+    .no-results { padding: 28px; text-align: center; color: var(--muted); border: 1px dashed var(--line-strong); border-radius: var(--radius); background: #fff; }
+    @media (max-width: 1380px) {
+      .tree-system-list { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 1180px) {
+      .filters { grid-template-columns: 1fr 1fr; }
+      .clear-button { width: 100%; }
+      .tree-workbench, .tree-workbench.detail-open { grid-template-columns: 1fr; height: auto; min-height: 0; overflow: visible; }
+      .tree-pane { max-height: 62dvh; }
+      .detail-pane { border-left: 0; border-top: 1px solid var(--line); max-height: none; }
+    }
+    @media (max-width: 640px) {
+      .header-row { display: block; }
+      .metrics { justify-content: flex-start; margin-top: 12px; }
+      .filters { grid-template-columns: 1fr; }
+      .tree-pane { padding: 8px; }
+      .detail-pane { padding: 18px; }
+      .requirement-row { padding: 10px; }
+      .detail-grid { grid-template-columns: 1fr; }
+      .detail-field:nth-child(even) { padding-left: 0; border-left: 0; }
+      .review-grid { grid-template-columns: 1fr; }
+    }
+    @media print {
+      .view-tabs, .filters, .detail-pane { display: none !important; }
+      .tree-workbench { display: block; height: auto; border: 0; box-shadow: none; }
+      .tree-pane { overflow: visible; background: #fff; }
+      .system-groups[hidden], .requirement-row.filtered-out { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <div class="header-inner">
+      <div class="header-row">
+        <div>
+          <h1>{{PROJECT_NAME}} | 弱電需求圖譜</h1>
+          <div class="source-line"><span>來源：{{SOURCE_NAME}}</span><span>產出日期：{{GENERATED_DATE}}</span></div>
+        </div>
+        <div class="metrics" aria-label="成果數量">
+          <div class="metric"><strong>{{REQUIREMENT_COUNT}}</strong><span>正式需求</span></div>
+          <div class="metric"><strong>{{SYSTEM_COUNT}}</strong><span>涉及系統</span></div>
+          <div class="metric"><strong>{{REVIEW_COUNT}}</strong><span>人工確認</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="workspace">
+    <nav class="view-tabs" aria-label="內容分頁">
+      <button class="tab-button" type="button" data-view="tree" aria-selected="true">需求樹核心</button>
+      <button class="tab-button" type="button" data-view="summary" aria-selected="false">摘要總覽</button>
+      <button class="tab-button" type="button" data-view="reviews" aria-selected="false">人工確認</button>
+      <button class="tab-button" type="button" data-view="context" aria-selected="false">背景與排除</button>
+    </nav>
+
+    <section class="view-panel" data-panel="tree">
+      <div class="filters" aria-label="需求篩選">
+        <input id="search" type="search" aria-label="搜尋需求" placeholder="搜尋需求、設備、空間或頁碼">
+        <select id="system-filter" aria-label="篩選系統">{{SYSTEM_OPTIONS}}</select>
+        <select id="space-filter" aria-label="篩選空間">{{SPACE_OPTIONS}}</select>
+        <select id="status-filter" aria-label="篩選狀態">{{STATUS_OPTIONS}}</select>
+        <button id="clear-filters" class="clear-button" type="button">清除篩選</button>
+      </div>
+      <div class="tree-workbench">
+        <div class="tree-pane">
+          <div class="result-line"><span>依系統與主題分組，點選需求查看來源</span><strong id="result-count">{{REQUIREMENT_COUNT}} / {{REQUIREMENT_COUNT}} 筆</strong></div>
+          <div id="tree-content">{{TREE_HTML}}</div>
+          <div id="no-results" class="no-results" hidden>沒有符合目前條件的需求。</div>
+        </div>
+        <aside class="detail-pane" aria-live="polite">
+          <div id="detail-empty" class="detail-empty">請從左側選擇一筆需求。詳情會顯示工程轉譯、設計重點、可能交付文件與來源證據。</div>
+          <article id="detail-content" hidden>
+            <div class="detail-kicker"><div id="detail-id" class="detail-id"></div><span id="detail-status" class="status"></span><button id="close-detail" class="detail-close" type="button">關閉詳情</button></div>
+            <h2 id="detail-title" class="detail-title"></h2>
+            <p id="detail-path" class="detail-path"></p>
+            <section class="detail-emphasis">
+              <h3>設計判讀</h3>
+              <p id="detail-design-focus"></p>
+            </section>
+            <dl class="detail-grid">
+              <div class="detail-field"><dt>適用空間</dt><dd id="detail-space"></dd></div>
+              <div class="detail-field"><dt>主題說明</dt><dd id="detail-topic-summary"></dd></div>
+            </dl>
+            <section class="detail-section">
+              <h3>系統設計意圖</h3>
+              <p id="detail-system-summary"></p>
+            </section>
+            <section class="detail-section">
+              <h3>可能需要圖說／文件</h3>
+              <p id="detail-deliverables"></p>
+            </section>
+            <section id="detail-interface-section" class="detail-section">
+              <h3>主要介面</h3>
+              <p id="detail-interfaces"></p>
+            </section>
+            <details class="evidence-details" open>
+              <summary>來源證據</summary>
+              <p id="detail-source" class="evidence-meta"></p>
+              <blockquote id="detail-quote" class="source-quote"></blockquote>
+            </details>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view-panel content-panel" data-panel="summary" hidden>
+      <h2>摘要總覽</h2>
+      {{SUMMARY_HTML}}
+    </section>
+    <section class="view-panel content-panel" data-panel="reviews" hidden>
+      <h2>需要人工確認</h2>
+      <div class="review-grid">{{REVIEWS_HTML}}</div>
+    </section>
+    <section class="view-panel content-panel" data-panel="context" hidden>
+      <h2>背景與排除紀錄</h2>
+      <div class="review-grid">{{CONTEXT_HTML}}</div>
+    </section>
+  </main>
+  <script id="requirements-data" type="application/json">{{DETAILS_JSON}}</script>
+  <script>
+    const requirements = JSON.parse(document.getElementById('requirements-data').textContent);
+    const details = new Map(requirements.map(item => [item.id, item]));
+    const rows = [...document.querySelectorAll('.requirement-row')];
+    const search = document.getElementById('search');
+    const systemFilter = document.getElementById('system-filter');
+    const spaceFilter = document.getElementById('space-filter');
+    const statusFilter = document.getElementById('status-filter');
+    const resultCount = document.getElementById('result-count');
+    const noResults = document.getElementById('no-results');
+
+    function showDetail(id) {
+      const item = details.get(id);
+      if (!item) return;
+      rows.forEach(row => row.classList.toggle('active', row.dataset.id === id));
+      document.querySelector('.tree-workbench').classList.add('detail-open');
+      document.getElementById('detail-empty').hidden = true;
+      document.getElementById('detail-content').hidden = false;
+      document.getElementById('detail-id').textContent = item.id;
+      document.getElementById('detail-title').textContent = item.text;
+      document.getElementById('detail-path').textContent = `${item.system} / ${item.group}`;
+      document.getElementById('detail-space').textContent = item.space;
+      document.getElementById('detail-status').textContent = item.status;
+      document.getElementById('detail-status').className = `status status-${item.status}`;
+      document.getElementById('detail-topic-summary').textContent = item.topic_summary;
+      document.getElementById('detail-design-focus').textContent = item.topic_design_focus || item.system_design_focus;
+      document.getElementById('detail-system-summary').textContent = item.system_summary;
+      document.getElementById('detail-deliverables').textContent = [item.topic_deliverables, item.system_deliverables].filter(Boolean).join('；');
+      const interfaceSection = document.getElementById('detail-interface-section');
+      interfaceSection.hidden = !item.system_interfaces;
+      document.getElementById('detail-interfaces').textContent = item.system_interfaces;
+      document.getElementById('detail-source').textContent = item.source;
+      document.getElementById('detail-quote').textContent = item.quote;
+      document.querySelector('.detail-pane').scrollTop = 0;
+    }
+
+    function closeDetail() {
+      document.querySelector('.tree-workbench').classList.remove('detail-open');
+      rows.forEach(row => row.classList.remove('active'));
+      document.getElementById('detail-content').hidden = true;
+      document.getElementById('detail-empty').hidden = false;
+    }
+
+    function applyFilters() {
+      const q = search.value.trim().toLowerCase();
+      let visible = 0;
+      rows.forEach(row => {
+        const item = details.get(row.dataset.id);
+        const haystack = `${item.text} ${item.system} ${item.group} ${item.space}`.toLowerCase();
+        const matches = (!q || haystack.includes(q)) &&
+          (!systemFilter.value || item.system === systemFilter.value) &&
+          (!spaceFilter.value || item.space_tokens.includes(spaceFilter.value)) &&
+          (!statusFilter.value || item.status === statusFilter.value);
+        row.classList.toggle('filtered-out', !matches);
+        if (matches) visible += 1;
+      });
+      document.querySelectorAll('.group-block').forEach(group => {
+        group.hidden = !group.querySelector('.requirement-row:not(.filtered-out)');
+      });
+      document.querySelectorAll('.system-block').forEach(system => {
+        const hasVisible = Boolean(system.querySelector('.requirement-row:not(.filtered-out)'));
+        system.hidden = !hasVisible;
+        if (hasVisible && (q || systemFilter.value || spaceFilter.value || statusFilter.value)) {
+          const toggle = system.querySelector('.system-toggle');
+          const body = document.getElementById(toggle.getAttribute('aria-controls'));
+          toggle.setAttribute('aria-expanded', 'true');
+          body.hidden = false;
+        }
+      });
+      resultCount.textContent = `${visible} / ${rows.length} 筆`;
+      noResults.hidden = visible !== 0;
+      const active = document.querySelector('.requirement-row.active:not(.filtered-out)');
+      if (!active && document.querySelector('.tree-workbench').classList.contains('detail-open')) closeDetail();
+    }
+
+    rows.forEach(row => row.addEventListener('click', () => showDetail(row.dataset.id)));
+    document.querySelectorAll('.system-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const body = document.getElementById(button.getAttribute('aria-controls'));
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!expanded));
+        body.hidden = expanded;
+      });
+    });
+    [search, systemFilter, spaceFilter, statusFilter].forEach(control => control.addEventListener('input', applyFilters));
+    document.getElementById('clear-filters').addEventListener('click', () => {
+      search.value = '';
+      systemFilter.value = '';
+      spaceFilter.value = '';
+      statusFilter.value = '';
+      applyFilters();
+      search.focus();
+    });
+    document.getElementById('close-detail').addEventListener('click', closeDetail);
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const target = button.dataset.view;
+        document.querySelectorAll('.tab-button').forEach(item => item.setAttribute('aria-selected', String(item === button)));
+        document.querySelectorAll('.view-panel').forEach(panel => { panel.hidden = panel.dataset.panel !== target; });
+      });
+    });
+  </script>
+</body>
+</html>

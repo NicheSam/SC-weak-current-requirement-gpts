@@ -2,7 +2,7 @@
 
 本專案是用於「統包需求書 / 審查意見」弱電內容解析的 GPTS Knowledge 與提示詞套件。目標是協助弱電設計、估算與繪圖人員快速整理需求，減少重複翻查文件、釐清責任界面與建立初步待辦。
 
-目前封裝版本為 `v0.2`。此版本將主流程從 Dashboard-first 改為 Tree-first，以「需求樹核心」作為第一閱讀入口，並將來源頁碼、審查意見與設備規格集中到「詳細資訊查詢」。
+目前開發版本為 `v0.3`。此版本保留 Tree-first 閱讀方式，新增大型 PDF 分批來源擷取、OCR、AI 語意轉譯、輕量驗收及可續接的兩階段流程。`v0.2` 保留為既有 Tree-first 基準版本。
 
 ## 解決的問題
 
@@ -26,7 +26,8 @@
 | 版本 | 狀態 | 說明 |
 |---|---|---|
 | `v0.1` | 已封裝 | HTML-first、摘要總覽、系統樹狀圖、審查意見整合、Markdown 旁支輸出 |
-| `v0.2` | 目前版本 | Tree-first、唯一需求樹、詳細資訊查詢、XMind 主節點輸出 |
+| `v0.2` | 基準版本 | Tree-first、唯一需求樹、詳細資訊查詢、XMind 主節點輸出 |
+| `v0.3` | 開發中 | 全文分批擷取、OCR、弱電來源包、舊版式 AI 轉譯、固定需求樹與輕量 Harness |
 
 ## Repository 結構
 
@@ -35,7 +36,8 @@
 ├─ README.md
 ├─ .gitignore
 ├─ v0.1/
-└─ v0.2/
+├─ v0.2/
+└─ v0.3/
    ├─ 00_使用說明.md
    ├─ 01_智慧建築2024_HTML對應總覽.md
    ├─ 02_智慧建築六大指標_弱電關聯摘要.md
@@ -47,24 +49,31 @@
    ├─ 08_M1.5資料包輸出規則.md
    ├─ 09_審查意見整合規則.md
    ├─ 10_MD旁支輸出規則.md
+   ├─ 11_M1輸出驗收與回歸測試規則.md
+   ├─ 12_M1雙階段續接資料規則.md
    ├─ gpt_instructions_weak_current_html.txt
    ├─ gpts_prompt_human_html.txt
+   ├─ m1_*.py
+   ├─ render_m1_outputs.py
+   ├─ requirements_master_template.md
    ├─ weak_current_html_template.html
+   ├─ tests/
    └─ optional_reference/
 ```
 
 ## GPTS 使用方式
 
 1. 在 GPT Builder 的 Instructions 中貼入：
-   - `v0.2/gpt_instructions_weak_current_html.txt`
-2. 將 `v0.2/` 內的規則檔上傳到 Knowledge。
+   - `v0.3/gpt_instructions_weak_current_html.txt`
+2. 將 `v0.3/` 內的正式規則、模板與執行腳本上傳到 Knowledge。
 3. 若 GPT Builder 對中文檔名上傳不穩定，可先將檔名改為英文，但保留中文內容。
 4. 使用者上傳統包需求書 PDF；若有審查意見書，應一併上傳。
 5. GPTS 依規則輸出 `demand_map.html`、`to_xmind.md`、`todo_handoff.md`。
 
-## v0.2 設計重點
+## v0.3 設計重點
 
 - 預設開啟 `需求樹核心`，不是摘要或 Dashboard。
+- 第一階段從大型 PDF 建立可追溯的弱電來源包，第二階段再由 AI 依舊版方法轉譯。
 - HTML 需求樹、`to_xmind.md` 與詳細資訊查詢區共用同一份唯一需求樹。
 - `to_xmind.md` 只複製需求樹主節點，不帶來源頁碼、狀態標籤、審查意見或短摘錄。
 - 詳細資訊查詢區負責統需書頁碼、短摘錄、審查意見、設備規格與待辦釐清。

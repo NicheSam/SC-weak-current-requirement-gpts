@@ -1,10 +1,26 @@
 # 版本紀錄
 
+## v0.3
+
+建立日期：2026-08-11
+
+狀態：開發中。保留 v0.2 Tree-first 閱讀方式，新增大型 PDF 的兩階段來源擷取與 AI 轉譯流程。
+
+目前能力：
+
+- 分批擷取 PDF 原生文字、表格與影像 OCR。
+- 建立 `weak_current_source.md` 與 `stage1_receipt.json` 作為階段續接資料。
+- 由 AI 建立唯一 `requirements_master.md`，再投影三份正式成果。
+- 固定式需求樹、系統／空間篩選、按需展開的詳細資訊。
+- 單元測試、正式 PDF 回歸與 HTML 結構驗收。
+
+本版本的第一個 checkpoint 保存召回重構前的可用狀態；後續調整集中於第一階段來源可見範圍與漏項覆核，不改回機械式工程語意裁決。
+
 ## v0.2
 
 封裝日期：2026-07-02
 
-狀態：目前版本。將模組一由 Dashboard-first 調整為 Tree-first。
+狀態：基準版本。將模組一由 Dashboard-first 調整為 Tree-first。
 
 包含能力：
 
