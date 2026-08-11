@@ -31,6 +31,17 @@ class KnowledgeContractTests(unittest.TestCase):
         self.assertIn("pending 影像區", instructions)
         self.assertIn("群組輪廓", instructions)
         self.assertIn("只重讀疑似漏項的批次", instructions)
+        self.assertIn("不得摘要或合併不同義務", instructions)
+        self.assertIn("設備規格表", instructions)
+        self.assertIn("語意覆蓋複核", instructions)
+
+        human_prompt = (ROOT / "gpts_prompt_human_html.txt").read_text(encoding="utf-8")
+        self.assertIn("不得摘要或合併不同義務", human_prompt)
+        self.assertIn("語意覆蓋複核", human_prompt)
+
+        dossier_builder = (ROOT / "m1_build_source_dossier.py").read_text(encoding="utf-8")
+        self.assertIn("不得摘要或合併不同義務", dossier_builder)
+        self.assertIn("設備規格表", dossier_builder)
 
     def test_rules_have_one_control_flow(self) -> None:
         usage = (ROOT / "00_使用說明.md").read_text(encoding="utf-8")
