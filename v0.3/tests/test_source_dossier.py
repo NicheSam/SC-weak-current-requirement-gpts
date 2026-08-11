@@ -44,7 +44,32 @@ class SourceDossierTests(unittest.TestCase):
             payload = m1_extract_source.run_tesseract_regions(Path(directory), [region], capability)
         self.assertEqual("pending", payload["regions"][0]["status"])
         self.assertEqual("tesseract_region_timeout", payload["regions"][0]["review_note"])
-        self.assertLessEqual(m1_extract_source.TESSERACT_REGION_TIMEOUT_SECONDS, 30)
+        self.assertGreaterEqual(m1_extract_source.TESSERACT_REGION_TIMEOUT_SECONDS, 120)
+
+    def test_low_confidence_psm6_retries_psm11_and_uses_better_text(self) -> None:
+        region = {"region_id": "VR-P0028-001", "crop_file": "page28.png", "image_count": 1}
+        capability = {"available": True, "executable": "/usr/bin/tesseract"}
+        low_tsv = (
+            "level\tpage_num\tblock_num\tpar_num\tline_num\tword_num\tleft\ttop\twidth\theight\tconf\ttext\n"
+            "5\t1\t1\t1\t1\t1\t0\t0\t20\t10\t42.0\t地下室\n"
+        )
+        high_tsv = (
+            "level\tpage_num\tblock_num\tpar_num\tline_num\tword_num\tleft\ttop\twidth\theight\tconf\ttext\n"
+            "5\t1\t1\t1\t1\t1\t0\t0\t20\t10\t91.0\t地下室\n"
+            "5\t1\t1\t1\t1\t2\t22\t0\t20\t10\t93.0\t建置5G強波器\n"
+        )
+        first = type("Completed", (), {"stdout": low_tsv})()
+        second = type("Completed", (), {"stdout": high_tsv})()
+        with TemporaryDirectory() as directory, patch(
+            "m1_extract_source.subprocess.run",
+            side_effect=[first, second],
+        ) as run:
+            payload = m1_extract_source.run_tesseract_regions(Path(directory), [region], capability)
+        record = payload["regions"][0]
+        self.assertEqual(2, run.call_count)
+        self.assertEqual("read", record["status"])
+        self.assertEqual("11", record["ocr_psm"])
+        self.assertIn("5G強波器", record["text"])
 
     def test_low_confidence_ocr_stays_pending_with_draft_for_model_review(self) -> None:
         region = {"region_id": "VR-P0028-001", "crop_file": "page28.png", "image_count": 1}

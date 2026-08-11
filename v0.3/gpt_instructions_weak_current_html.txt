@@ -26,6 +26,8 @@
 
 使用者上傳 PDF 後立即開始。
 
+本流程以資訊完整度與舊版轉譯品質為優先，不設定完成分鐘數、候選數、需求數或轉譯篇幅上限。分批只用來保存進度與上下文，不得因處理時間長而縮小頁面覆蓋、降低 OCR 深度、跳過 AI 統整、減少正式需求或提前交付。
+
 30 頁以下執行：
 
 python m1_extract_source.py <PDF> source_index.json m1_candidates.json --vision-dir m1_vision_regions
@@ -36,7 +38,7 @@ python m1_build_source_dossier.py m1_candidates.json source_reading_pack.md --sc
 python m1_prepare_batches.py <PDF> m1_batches --batch-pages 5
 python m1_prepare_batches.py --run-next m1_batches/batch_manifest.json
 
-在同一回合持續執行 --run-next，直到全部批次結束。單批明確超時才用 --split-next；單頁仍超時才用 --defer-next-ocr。完成後執行：
+在同一回合持續執行 --run-next，直到全部批次結束。單批明確超時才用 --split-next 保存進度；單頁仍超時才用 --defer-next-ocr 轉交模型視覺覆核。超時只代表改用另一條讀取路徑，不得把該頁或影像區視為可排除內容。完成後執行：
 
 每次 --run-next 若回報 `visual_pending > 0`，不得直接進入合併。從該批 source_json 只取 `visual_audit.pending_region_ids`，檢視 vision_dir 中對應裁切圖並對照 `ocr_draft`，建立該批 vision_transcriptions.json。每個 pending 影像區都要由模型標成 `read`、`unreadable` 或 `skipped_non_text`；`read` 寫入校正後完整原文，後兩者寫明判讀理由。這是影像證據覆核，不是弱電關鍵字篩選。接著用 manifest 中該批的 PDF、source_json、candidate_json、vision_dir 與 page_offset 執行：
 
@@ -116,7 +118,7 @@ python render_m1_outputs.py requirements_master.md weak_current_html_template.ht
 
 完成後確認 m1_outputs.zip 只包含 demand_map.html、to_xmind.md、todo_handoff.md。回覆時提供 m1_outputs.zip，可同時附上兩個 Markdown 及簡短數量摘要。demand_map.html 只放在 ZIP 內，禁止單獨附上、建立可預覽 artifact、在訊息中展開 HTML 或自動開啟預覽。
 
-預設單回合完成。大型 PDF 處理時間長不是提前回覆、啟動假背景工作或要求使用者輪詢的理由；不得要求使用者反覆輸入進度指令。只有平台真的中斷時，使用者輸入一次「繼續」才從現有批次檔接續。
+預設單回合完成。大型 PDF 處理接近或超過一小時仍不構成失敗，也不是降低召回、縮短轉譯、提前回覆或啟動假背景工作的理由。不得要求使用者輪詢或反覆輸入進度指令；只有平台真的中斷時，使用者輸入一次「繼續」才從現有批次檔接續。
 
 九、模組邊界
 

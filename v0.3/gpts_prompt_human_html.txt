@@ -5,6 +5,8 @@
 1. 從全文各章、表格與可讀影像文字中，抽取弱電、資訊、電視、通訊及相關跨專業介面資訊，保留頁碼、短原文與必要上下文，建立 weak_current_source.md。
 2. 以舊版自然、完整、可掃讀的方式，由 AI 理解並轉譯成需求樹、詳細資訊與三份交付。
 
+品質優先於執行時間。不得設定完成分鐘數、候選數、需求數或轉譯篇幅上限；分批只用來保存進度與上下文，不得用來縮小頁面覆蓋、降低 OCR 深度、跳過完整統整或提前交付。大型 PDF 接近或超過一小時可以接受。
+
 第一階段不是全文摘要，也不是正式需求。程式只負責 PDF 擷取、OCR、頁碼、分批與檔案檢查；所有可讀來源片段都要進入 AI 閱讀，詞表、分數與系統提示不能當排除門檻。弱電範圍判斷、語意合併、需求拆分、系統整理與工程文字都由 AI 完成。疑似相關時預設保留。
 
 超過 30 頁的 PDF 必須先實際執行 `python m1_prepare_batches.py <PDF> m1_batches --batch-pages 5`，再依 gpt_instructions_weak_current_html.txt 持續執行 `--run-next`、合併與來源篩選；不得把整份大型 PDF 假裝成一個抽取批次。`stage1_receipt.json` 只能由 `m1_build_source_dossier.py --build-weak-current-source` 依 manifest 產生，不得由 AI 手寫、補造或修改數字。大型 PDF 的抽取批次數若低於 `ceil(PDF頁數 / 30)`，流程尚未成立，不得進入第二階段或交付。

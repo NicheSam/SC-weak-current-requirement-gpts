@@ -36,7 +36,7 @@ VISION_REGION_VERTICAL_GAP = 20.0
 GPTS_TESSERACT_PATH = "/usr/bin/tesseract"
 OCR_ACCEPT_CONFIDENCE = 72.0
 OCR_HIGH_CONFIDENCE = 88.0
-TESSERACT_REGION_TIMEOUT_SECONDS = 30
+TESSERACT_REGION_TIMEOUT_SECONDS = 120
 
 # Broad system-family vocabulary is used only to suggest a classification. It is
 # intentionally free of project-specific expected answers; candidate admission
@@ -604,36 +604,63 @@ def run_tesseract_regions(
         return {"schema_version": "1.0", "engine": "none", "regions": records}
     def read_region(region: dict[str, object]) -> dict[str, object]:
         crop_path = visual_dir / str(region.get("crop_file", ""))
-        failure_reason = ""
-        try:
-            completed = subprocess.run(
-                [executable, str(crop_path), "stdout", "-l", "chi_tra+eng", "--psm", "6", "tsv"],
-                capture_output=True,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                timeout=TESSERACT_REGION_TIMEOUT_SECONDS,
-                check=False,
+        attempts: list[dict[str, object]] = []
+        for psm in ("6", "11"):
+            failure_reason = ""
+            try:
+                completed = subprocess.run(
+                    [executable, str(crop_path), "stdout", "-l", "chi_tra+eng", "--psm", psm, "tsv"],
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=TESSERACT_REGION_TIMEOUT_SECONDS,
+                    check=False,
+                )
+                text, mean_confidence = parse_tesseract_tsv(completed.stdout)
+            except subprocess.TimeoutExpired:
+                text = ""
+                mean_confidence = None
+                failure_reason = "tesseract_region_timeout"
+            except (OSError, subprocess.SubprocessError):
+                text = ""
+                mean_confidence = None
+                failure_reason = "tesseract_execution_failed"
+            usable = ocr_text_usable(text, int(region.get("image_count", 0) or 0))
+            accepted = bool(
+                usable
+                and mean_confidence is not None
+                and mean_confidence >= OCR_ACCEPT_CONFIDENCE
             )
-            text, mean_confidence = parse_tesseract_tsv(completed.stdout)
-        except subprocess.TimeoutExpired:
-            text = ""
-            mean_confidence = None
-            failure_reason = "tesseract_region_timeout"
-        except (OSError, subprocess.SubprocessError):
-            text = ""
-            mean_confidence = None
-            failure_reason = "tesseract_execution_failed"
-        usable = ocr_text_usable(text, int(region.get("image_count", 0) or 0))
-        # Preserve every usable OCR draft, but only accept text whose measured
-        # confidence reaches the evidence threshold. Lower-confidence drafts
-        # remain pending so model vision can compare them with the crop instead
-        # of silently promoting a plausible OCR fragment to source evidence.
-        accepted = bool(
-            usable
-            and mean_confidence is not None
-            and mean_confidence >= OCR_ACCEPT_CONFIDENCE
+            attempts.append({
+                "psm": psm,
+                "text": text,
+                "mean_confidence": mean_confidence,
+                "usable": usable,
+                "accepted": accepted,
+                "failure_reason": failure_reason,
+            })
+            if accepted:
+                break
+        best = max(
+            attempts,
+            key=lambda item: (
+                bool(item["accepted"]),
+                bool(item["usable"]),
+                float(item["mean_confidence"]) if item["mean_confidence"] is not None else -1.0,
+                len(str(item["text"])),
+            ),
         )
+        text = str(best["text"])
+        mean_confidence = best["mean_confidence"]
+        usable = bool(best["usable"])
+        accepted = bool(best["accepted"])
+        failure_reason = str(best["failure_reason"])
+        if not failure_reason and not usable:
+            failure_reason = next(
+                (str(item["failure_reason"]) for item in attempts if item["failure_reason"]),
+                "",
+            )
         confidence = (
             "high" if mean_confidence is not None and mean_confidence >= OCR_HIGH_CONFIDENCE
             else "medium" if accepted
@@ -647,6 +674,7 @@ def run_tesseract_regions(
             "confidence": confidence,
             "mean_confidence": round(mean_confidence, 2) if mean_confidence is not None else None,
             "engine": "tesseract",
+            "ocr_psm": str(best["psm"]),
             "review_note": failure_reason or (
                 "" if accepted else "low_confidence_ocr" if usable else "no_usable_ocr_text"
             ),
