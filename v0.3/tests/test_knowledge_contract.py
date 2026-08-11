@@ -27,6 +27,8 @@ class KnowledgeContractTests(unittest.TestCase):
             self.assertNotIn("validate_m1_resume.py", text)
         instructions = (ROOT / "gpt_instructions_weak_current_html.txt").read_text(encoding="utf-8")
         self.assertIn("--run-next", instructions)
+        self.assertIn("--vision-transcriptions", instructions)
+        self.assertIn("pending 影像區", instructions)
         self.assertIn("群組輪廓", instructions)
         self.assertIn("只重讀疑似漏項的批次", instructions)
 

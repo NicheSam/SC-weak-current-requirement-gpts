@@ -38,6 +38,12 @@ python m1_prepare_batches.py --run-next m1_batches/batch_manifest.json
 
 在同一回合持續執行 --run-next，直到全部批次結束。單批明確超時才用 --split-next；單頁仍超時才用 --defer-next-ocr。完成後執行：
 
+每次 --run-next 若回報 `visual_pending > 0`，不得直接進入合併。從該批 source_json 只取 `visual_audit.pending_region_ids`，檢視 vision_dir 中對應裁切圖並對照 `ocr_draft`，建立該批 vision_transcriptions.json。每個 pending 影像區都要由模型標成 `read`、`unreadable` 或 `skipped_non_text`；`read` 寫入校正後完整原文，後兩者寫明判讀理由。這是影像證據覆核，不是弱電關鍵字篩選。接著用 manifest 中該批的 PDF、source_json、candidate_json、vision_dir 與 page_offset 執行：
+
+python m1_extract_source.py <批次PDF> <批次source_json> <批次candidate_json> --vision-dir <批次vision_dir> --vision-transcriptions <vision_transcriptions.json> --page-offset <page_offset>
+
+`vision_transcriptions.json` 格式為 `{"engine":"model_vision","regions":[{"region_id":"...","status":"read|unreadable|skipped_non_text","text":"...","confidence":"high|medium|low","review_note":"..."}]}`。模型已確認為不可讀或非文字的區域可以繼續；未經模型判讀而仍為 pending 的區域不得合併。
+
 python m1_merge_candidate_batches.py m1_batches/batch_manifest.json source_index.json m1_candidates.json source_reading_pack.md --screening-dir m1_screening
 
 source_reading_pack.md 只是程式整理的全文閱讀材料。程式須讓每個可讀來源片段進入 AI 閱讀批次，既有詞表、分數、系統提示或案例名稱只能當閱讀提示，不能當納入門檻。AI 必須逐一讀取 m1_screening/screen_source_###.md，將與弱電業務相關、疑似相關或需靠第二階段上下文判斷的原文，連同頁碼、候選 ID、章節與必要前後文寫入同編號 screen_result_###.md。
@@ -54,7 +60,7 @@ weak_current_source.md 才是第一階段內容成果，也是第二階段的主
 
 第一階段完成後，先讀取 stage1_receipt.json 並核對 weak_current_source.md 的 SHA-256、來源文件及批次覆蓋。缺少收據、雜湊不符或批次 ID 不一致時，不得宣稱第一階段完成，也不得直接從 PDF 產生 requirements_master.md。執行時間不是完成證據。
 
-第一階段只做來源抽取，不寫正式需求、不決定最終系統、不建立需求樹。程式不得依封閉關鍵字、語意分數或預設系統路由排除內容；AI 依業務語意判斷。低信心或不可讀影像不阻斷全案，只有疑似與弱電相關且可能影響理解者，才在 weak_current_source.md 中列為具體來源待確認。
+第一階段只做來源抽取，不寫正式需求、不決定最終系統、不建立需求樹。程式不得依封閉關鍵字、語意分數或預設系統路由排除內容；AI 依業務語意判斷。低信心影像必須完成一次模型視覺判讀，但判為不可讀或非文字後不阻斷全案；只有疑似與弱電相關且可能影響理解者，才在 weak_current_source.md 中列為具體來源待確認。
 
 五、弱電業務範圍
 

@@ -139,6 +139,39 @@ class BatchMergeTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "page coverage mismatch"):
                 merge_batches(manifest)
 
+    def test_merge_rejects_unreviewed_pending_visual_region(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pack = batch_pack(1, "地下室應設置行動通訊改善設備。")
+            pack["visual_regions"] = [{
+                "region_id": "VR-P0001-001",
+                "page_id": "SRC-001-P0001",
+                "pdf_page": 1,
+                "status": "pending",
+                "ocr_draft": "地下室應設置5G強波器",
+            }]
+            pack["visual_audit"] = {
+                "status": "pending",
+                "pending_region_ids": ["VR-P0001-001"],
+                "resolved_region_count": 0,
+            }
+            source = root / "batch_source.json"
+            source.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
+            manifest = root / "batch_manifest.json"
+            manifest.write_text(json.dumps({
+                "source_name": "sample.pdf",
+                "source_sha256": "d" * 64,
+                "page_count": 1,
+                "batches": [{
+                    "batch_id": "B01",
+                    "page_start": 1,
+                    "page_end": 1,
+                    "source_json": str(source),
+                }],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unresolved visual review"):
+                merge_batches(manifest)
+
 
 if __name__ == "__main__":
     unittest.main()

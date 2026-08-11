@@ -46,6 +46,25 @@ class SourceDossierTests(unittest.TestCase):
         self.assertEqual("tesseract_region_timeout", payload["regions"][0]["review_note"])
         self.assertLessEqual(m1_extract_source.TESSERACT_REGION_TIMEOUT_SECONDS, 30)
 
+    def test_low_confidence_ocr_stays_pending_with_draft_for_model_review(self) -> None:
+        region = {"region_id": "VR-P0028-001", "crop_file": "page28.png", "image_count": 1}
+        capability = {"available": True, "executable": "/usr/bin/tesseract"}
+        tsv = (
+            "level\tpage_num\tblock_num\tpar_num\tline_num\tword_num\tleft\ttop\twidth\theight\tconf\ttext\n"
+            "5\t1\t1\t1\t1\t1\t0\t0\t20\t10\t48.0\t地下室\n"
+            "5\t1\t1\t1\t1\t2\t22\t0\t20\t10\t52.0\t應設5G強波器\n"
+        )
+        completed = type("Completed", (), {"stdout": tsv})()
+        with TemporaryDirectory() as directory, patch(
+            "m1_extract_source.subprocess.run",
+            return_value=completed,
+        ):
+            payload = m1_extract_source.run_tesseract_regions(Path(directory), [region], capability)
+        record = payload["regions"][0]
+        self.assertEqual("pending", record["status"])
+        self.assertIn("5G", record["text"])
+        self.assertEqual("low_confidence_ocr", record["review_note"])
+
     @unittest.skipUnless(PACK.is_file(), "private candidate-pack fixture is not installed")
     def test_every_evidence_group_is_preserved(self) -> None:
         for group in self.data["evidence_groups"]:

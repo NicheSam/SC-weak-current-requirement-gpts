@@ -625,10 +625,15 @@ def run_tesseract_regions(
             mean_confidence = None
             failure_reason = "tesseract_execution_failed"
         usable = ocr_text_usable(text, int(region.get("image_count", 0) or 0))
-        # Source recall is more important than OCR certainty. Keep every usable
-        # draft for AI review and expose its confidence; only a region with no
-        # usable text becomes an explicit unreadable check item.
-        accepted = usable
+        # Preserve every usable OCR draft, but only accept text whose measured
+        # confidence reaches the evidence threshold. Lower-confidence drafts
+        # remain pending so model vision can compare them with the crop instead
+        # of silently promoting a plausible OCR fragment to source evidence.
+        accepted = bool(
+            usable
+            and mean_confidence is not None
+            and mean_confidence >= OCR_ACCEPT_CONFIDENCE
+        )
         confidence = (
             "high" if mean_confidence is not None and mean_confidence >= OCR_HIGH_CONFIDENCE
             else "medium" if accepted
@@ -642,7 +647,9 @@ def run_tesseract_regions(
             "confidence": confidence,
             "mean_confidence": round(mean_confidence, 2) if mean_confidence is not None else None,
             "engine": "tesseract",
-            "review_note": failure_reason or ("" if accepted else "no_usable_ocr_text"),
+            "review_note": failure_reason or (
+                "" if accepted else "low_confidence_ocr" if usable else "no_usable_ocr_text"
+            ),
         }
 
     # Tesseract is an external process. A small worker pool shortens large mixed

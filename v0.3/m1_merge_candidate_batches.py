@@ -152,6 +152,14 @@ def merge_batches(manifest_path: Path) -> dict[str, Any]:
         raise ValueError("merged page coverage is not exactly 1..page_count")
     if len({item["candidate_id"] for item in merged_candidates}) != len(merged_candidates):
         raise ValueError("candidate IDs are not unique after merge")
+    pending_region_ids = list(dict.fromkeys(pending_region_ids))
+    if pending_region_ids:
+        preview = ", ".join(pending_region_ids[:8])
+        suffix = "..." if len(pending_region_ids) > 8 else ""
+        raise ValueError(
+            "unresolved visual review regions remain: "
+            f"{preview}{suffix}; run targeted model vision before canonical merge"
+        )
 
     now = datetime.now(timezone.utc).isoformat()
     all_candidate_ids = [str(item["candidate_id"]) for item in merged_candidates]
@@ -160,7 +168,7 @@ def merge_batches(manifest_path: Path) -> dict[str, Any]:
         for page in merged_pages
         if str(page.get("status")) == "pending"
     ]
-    visual_status = "pending" if pending_region_ids else ("complete" if merged_regions else "not_required")
+    visual_status = "complete" if merged_regions else "not_required"
     document_terms = [
         {
             "term_id": f"TERM-{index:04d}",
@@ -176,9 +184,9 @@ def merge_batches(manifest_path: Path) -> dict[str, Any]:
         "checkpoint": {
             "checkpoint_id": f"CP-{hashlib.sha256((str(manifest['source_sha256']) + now).encode('utf-8')).hexdigest()[:12].upper()}",
             "sequence": 1,
-            "state": "stage1_visual_pending" if pending_region_ids else "stage1_auditing",
+            "state": "stage1_auditing",
             "last_passed_gate": "index",
-            "next_action": "transcribe_visual_regions" if pending_region_ids else "run_semantic_translation",
+            "next_action": "run_semantic_translation",
             "pending_page_ids": pending_page_ids,
             "pending_candidate_ids": all_candidate_ids,
             "continue_count": 0,
@@ -201,7 +209,7 @@ def merge_batches(manifest_path: Path) -> dict[str, Any]:
             "engine": "tesseract_primary" if merged_regions else "none",
             "region_count": len(merged_regions),
             "resolved_region_count": resolved_regions,
-            "pending_region_ids": list(dict.fromkeys(pending_region_ids)),
+            "pending_region_ids": [],
             "manifest_path": str(manifest_path),
         },
         "document_terms": document_terms,
