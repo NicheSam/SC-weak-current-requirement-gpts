@@ -55,6 +55,11 @@
    ├─ 12_M1雙階段續接資料規則.md
    ├─ gpt_instructions_weak_current_html.txt
    ├─ gpts_prompt_human_html.txt
+   ├─ docling_tool/
+   │  ├─ install_docling.cmd
+   │  ├─ launch_docling_ui.cmd
+   │  ├─ README.md
+   │  └─ docling/
    ├─ m1_*.py
    ├─ render_m1_outputs.py
    ├─ requirements_master_template.md
@@ -63,16 +68,95 @@
    └─ optional_reference/
 ```
 
-## GPTS 使用方式
+## 完整使用流程
 
-1. 使用 Docling 來源轉換器，將原始 PDF 轉成完整頁碼化的 `source_document_clean.md`。
-   - 主需求書必選一份。
-   - 審查意見、會議紀錄或回覆 PDF 可選填多份。
-   - 操作方式見 `v0.4/docling_tool/README.md`。
-2. 在 GPT Builder 的 Instructions 中貼入 `v0.4/gpts_prompt_human_html.txt`。
-3. 將 `v0.4/` 內的正式規則、模板與執行腳本上傳到 Knowledge。
+```text
+主需求書 PDF ＋ 選填的審查／補充 PDF
+                ↓
+      本機 Docling 來源轉換器
+                ↓
+      source_document_clean.md
+                ↓
+              GPTS
+                ↓
+demand_map.html ＋ to_xmind.md ＋ todo_handoff.md
+```
+
+Docling 只負責把 PDF 轉成保留來源、頁碼、表格與上下文的 Markdown；弱電範圍判斷、需求拆分與工程語言轉譯仍由 GPTS 完成。
+
+### 1. 環境需求
+
+- Windows 10／11。
+- Python 3.12，安裝時須包含 Python Launcher `py`。
+- 第一次安裝套件及第一次下載 Docling／OCR 模型時需要網路。
+- 大型或掃描型 PDF 需要較長處理時間，並應保留足夠記憶體與磁碟空間。
+- 可使用本專案 GPTS 的 ChatGPT 帳號；自行建立 GPTS 時則需具備 GPT Builder 編輯權限。
+
+> Docling 會安裝在 `v0.4/docling_tool/.venv`，不會取代或修改電腦既有的 Python 環境。
+
+### 2. 下載與安裝 Docling
+
+1. 從 GitHub 下載本專案 ZIP 並解壓縮，或使用 Git clone 取得專案。
+2. 開啟 `v0.4/docling_tool/` 資料夾。
+3. 雙擊 `install_docling.cmd`。
+4. 等待視窗顯示 `Docling installation completed.`。第一次安裝需下載 Python 套件，時間取決於網路速度。
+
+若安裝器顯示找不到 Python Launcher，請先安裝 Python 3.12，安裝時勾選 Python Launcher，完成後重新執行安裝器。
+
+### 3. 開啟 Docling 介面
+
+1. 雙擊 `launch_docling_ui.cmd`。
+2. 瀏覽器會開啟 `http://127.0.0.1:8765/`。
+3. 若瀏覽器沒有自動開啟，請自行將上述網址貼到瀏覽器。
+
+這是使用者電腦上的本機介面，不會把工程文件上傳到本專案的 GitHub repository。
+
+### 4. 轉換案件文件
+
+1. 在「主需求書」選擇一份統包需求書或主要規範 PDF。
+2. 如有審查意見、會議紀錄、補充說明或回覆文件，在附加文件欄多選加入；沒有則留空。
+3. 按下「開始／續跑」。每份 PDF 會各自保留處理進度，意外關閉後可重新開啟介面續跑。
+4. 所有文件完成後，下載合併的 `source_document_clean.md`。
+
+來源角色會保留在合併檔中：
+
+- `primary_requirements`：主需求書。
+- `review_comments`：審查意見、會議紀錄、補充說明或回覆文件。
+- 每份文件保留原始檔名及各自的 PDF 頁碼，避免不同文件的同頁碼互相混淆。
+
+一般使用只需要下載 `source_document_clean.md`。`source_document.md`、`ocr_review_alternatives.md` 與 `manifest.json` 是 OCR 覆核及來源追溯資料，不需上傳 GPTS。
+
+### 5. 上傳 GPTS 並取得成果
+
+1. 開啟本專案的弱電需求書解析 GPTS。
+2. 使用目前帳號可選用的模型；本流程不綁定特定模型名稱。
+3. 上傳 Docling 產生的 `source_document_clean.md`，要求 GPTS 開始解析。
+4. 等待 GPTS 完成需求判斷、拆分、工程轉譯及輸出。
+5. 下載 `demand_map.html`、`to_xmind.md` 與 `todo_handoff.md`。
+
+為避免 ChatGPT 頁面因大型 HTML 預覽而變慢，請下載 `demand_map.html` 後在本機瀏覽器開啟，不要要求 GPTS 在對話中展開 HTML 預覽。
+
+### 6. 常見問題
+
+| 狀況 | 處理方式 |
+|---|---|
+| `install_docling.cmd` 顯示找不到 `py` | 安裝 Python 3.12 並包含 Python Launcher，再重新執行安裝器。 |
+| 第一次安裝或第一次轉換很久 | Docling 可能正在下載套件或模型；大型、掃描型 PDF 的 OCR 本來也會花較長時間。 |
+| 雙擊啟動器後沒有看到介面 | 手動開啟 `http://127.0.0.1:8765/`；若仍無法開啟，再檢查是否已完成安裝。 |
+| 處理途中關閉視窗 | 重新執行 `launch_docling_ui.cmd`，載入同一案件後按「開始／續跑」。 |
+| 有另一份審查意見 PDF | 主需求書放第一欄，審查意見放附加文件欄；不要先把兩份 PDF 人工合併。 |
+| GPTS 只收到 OCR 輔助檔 | 正常流程只上傳合併完成的 `source_document_clean.md`。 |
+
+Docling 的檔案結構、測試指令與技術限制請見 [`v0.4/docling_tool/README.md`](v0.4/docling_tool/README.md)。
+
+## GPTS 建置方式
+
+以下內容只供需要自行建立或維護 GPTS 的管理者使用；一般使用者不需要設定 Knowledge。
+
+1. 在 GPT Builder 的 Instructions 中貼入 `v0.4/gpts_prompt_human_html.txt`。
+2. 將 `v0.4/` 內的正式規則、模板與執行腳本上傳到 Knowledge。
 3. 若 GPT Builder 對中文檔名上傳不穩定，可先將檔名改為英文，但保留中文內容。
-4. 使用者上傳合併後的 `source_document_clean.md`；審查文件已包含在同一來源包，不必再分別上傳 GPTS。
+4. 使用者上傳合併後的 `source_document_clean.md`；附加文件已包含在同一來源包，不必再分別上傳 GPTS。
 5. GPTS 依規則輸出 `demand_map.html`、`to_xmind.md`、`todo_handoff.md`。
 
 ## v0.4 設計重點
