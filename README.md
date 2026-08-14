@@ -4,6 +4,12 @@
 
 目前版本為 `v0.4`。此版本把 PDF 解析移到隨版本提供的 Docling 來源轉換器；工具支援一份主需求書與選填的審查／補充 PDF，並合併成保留文件角色、原檔名與獨立頁碼的 `source_document_clean.md`。GPTS 再由此完成弱電範圍判斷、需求拆分、工程轉譯與固定版面輸出。`v0.3` 保留為 GPTS 內直接處理大型 PDF 的實驗版本，`v0.2` 保留為 Tree-first 基準版本。
 
+## 直接下載
+
+[**下載 Docling Windows 使用者套件 v0.4**](https://github.com/NicheSam/SC-weak-current-requirement-gpts/releases/download/v0.4/SC-Docling-Source-Converter-v0.4.zip)
+
+下載後解壓縮，第一次使用雙擊 `install_docling.cmd`；不需要預先安裝 Python。需要查看原始碼或自行維護 GPTS 的使用者，再下載完整 repository。
+
 ## 解決的問題
 
 - 統包需求書篇幅長，弱電需求分散在多個章節。
