@@ -14,8 +14,9 @@
 
 ## v0.4 預設流程
 
-統包需求書 PDF
-→ Docling 轉換為 source_document_clean.md
+主需求書 PDF＋選填審查／補充 PDF
+→ Docling 逐檔轉換並保留各自 checkpoint
+→ 合併為具文件角色、原檔名與獨立頁碼的 `source_document_clean.md`
 → GPTS 通讀完整來源與頁碼
 → 弱電範圍判斷、義務拆分與工程轉譯
 → 系統分類
@@ -24,6 +25,12 @@
 → 詳細資訊查詢
 → 摘要與智慧建築可能對應
 → Markdown 旁支交接檔 `to_xmind.md`、`todo_handoff.md`
+
+## Docling 工具
+
+`docling_tool/` 是可獨立安裝的 Windows 本機轉換器。使用者可選一份主需求書，並選填一份或多份審查意見、會議紀錄或回覆 PDF。工具逐檔保留 checkpoint，完成後合併成單一 `source_document_clean.md`；每個來源區段保留文件角色、原始檔名及該文件自己的 PDF 頁碼。
+
+安裝與操作方式請見 [`docling_tool/README.md`](docling_tool/README.md)。
 
 ## 主要檔案說明
 

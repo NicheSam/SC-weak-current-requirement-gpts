@@ -2,7 +2,7 @@
 
 本專案是用於「統包需求書 / 審查意見」弱電內容解析的 GPTS Knowledge 與提示詞套件。目標是協助弱電設計、估算與繪圖人員快速整理需求，減少重複翻查文件、釐清責任界面與建立初步待辦。
 
-目前版本為 `v0.4`。此版本把 PDF 解析移到外部 Docling 來源轉換器，GPTS 直接讀取完整頁碼化的 `source_document_clean.md`，再由 AI 完成弱電範圍判斷、需求拆分、工程轉譯與固定版面輸出。`v0.3` 保留為 GPTS 內直接處理大型 PDF 的實驗版本，`v0.2` 保留為 Tree-first 基準版本。
+目前版本為 `v0.4`。此版本把 PDF 解析移到隨版本提供的 Docling 來源轉換器；工具支援一份主需求書與選填的審查／補充 PDF，並合併成保留文件角色、原檔名與獨立頁碼的 `source_document_clean.md`。GPTS 再由此完成弱電範圍判斷、需求拆分、工程轉譯與固定版面輸出。`v0.3` 保留為 GPTS 內直接處理大型 PDF 的實驗版本，`v0.2` 保留為 Tree-first 基準版本。
 
 ## 解決的問題
 
@@ -66,10 +66,13 @@
 ## GPTS 使用方式
 
 1. 使用 Docling 來源轉換器，將原始 PDF 轉成完整頁碼化的 `source_document_clean.md`。
+   - 主需求書必選一份。
+   - 審查意見、會議紀錄或回覆 PDF 可選填多份。
+   - 操作方式見 `v0.4/docling_tool/README.md`。
 2. 在 GPT Builder 的 Instructions 中貼入 `v0.4/gpts_prompt_human_html.txt`。
 3. 將 `v0.4/` 內的正式規則、模板與執行腳本上傳到 Knowledge。
 3. 若 GPT Builder 對中文檔名上傳不穩定，可先將檔名改為英文，但保留中文內容。
-4. 使用者上傳 `source_document_clean.md`；若有審查意見書，應一併轉換或上傳可讀檔案。
+4. 使用者上傳合併後的 `source_document_clean.md`；審查文件已包含在同一來源包，不必再分別上傳 GPTS。
 5. GPTS 依規則輸出 `demand_map.html`、`to_xmind.md`、`todo_handoff.md`。
 
 ## v0.4 設計重點

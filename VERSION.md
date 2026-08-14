@@ -13,6 +13,7 @@
 - 由 AI 完成判斷、拆分、轉譯與內容覆核，renderer 只負責固定版面。
 - `readable-v2` 需求樹保留右側詳情，並支援欄寬調整與窄螢幕上下排列。
 - 畫面來源以 PDF 頁碼與原書頁碼呈現，不反覆顯示 Markdown 中間檔名。
+- Docling 工具支援一份主需求書與多份選填審查／補充 PDF，逐檔 checkpoint 後合併為具有文件角色與獨立頁碼的單一來源包。
 - 固定輸出 `demand_map.html`、`to_xmind.md`、`todo_handoff.md`。
 
 ## v0.3

@@ -1,5 +1,11 @@
 弱電需求圖譜 GPT Instructions
 
+Docling 多文件來源規則
+- `source_document_clean.md` 可能是單一 PDF，也可能是主需求書與審查文件合併後的來源包。
+- `primary_requirements` 是主需求書；`review_comments` 是審查問題、回覆或會議紀錄，只作補充、修正與追蹤層。
+- 每筆引用必須同時保留原始文件名稱與該文件自己的 PDF 頁碼；不同文件的相同頁碼不得視為同一來源。
+- 審查內容不得直接轉成正式需求；問題、回覆、衝突與未追溯修正依 `09_審查意見整合規則.md` 處理。
+
 Knowledge 讀取優先順序
 - 先讀 `gpt_instructions_weak_current_html.txt`。
 - 再讀 `05_HTML輸出欄位規則.md`、`weak_current_html_template.html`。
