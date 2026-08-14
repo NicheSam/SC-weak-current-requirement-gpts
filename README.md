@@ -87,21 +87,21 @@ Docling 只負責把 PDF 轉成保留來源、頁碼、表格與上下文的 Mar
 ### 1. 環境需求
 
 - Windows 10／11。
-- Python 3.12，安裝時須包含 Python Launcher `py`。
 - 第一次安裝套件及第一次下載 Docling／OCR 模型時需要網路。
 - 大型或掃描型 PDF 需要較長處理時間，並應保留足夠記憶體與磁碟空間。
 - 可使用本專案 GPTS 的 ChatGPT 帳號；自行建立 GPTS 時則需具備 GPT Builder 編輯權限。
 
-> Docling 會安裝在 `v0.4/docling_tool/.venv`，不會取代或修改電腦既有的 Python 環境。
+> 不需要事先安裝 Python，也不需要管理員權限。安裝器會在 `v0.4/docling_tool/` 內建立 Docling 專用的 `uv`、Python 3.12 與 `.venv`，不會修改系統 PATH 或取代電腦既有的 Python。
 
 ### 2. 下載與安裝 Docling
 
 1. 從 GitHub 下載本專案 ZIP 並解壓縮，或使用 Git clone 取得專案。
 2. 開啟 `v0.4/docling_tool/` 資料夾。
 3. 雙擊 `install_docling.cmd`。
-4. 等待視窗顯示 `Docling installation completed.`。第一次安裝需下載 Python 套件，時間取決於網路速度。
+4. 等待安裝器自動下載專用 Python、建立隔離環境並安裝 Docling／OCR 套件。
+5. 視窗顯示 `Docling installation completed.` 即完成。
 
-若安裝器顯示找不到 Python Launcher，請先安裝 Python 3.12，安裝時勾選 Python Launcher，完成後重新執行安裝器。
+首次安裝下載量較大，時間取決於網路速度。若中途中斷，可重新執行同一安裝器；已完成的下載會盡量從本機快取續用。
 
 ### 3. 開啟 Docling 介面
 
@@ -140,7 +140,7 @@ Docling 只負責把 PDF 轉成保留來源、頁碼、表格與上下文的 Mar
 
 | 狀況 | 處理方式 |
 |---|---|
-| `install_docling.cmd` 顯示找不到 `py` | 安裝 Python 3.12 並包含 Python Launcher，再重新執行安裝器。 |
+| `install_docling.cmd` 無法下載執行環境 | 確認網路可連線至 `astral.sh`、GitHub 與 Python 套件來源，之後重新執行安裝器。 |
 | 第一次安裝或第一次轉換很久 | Docling 可能正在下載套件或模型；大型、掃描型 PDF 的 OCR 本來也會花較長時間。 |
 | 雙擊啟動器後沒有看到介面 | 手動開啟 `http://127.0.0.1:8765/`；若仍無法開啟，再檢查是否已完成安裝。 |
 | 處理途中關閉視窗 | 重新執行 `launch_docling_ui.cmd`，載入同一案件後按「開始／續跑」。 |

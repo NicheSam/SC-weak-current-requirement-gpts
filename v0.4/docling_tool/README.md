@@ -5,15 +5,18 @@
 ## 環境需求
 
 - Windows 10／11
-- Python 3.12（含 Python Launcher `py`）
 - 首次安裝及首次載入模型時需要網路
 - 大型或掃描型 PDF 建議保留充足記憶體與磁碟空間
 
+不需要事先安裝 Python，也不需要管理員權限。安裝器會在本資料夾內建立 Docling 專用的 `uv`、Python 3.12 與 `.venv`，不會修改系統 PATH 或取代電腦既有的 Python。
+
 ## 安裝與開啟
 
-1. 執行 `install_docling.cmd`，建立獨立 `.venv` 並安裝 Docling／RapidOCR。
+1. 執行 `install_docling.cmd`。第一次執行會自動下載專用 Python、建立 `.venv`，並安裝 Docling／RapidOCR。
 2. 安裝完成後執行 `launch_docling_ui.cmd`。
 3. 瀏覽器會開啟本機介面 `http://127.0.0.1:8765/`。
+
+首次安裝下載量較大，所需時間取決於網路速度。若中途中斷，可重新執行同一安裝器；已完成的下載會盡量從本機快取續用。
 
 ## 使用流程
 
