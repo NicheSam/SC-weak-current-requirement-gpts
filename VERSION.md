@@ -1,5 +1,20 @@
 # 版本紀錄
 
+## v0.4
+
+建立日期：2026-08-14
+
+狀態：目前版本。將 PDF 來源解析移至外部 Docling 轉換器，GPTS 直接讀取 `source_document_clean.md`，再由 AI 完成全文弱電範圍判斷、需求拆分、工程轉譯與正式交付。
+
+目前能力：
+
+- 保留 Docling 來源頁碼、表格與 OCR 文字，不在 GPTS 內重跑大型 PDF OCR。
+- 以全文語意涵蓋弱電、資訊、電視、通訊、監控、停車、BMS、EMS 及跨系統介面。
+- 由 AI 完成判斷、拆分、轉譯與內容覆核，renderer 只負責固定版面。
+- `readable-v2` 需求樹保留右側詳情，並支援欄寬調整與窄螢幕上下排列。
+- 畫面來源以 PDF 頁碼與原書頁碼呈現，不反覆顯示 Markdown 中間檔名。
+- 固定輸出 `demand_map.html`、`to_xmind.md`、`todo_handoff.md`。
+
 ## v0.3
 
 建立日期：2026-08-11

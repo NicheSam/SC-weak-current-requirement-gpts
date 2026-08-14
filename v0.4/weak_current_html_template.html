@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="m1-layout-version" content="readable-v2">
+  <title>弱電需求圖譜</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f4f6f8;
+      --surface: #ffffff;
+      --surface-subtle: #f8fafc;
+      --surface-blue: #eef5ff;
+      --ink: #172033;
+      --muted: #687386;
+      --line: #dce2ea;
+      --line-strong: #c9d2df;
+      --accent: #1f5fbd;
+      --accent-dark: #174a93;
+      --accent-soft: #dceaff;
+      --warning: #a85d11;
+      --warning-soft: #fff3e2;
+      --danger: #9d3434;
+      --danger-soft: #fff0f0;
+      --ok: #287356;
+      --ok-soft: #eaf7f1;
+      --violet: #6654a3;
+      --teal: #247b76;
+      --indigo: #405d9b;
+      --rose: #98506b;
+      --radius: 12px;
+      --shadow: 0 10px 28px rgba(31, 46, 70, .08);
+      font-family: "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--page); color: var(--ink); }
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+    a { color: var(--accent); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .header-main {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 16px 24px 13px;
+      display: flex;
+      gap: 24px;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .title-block { min-width: 0; }
+    .eyebrow { color: var(--accent-dark); font-size: 12px; font-weight: 700; letter-spacing: .04em; margin-bottom: 5px; }
+    h1 { margin: 0; font-size: 24px; line-height: 1.28; letter-spacing: -.02em; }
+    .subtitle { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
+    .header-meta { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .meta-chip { border: 1px solid var(--line); background: var(--surface-subtle); color: var(--muted); padding: 6px 9px; border-radius: 7px; font-size: 12px; }
+
+    .nav-row {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      gap: 4px;
+    }
+    .tab-button {
+      border: 0;
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      padding: 10px 14px 9px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .tab-button:hover { color: var(--ink); }
+    .tab-button.active { color: var(--accent-dark); border-bottom-color: var(--accent); }
+    .tab-button:focus-visible, .tree-item:focus-visible, .summary-link:focus-visible, select:focus-visible, input:focus-visible {
+      outline: 3px solid rgba(31,95,189,.22);
+      outline-offset: 2px;
+    }
+
+    main { max-width: 1560px; margin: 0 auto; padding: 18px 24px 36px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(260px, 1.5fr) minmax(180px, .75fr) minmax(180px, .75fr) auto;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding: 12px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .field { min-width: 0; }
+    .field label { display: block; margin: 0 0 5px; color: var(--muted); font-size: 11px; font-weight: 700; }
+    input, select {
+      width: 100%;
+      height: 40px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0 11px;
+      color: var(--ink);
+    }
+    .clear-button {
+      align-self: end;
+      height: 40px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface-subtle);
+      border-radius: 8px;
+      padding: 0 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .clear-button:hover { background: #eef1f5; }
+
+    .workspace {
+      --tree-pane-width: 66%;
+      display: grid;
+      grid-template-columns: minmax(0, var(--tree-pane-width)) 10px minmax(0, 1fr);
+      min-height: 690px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .tree-pane { min-width: 0; container-type: inline-size; }
+    .workspace-resizer {
+      position: relative;
+      width: 10px;
+      min-height: 100%;
+      border: 0;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      background: #f4f7fb;
+      cursor: col-resize;
+      touch-action: none;
+    }
+    .workspace-resizer::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 3px;
+      height: 54px;
+      border-radius: 3px;
+      background: #9aa9bd;
+      transform: translate(-50%, -50%);
+    }
+    .workspace-resizer:hover::before,
+    .workspace-resizer:focus-visible::before,
+    .workspace.is-resizing .workspace-resizer::before { background: var(--accent); }
+    .workspace-resizer:focus-visible { outline: 3px solid rgba(35, 104, 217, .22); outline-offset: -3px; }
+    .workspace.is-resizing { cursor: col-resize; user-select: none; }
+    .pane-head {
+      min-height: 60px;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-subtle);
+    }
+    .pane-head h2, .detail-head h2 { margin: 0; font-size: 17px; }
+    .tree-pane .pane-head h2 { display: inline-flex; color: #fff; background: #0f1c34; border-radius: 7px; padding: 7px 10px; font-size: 14px; }
+    .pane-head p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .result-count { color: var(--accent-dark); font-weight: 800; font-size: 13px; white-space: nowrap; }
+    .tree-scroll {
+      height: 628px;
+      overflow: auto;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+    .tree-column { min-width: 0; display: grid; gap: 12px; align-content: start; }
+    .tree-scroll > .empty-state { grid-column: 1 / -1; }
+
+    .system-group {
+      --system-ink: #0d4f9a;
+      --system-line: #a9c8ef;
+      --system-soft: #edf5ff;
+      border: 1px solid #d8e1ec;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .system-group summary {
+      list-style: none;
+      cursor: pointer;
+      min-height: 48px;
+      padding: 11px 13px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      color: var(--system-ink);
+      font-weight: 800;
+    }
+    .system-group summary > span:first-child { display: inline-flex; padding: 6px 9px; border-radius: 7px; background: var(--system-soft); }
+    .system-group summary::-webkit-details-marker { display: none; }
+    .system-group summary::after { content: "+"; color: var(--system-ink); font-size: 17px; }
+    .system-group[open] summary::after { content: "−"; }
+    .system-count { font-size: 11px; color: var(--system-ink); background: #dff2ff; border: 0; border-radius: 999px; padding: 4px 8px; font-weight: 800; }
+    .subgroup { position: relative; border-top: 1px solid #e1e7ef; padding: 12px 11px 13px 27px; background: #fff; }
+    .subgroup::before { content: ""; position: absolute; top: 11px; bottom: 13px; left: 13px; border-left: 1px dashed #a9c8ef; }
+    .subgroup-title { position: relative; display: inline-flex; margin: 0 0 8px; color: #17624e; background: #e9f6f0; border-radius: 7px; padding: 5px 8px; font-size: 11px; font-weight: 800; }
+    .subgroup-title::before { content: ""; position: absolute; top: 50%; right: 100%; width: 14px; border-top: 1px dashed #a9c8ef; }
+    .tree-item {
+      width: 100%;
+      position: relative;
+      border: 0;
+      background: transparent;
+      padding: 0 0 0 18px;
+      text-align: left;
+      line-height: 1.48;
+      cursor: pointer;
+    }
+    .tree-item::before { content: ""; position: absolute; top: 15px; left: 0; width: 18px; border-top: 1px dashed #a9c8ef; }
+    .tree-item + .tree-item { margin-top: 9px; }
+    .tree-item-title { display: block; width: fit-content; max-width: 100%; color: #874207; background: #fff4e6; border-radius: 7px; padding: 7px 9px; font-size: 12px; font-weight: 700; line-height: 1.58; }
+    .tree-item:hover .tree-item-title { background: #ffefd8; }
+    .tree-item.active .tree-item-title { background: #ffefd8; box-shadow: 0 0 0 2px rgba(31,95,189,.35); }
+    .tree-item.active .tree-item-title { color: #643006; }
+    .tree-item-meta { display: flex; width: fit-content; max-width: calc(100% - 12px); gap: 6px; align-items: center; flex-wrap: wrap; margin: 5px 0 0 12px; padding: 5px 7px; border-radius: 7px; background: #f7f1ff; }
+    .tiny { color: var(--muted); font-size: 11px; }
+    .tag { display: inline-flex; align-items: center; min-height: 22px; padding: 2px 7px; border-radius: 6px; font-size: 10px; font-weight: 800; }
+    .tag.review { color: #824707; background: #ffedce; border: 1px solid #f2c77f; }
+    .tag.interface { color: #8b2d2d; background: #ffe3e3; border: 1px solid #efb0b0; }
+    .tag.clear { color: #1d684b; background: #def3e9; border: 1px solid #9ed3bc; }
+    .tag.source { color: #3157a4; background: #eef2ff; border: 1px solid #c6d1f4; font-weight: 700; }
+    .tree-open-detail { margin-left: auto; color: var(--accent); font-size: 10px; font-weight: 800; }
+
+    .detail-pane { min-width: 0; background: #fff; }
+    .detail-head { min-height: 60px; padding: 13px 18px; border-bottom: 1px solid var(--line); background: var(--surface-subtle); }
+    .detail-scroll { height: 628px; overflow: auto; padding: 20px; }
+    .detail-context { border-top: 5px solid var(--accent); padding-top: 15px; }
+    .detail-context.tone-violet { border-top-color: var(--violet); }
+    .detail-context.tone-teal { border-top-color: var(--teal); }
+    .detail-context.tone-indigo { border-top-color: var(--indigo); }
+    .detail-context.tone-amber { border-top-color: #b97418; }
+    .detail-context.tone-rose { border-top-color: var(--rose); }
+    .detail-kicker { display: inline-flex; color: var(--accent-dark); background: var(--accent-soft); border-radius: 6px; padding: 4px 8px; font-size: 11px; font-weight: 800; margin-bottom: 9px; }
+    .detail-title { margin: 0; font-size: 21px; line-height: 1.4; letter-spacing: -.015em; }
+    .detail-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0 18px; }
+    .detail-action { border: 1px solid #b8ccea; background: #eef5ff; color: var(--accent-dark); border-radius: 7px; padding: 5px 9px; font-size: 11px; font-weight: 800; cursor: pointer; }
+    .detail-action:hover { background: #dceaff; }
+    .detail-section { margin-top: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+    .detail-section.engineering { background: #f1f6fd; border-color: #cbdcf1; }
+    .detail-section.review-block { background: var(--warning-soft); border-color: #efd19f; }
+    .detail-section.evidence { background: #f6f7f9; }
+    .detail-section h3 { margin: 0 0 8px; color: #45536a; font-size: 12px; }
+    .detail-section.engineering h3 { color: var(--accent-dark); }
+    .detail-section.review-block h3 { color: var(--warning); }
+    .detail-section p { margin: 0; line-height: 1.72; font-size: 14px; }
+    .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .fact { padding: 11px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-subtle); }
+    .fact dt { color: var(--muted); font-size: 11px; font-weight: 800; }
+    .fact dd { margin: 4px 0 0; font-size: 13px; line-height: 1.5; }
+    .source-quote { border-left: 3px solid #a9b8ca; padding-left: 13px; color: #4d596b; }
+    .empty-state { padding: 60px 24px; text-align: center; color: var(--muted); }
+
+    .summary-intro { margin-bottom: 16px; }
+    .summary-intro h2 { margin: 0 0 5px; font-size: 22px; }
+    .summary-intro p { margin: 0; color: var(--muted); }
+    .details-list { display: grid; gap: 14px; }
+    .detail-record { --record-color: var(--accent); background: #fff; border: 1px solid var(--line); border-left: 5px solid var(--record-color); border-radius: var(--radius); padding: 18px; box-shadow: 0 4px 15px rgba(31,46,70,.05); }
+    .detail-record[data-tone="violet"] { --record-color: var(--violet); }
+    .detail-record[data-tone="teal"] { --record-color: var(--teal); }
+    .detail-record[data-tone="indigo"] { --record-color: var(--indigo); }
+    .detail-record[data-tone="amber"] { --record-color: #b97418; }
+    .detail-record[data-tone="rose"] { --record-color: var(--rose); }
+    .detail-record-head { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+    .detail-record-system { color: var(--record-color); font-size: 11px; font-weight: 800; margin-bottom: 5px; }
+    .detail-record h3 { margin: 0; font-size: 17px; line-height: 1.5; }
+    .detail-record-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .detail-record-block { padding: 12px; border-radius: 8px; background: #f7f9fc; border: 1px solid var(--line); }
+    .detail-record-block.review-block { background: var(--warning-soft); border-color: #efd19f; }
+    .detail-record-block.evidence-block { grid-column: 1 / -1; background: #f2f4f7; }
+    .detail-record-block h4 { margin: 0 0 6px; color: #536077; font-size: 11px; }
+    .detail-record-block p { margin: 0; font-size: 13px; line-height: 1.65; }
+    .system-summary-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .system-summary-card { --summary-color: var(--accent); min-height: 170px; padding: 18px; background: #fff; border: 1px solid var(--line); border-top: 5px solid var(--summary-color); border-radius: var(--radius); }
+    .system-summary-card[data-tone="violet"] { --summary-color: var(--violet); }
+    .system-summary-card[data-tone="teal"] { --summary-color: var(--teal); }
+    .system-summary-card[data-tone="indigo"] { --summary-color: var(--indigo); }
+    .system-summary-card[data-tone="amber"] { --summary-color: #b97418; }
+    .system-summary-card[data-tone="rose"] { --summary-color: var(--rose); }
+    .system-summary-card h3 { margin: 0 0 10px; color: var(--summary-color); font-size: 17px; }
+    .system-summary-card p { margin: 0; color: #435066; line-height: 1.72; font-size: 14px; }
+    .system-summary-count { display: inline-flex; margin-top: 14px; padding: 4px 8px; border-radius: 6px; background: #f0f3f7; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .priority-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .priority-card { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: var(--radius); padding: 16px; }
+    .priority-card:nth-child(2) { border-top-color: var(--warning); }
+    .priority-card:nth-child(3) { border-top-color: #607086; }
+    .priority-label { color: var(--muted); font-size: 11px; font-weight: 800; }
+    .priority-card h3 { margin: 6px 0 7px; font-size: 16px; }
+    .priority-card p { margin: 0; color: #4f5a6b; font-size: 13px; line-height: 1.6; }
+    .summary-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin-bottom: 16px; }
+    .summary-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .summary-list { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; }
+    .summary-list li { break-inside: avoid; margin: 0 0 8px; line-height: 1.55; font-size: 13px; }
+    .table-wrap { overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+    table { width: 100%; border-collapse: collapse; min-width: 980px; }
+    th { position: sticky; top: 0; z-index: 1; background: #eef2f7; color: #475368; text-align: left; font-size: 11px; padding: 10px 12px; border-bottom: 1px solid var(--line-strong); }
+    td { padding: 12px; vertical-align: top; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.55; }
+    tbody tr:hover { background: #f8fbff; }
+    .system-name { font-size: 13px; font-weight: 800; }
+    .summary-link { border: 0; background: transparent; color: var(--accent); font-weight: 800; cursor: pointer; padding: 0; white-space: nowrap; }
+    .priority-high { color: var(--danger); font-weight: 800; }
+    .priority-mid { color: var(--warning); font-weight: 800; }
+    .demo-note { margin-top: 14px; padding: 11px 13px; background: #eef2f6; border-radius: 8px; color: var(--muted); font-size: 12px; }
+
+    @container (max-width: 720px) {
+      .tree-scroll { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 980px) {
+      .workspace { grid-template-columns: 1fr; }
+      .tree-pane { border-bottom: 1px solid var(--line); }
+      .workspace-resizer { display: none; }
+      .tree-scroll { height: 500px; }
+      .detail-scroll { height: auto; max-height: 620px; }
+      .toolbar { grid-template-columns: 1fr 1fr; }
+      .priority-grid { grid-template-columns: 1fr; }
+      .system-summary-grid, .detail-record-grid { grid-template-columns: 1fr; }
+      .detail-record-block.evidence-block { grid-column: auto; }
+    }
+    @media (max-width: 680px) {
+      .header-main { align-items: flex-start; flex-direction: column; padding: 14px 16px 10px; }
+      .header-meta { justify-content: flex-start; }
+      .nav-row, main { padding-left: 12px; padding-right: 12px; }
+      .nav-row { overflow-x: auto; }
+      .tab-button { white-space: nowrap; }
+      .toolbar { grid-template-columns: 1fr; }
+      .clear-button { width: 100%; }
+      .workspace { min-height: 0; }
+      .tree-scroll { height: 470px; }
+      .tree-scroll { grid-template-columns: 1fr; }
+      .fact-grid { grid-template-columns: 1fr; }
+      .summary-list { columns: 1; }
+      h1 { font-size: 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-main">
+      <div class="title-block">
+        <div class="eyebrow">弱電需求轉譯｜來源可追溯</div>
+        <h1 id="project-title">弱電需求圖譜</h1>
+        <p class="subtitle" id="project-subtitle">固定需求樹、右側快速詳情、獨立詳細資訊與各系統摘要。</p>
+      </div>
+      <div class="header-meta" aria-label="示範資訊">
+        <span class="meta-chip" id="requirement-meta">需求 0 筆</span>
+        <span class="meta-chip" id="system-meta">系統 0 個</span>
+        <span class="meta-chip" id="source-meta">來源：未明確提供</span>
+      </div>
+    </div>
+    <nav class="nav-row" aria-label="主要頁籤">
+      <button class="tab-button active" data-tab="tree-panel" aria-selected="true">需求樹核心</button>
+      <button class="tab-button" data-tab="details-panel" aria-selected="false">詳細資訊</button>
+      <button class="tab-button" data-tab="summary-panel" aria-selected="false">摘要總覽</button>
+      <button class="tab-button" data-tab="project-panel" aria-selected="false">專案資訊</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="tab-panel active" id="tree-panel">
+      <div class="toolbar" aria-label="需求篩選">
+        <div class="field">
+          <label for="search">搜尋需求、設備或頁碼</label>
+          <input id="search" type="search" placeholder="例如：5G、UPS、p.71、車牌辨識">
+        </div>
+        <div class="field">
+          <label for="system-filter">系統</label>
+          <select id="system-filter"><option value="all">全部系統</option></select>
+        </div>
+        <div class="field">
+          <label for="space-filter">空間</label>
+          <select id="space-filter"><option value="all">全部空間</option></select>
+        </div>
+        <button class="clear-button" id="clear-filter" type="button">清除篩選</button>
+      </div>
+
+      <div class="workspace">
+        <section class="tree-pane" aria-label="需求樹">
+          <div class="pane-head">
+            <div><h2>弱電需求樹</h2><p>以系統卡與縮排分支瀏覽完整轉譯需求；點選後在右側查閱詳細條件。</p></div>
+            <span class="result-count" id="result-count">12 / 12 筆</span>
+          </div>
+          <div class="tree-scroll" id="tree-root"></div>
+        </section>
+
+        <div class="workspace-resizer" id="workspace-resizer" role="separator" aria-label="調整需求樹與需求詳情寬度" aria-orientation="vertical" aria-valuemin="45" aria-valuemax="78" aria-valuenow="66" tabindex="0" title="拖曳調整欄寬，雙擊重設"></div>
+
+        <aside class="detail-pane" aria-label="需求詳情">
+          <div class="detail-head"><h2>需求詳情</h2></div>
+          <div class="detail-scroll" id="detail-root"></div>
+        </aside>
+      </div>
+      <div class="demo-note">閱讀原則：需求樹保留完整轉譯需求與必要標籤，右側提供工程條件、來源、介面與待確認事項的集中查閱。</div>
+    </section>
+
+    <section class="tab-panel" id="details-panel">
+      <div class="summary-intro">
+        <h2>詳細資訊</h2>
+        <p>逐筆閱讀完整工程需求、條件、來源、建議文件與待確認事項。</p>
+      </div>
+      <div class="details-list" id="details-list"></div>
+    </section>
+
+    <section class="tab-panel" id="summary-panel">
+      <div class="summary-intro">
+        <h2>各系統摘要</h2>
+        <p>本頁只說明各系統在本案中的主要角色與範圍，不展開個別需求條件。</p>
+      </div>
+      <div class="system-summary-grid" id="system-summary-grid"></div>
+    </section>
+
+    <section class="tab-panel" id="project-panel">
+      <section class="summary-card">
+        <h2>專案資訊</h2>
+        <div class="fact-grid" id="project-info-root"></div>
+      </section>
+      <section class="summary-card">
+        <h2>智慧建築可能對應</h2>
+        <p class="tiny">僅整理來源明示或可追溯的可能關聯，不代表符合、得分或通過。</p>
+        <div class="fact-grid" id="smart-building-root"></div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const M1_DATA = /*__M1_DATA_START__*/{"project":{},"requirements":[],"system_summaries":[],"project_info":[],"smart_building":[]}/*__M1_DATA_END__*/;
+    const requirements = Array.isArray(M1_DATA.requirements) ? M1_DATA.requirements : [];
+    const systemGuides = Object.fromEntries((Array.isArray(M1_DATA.system_summaries) ? M1_DATA.system_summaries : []).map(item => [item.system, item]));
+
+    const state = {search:"", system:"all", space:"all", selected:requirements[0]?.id || ""};
+    const treeRoot = document.querySelector("#tree-root");
+    const detailRoot = document.querySelector("#detail-root");
+    const workspace = document.querySelector(".workspace");
+    const workspaceResizer = document.querySelector("#workspace-resizer");
+    const searchInput = document.querySelector("#search");
+    const systemFilter = document.querySelector("#system-filter");
+    const spaceFilter = document.querySelector("#space-filter");
+
+    function unique(values) { return [...new Set(values)].sort((a,b)=>a.localeCompare(b,"zh-Hant")); }
+    function escapeHtml(value) { return String(value).replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c])); }
+    function formatSourceLabel(value) {
+      const label = String(value || "")
+        .replace(/source_document_clean\.md\s*[｜|]\s*/gi, "")
+        .replace(/source_document_clean\.md/gi, "")
+        .replace(/source_pdf_page\s*(\d+)/gi, "PDF p.$1")
+        .replace(/\s*[｜|]\s*/g, " · ")
+        .replace(/\s+/g, " ")
+        .replace(/^[·、，,；;\s]+|[·、，,；;\s]+$/g, "")
+        .trim();
+      return label;
+    }
+    function sourceTag(value, className="source") {
+      const label = formatSourceLabel(value);
+      return label ? `<span class="tag ${className}">${escapeHtml(label)}</span>` : "";
+    }
+    function statusLabel(status) { return status === "clear" ? "原文明確" : status === "interface" ? "介面待確認" : "需確認"; }
+    function statusClass(status) { return status === "clear" ? "clear" : status === "interface" ? "interface" : "review"; }
+    function matchRequirement(item) {
+      const q = state.search.trim().toLowerCase();
+      const haystack = [item.navTitle,item.title,item.system,item.group,item.space,item.source,item.evidence,item.conditions,item.review].join(" ").toLowerCase();
+      return (state.system === "all" || item.system === state.system) && (state.space === "all" || item.space === state.space) && (!q || haystack.includes(q));
+    }
+    function filtered() { return requirements.filter(matchRequirement); }
+
+    function systemTone(system) {
+      return ({
+        "資訊網路 / 綜合佈線":"blue",
+        "公眾通信涵蓋":"violet",
+        "停車管理":"teal",
+        "監視系統":"indigo",
+        "中央監控 / BMS":"amber",
+        "特殊空間需求":"rose"
+      })[system] || "blue";
+    }
+
+    function renderFilters() {
+      unique(requirements.map(r=>r.system)).forEach(value=>systemFilter.insertAdjacentHTML("beforeend",`<option>${escapeHtml(value)}</option>`));
+      unique(requirements.map(r=>r.space)).forEach(value=>spaceFilter.insertAdjacentHTML("beforeend",`<option>${escapeHtml(value)}</option>`));
+    }
+
+    function renderTree() {
+      const rows = filtered();
+      document.querySelector("#result-count").textContent = `${rows.length} / ${requirements.length} 筆`;
+      if (!rows.length) {
+        treeRoot.innerHTML = `<div class="empty-state">沒有符合目前篩選條件的需求。</div>`;
+        detailRoot.innerHTML = `<div class="empty-state">請調整搜尋或篩選條件。</div>`;
+        return;
+      }
+      if (!rows.some(r=>r.id===state.selected)) state.selected = rows[0].id;
+      const systems = unique(rows.map(r=>r.system));
+      const cards = systems.map(system=>{
+        const systemRows = rows.filter(r=>r.system===system);
+        const groups = unique(systemRows.map(r=>r.group));
+        return `<details class="system-group" open data-system="${escapeHtml(system)}" data-tone="${systemTone(system)}">
+          <summary><span>${escapeHtml(system)}</span><span class="system-count">${systemRows.length} 筆</span></summary>
+          ${groups.map(group=>`<div class="subgroup"><p class="subgroup-title">${escapeHtml(group)}</p>${systemRows.filter(r=>r.group===group).map(r=>`
+            <button type="button" class="tree-item ${r.id===state.selected?'active':''}" data-id="${r.id}">
+              <span class="tree-item-title">${escapeHtml(r.title)}</span>
+               <span class="tree-item-meta">${sourceTag(r.source)}<span class="tag ${statusClass(r.status)}">${statusLabel(r.status)}</span><span class="tree-open-detail">查看右側</span></span>
+            </button>`).join("")}</div>`).join("")}
+        </details>`;
+      });
+      const midpoint = Math.ceil(cards.length / 2);
+      treeRoot.innerHTML = `<div class="tree-column">${cards.slice(0,midpoint).join("")}</div><div class="tree-column">${cards.slice(midpoint).join("")}</div>`;
+      treeRoot.querySelectorAll(".tree-item").forEach(button=>button.addEventListener("click",()=>{
+        state.selected=button.dataset.id;
+        treeRoot.querySelectorAll(".tree-item").forEach(item=>item.classList.toggle("active",item.dataset.id===state.selected));
+        renderDetail();
+      }));
+      renderDetail();
+    }
+
+    function renderDetail() {
+      const item = requirements.find(r=>r.id===state.selected);
+      if (!item) return;
+      detailRoot.innerHTML = `
+        <div class="detail-context tone-${systemTone(item.system)}">
+          <div class="detail-kicker">${escapeHtml(item.system)} / ${escapeHtml(item.group)}</div>
+          <h2 class="detail-title">${escapeHtml(item.title)}</h2>
+           <div class="detail-tags"><span class="tag ${statusClass(item.status)}">${statusLabel(item.status)}</span>${sourceTag(item.source, "clear")}<button type="button" class="detail-action" data-open-detail="${escapeHtml(item.id)}">查看完整詳細資訊</button></div>
+          <section class="detail-section engineering"><h3>工程條件</h3><p>${escapeHtml(item.conditions)}</p></section>
+           <section class="detail-section"><h3>適用資訊</h3><dl class="fact-grid"><div class="fact"><dt>系統</dt><dd>${escapeHtml(item.system)}</dd></div><div class="fact"><dt>空間</dt><dd>${escapeHtml(item.space)}</dd></div><div class="fact"><dt>建議圖說／文件</dt><dd>${escapeHtml(item.docs)}</dd></div><div class="fact"><dt>來源</dt><dd>${escapeHtml(formatSourceLabel(item.source) || "來源頁未標示")}</dd></div></dl></section>
+          <section class="detail-section review-block"><h3>待確認事項</h3><p>${escapeHtml(item.review)}</p></section>
+          <section class="detail-section evidence"><h3>短原文依據</h3><p class="source-quote">${escapeHtml(item.evidence)}</p></section>
+        </div>`;
+      detailRoot.querySelector("[data-open-detail]")?.addEventListener("click", event=>{
+        switchTab("details-panel");
+        document.querySelector(`#detail-${CSS.escape(event.currentTarget.dataset.openDetail)}`)?.scrollIntoView({block:"start"});
+      });
+    }
+
+    function renderProject() {
+      const project = M1_DATA.project || {};
+      const name = project.name || "未命名專案";
+      document.title = `${name}｜弱電需求圖譜`;
+      document.querySelector("#project-title").textContent = `${name}｜弱電需求圖譜`;
+      document.querySelector("#project-subtitle").textContent = project.subtitle || "固定需求樹、右側快速詳情、獨立詳細資訊與各系統摘要。";
+      document.querySelector("#requirement-meta").textContent = `需求 ${requirements.length} 筆`;
+      document.querySelector("#system-meta").textContent = `系統 ${new Set(requirements.map(item=>item.system)).size} 個`;
+       document.querySelector("#source-meta").textContent = `來源：${formatSourceLabel(project.source) || "Docling 整理來源"}`;
+
+      const projectRows = Array.isArray(M1_DATA.project_info) ? M1_DATA.project_info : [];
+       document.querySelector("#project-info-root").innerHTML = projectRows.length ? projectRows.map(item=>`<div class="fact"><dt>${escapeHtml(item.label)}</dt><dd>${escapeHtml(item.value || "未明確提供")}${formatSourceLabel(item.source) ? `<br><span class="tiny">${escapeHtml(formatSourceLabel(item.source))}</span>` : ""}</dd></div>`).join("") : '<div class="empty-state">未明確提供專案資訊。</div>';
+
+      const smartRows = Array.isArray(M1_DATA.smart_building) ? M1_DATA.smart_building : [];
+       document.querySelector("#smart-building-root").innerHTML = smartRows.length ? smartRows.map(item=>`<div class="fact"><dt>${escapeHtml(item.indicator)}</dt><dd>${escapeHtml(item.summary || "未明確提供")}${formatSourceLabel(item.source) ? `<br><span class="tiny">${escapeHtml(formatSourceLabel(item.source))}</span>` : ""}</dd></div>`).join("") : '<div class="empty-state">來源未見明確智慧建築可能對應。</div>';
+    }
+
+    function renderDetails() {
+      const root = document.querySelector("#details-list");
+      root.innerHTML = requirements.map(item=>`
+        <article class="detail-record" data-tone="${systemTone(item.system)}" id="detail-${escapeHtml(item.id)}">
+          <div class="detail-record-head">
+            <div><div class="detail-record-system">${escapeHtml(item.system)} / ${escapeHtml(item.group)}</div><h3>${escapeHtml(item.title)}</h3></div>
+            <span class="tag ${statusClass(item.status)}">${statusLabel(item.status)}</span>
+          </div>
+          <div class="detail-record-grid">
+            <section class="detail-record-block"><h4>工程條件</h4><p>${escapeHtml(item.conditions)}</p></section>
+             <section class="detail-record-block"><h4>適用資訊</h4><p>${escapeHtml(item.space)}<br>${escapeHtml(item.docs)}<br>${escapeHtml(formatSourceLabel(item.source) || "來源頁未標示")}</p></section>
+            <section class="detail-record-block review-block"><h4>待確認事項</h4><p>${escapeHtml(item.review)}</p></section>
+            <section class="detail-record-block evidence-block"><h4>短原文依據</h4><p>${escapeHtml(item.evidence)}</p></section>
+          </div>
+        </article>`).join("");
+    }
+
+    function renderSummary() {
+      const root = document.querySelector("#system-summary-grid");
+      root.innerHTML = Object.entries(systemGuides).map(([system,guide])=>{
+        const count = requirements.filter(r=>r.system===system).length;
+        return `<article class="system-summary-card" data-tone="${systemTone(system)}"><h3>${escapeHtml(system)}</h3><p>${escapeHtml(guide.summary)}</p><span class="system-summary-count">本示範 ${count} 筆需求</span></article>`;
+      }).join("");
+    }
+
+    function switchTab(id) {
+      document.querySelectorAll(".tab-panel").forEach(panel=>panel.classList.toggle("active",panel.id===id));
+      document.querySelectorAll(".tab-button").forEach(button=>{const active=button.dataset.tab===id;button.classList.toggle("active",active);button.setAttribute("aria-selected",String(active));});
+    }
+
+    const splitStorageKey = "m1-readable-v2-tree-width";
+    function splitBounds() {
+      const usableWidth = Math.max(1, workspace.clientWidth - workspaceResizer.offsetWidth);
+      const minimum = Math.min(.62, Math.max(.45, 560 / usableWidth));
+      const maximum = Math.max(minimum, Math.min(.78, 1 - 320 / usableWidth));
+      return {minimum, maximum};
+    }
+    function applySplitRatio(nextRatio, persist=false) {
+      if (getComputedStyle(workspaceResizer).display === "none") return;
+      const {minimum, maximum} = splitBounds();
+      const ratio = Math.min(maximum, Math.max(minimum, Number(nextRatio) || .66));
+      workspace.style.setProperty("--tree-pane-width", `${ratio * 100}%`);
+      workspaceResizer.setAttribute("aria-valuemin", String(Math.round(minimum * 100)));
+      workspaceResizer.setAttribute("aria-valuemax", String(Math.round(maximum * 100)));
+      workspaceResizer.setAttribute("aria-valuenow", String(Math.round(ratio * 100)));
+      if (persist) {
+        try { localStorage.setItem(splitStorageKey, String(ratio)); } catch (error) { /* local file storage may be unavailable */ }
+      }
+    }
+    function ratioFromPointer(clientX) {
+      const rect = workspace.getBoundingClientRect();
+      return (clientX - rect.left) / Math.max(1, rect.width - workspaceResizer.offsetWidth);
+    }
+    let resizingWorkspace = false;
+    workspaceResizer.addEventListener("pointerdown", event=>{
+      if (getComputedStyle(workspaceResizer).display === "none") return;
+      resizingWorkspace = true;
+      workspace.classList.add("is-resizing");
+      workspaceResizer.setPointerCapture(event.pointerId);
+    });
+    workspaceResizer.addEventListener("pointermove", event=>{
+      if (resizingWorkspace) applySplitRatio(ratioFromPointer(event.clientX));
+    });
+    function finishWorkspaceResize(event) {
+      if (!resizingWorkspace) return;
+      resizingWorkspace = false;
+      workspace.classList.remove("is-resizing");
+      if (workspaceResizer.hasPointerCapture(event.pointerId)) workspaceResizer.releasePointerCapture(event.pointerId);
+      applySplitRatio(Number(workspaceResizer.getAttribute("aria-valuenow")) / 100, true);
+    }
+    workspaceResizer.addEventListener("pointerup", finishWorkspaceResize);
+    workspaceResizer.addEventListener("pointercancel", finishWorkspaceResize);
+    workspaceResizer.addEventListener("dblclick", ()=>applySplitRatio(.66, true));
+    workspaceResizer.addEventListener("keydown", event=>{
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      const {minimum, maximum} = splitBounds();
+      const current = Number(workspaceResizer.getAttribute("aria-valuenow")) / 100;
+      const next = event.key === "Home" ? minimum : event.key === "End" ? maximum : current + (event.key === "ArrowLeft" ? -.02 : .02);
+      applySplitRatio(next, true);
+    });
+    try { applySplitRatio(Number(localStorage.getItem(splitStorageKey)) || .66); } catch (error) { applySplitRatio(.66); }
+    window.addEventListener("resize", ()=>applySplitRatio(Number(workspaceResizer.getAttribute("aria-valuenow")) / 100));
+
+    document.querySelectorAll(".tab-button").forEach(button=>button.addEventListener("click",()=>switchTab(button.dataset.tab)));
+    searchInput.addEventListener("input",()=>{state.search=searchInput.value;renderTree();});
+    systemFilter.addEventListener("change",()=>{state.system=systemFilter.value;renderTree();});
+    spaceFilter.addEventListener("change",()=>{state.space=spaceFilter.value;renderTree();});
+    document.querySelector("#clear-filter").addEventListener("click",()=>{state.search="";state.system="all";state.space="all";searchInput.value="";systemFilter.value="all";spaceFilter.value="all";renderTree();});
+    renderProject();
+    renderFilters();
+    renderTree();
+    renderDetails();
+    renderSummary();
+  </script>
+</body>
+</html>

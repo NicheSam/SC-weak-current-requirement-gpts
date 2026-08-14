@@ -2,7 +2,7 @@
 
 本專案是用於「統包需求書 / 審查意見」弱電內容解析的 GPTS Knowledge 與提示詞套件。目標是協助弱電設計、估算與繪圖人員快速整理需求，減少重複翻查文件、釐清責任界面與建立初步待辦。
 
-目前開發版本為 `v0.3`。此版本保留 Tree-first 閱讀方式，新增大型 PDF 分批來源擷取、OCR、AI 語意轉譯、輕量驗收及可續接的兩階段流程。`v0.2` 保留為既有 Tree-first 基準版本。
+目前版本為 `v0.4`。此版本把 PDF 解析移到外部 Docling 來源轉換器，GPTS 直接讀取完整頁碼化的 `source_document_clean.md`，再由 AI 完成弱電範圍判斷、需求拆分、工程轉譯與固定版面輸出。`v0.3` 保留為 GPTS 內直接處理大型 PDF 的實驗版本，`v0.2` 保留為 Tree-first 基準版本。
 
 ## 解決的問題
 
@@ -28,6 +28,7 @@
 | `v0.1` | 已封裝 | HTML-first、摘要總覽、系統樹狀圖、審查意見整合、Markdown 旁支輸出 |
 | `v0.2` | 基準版本 | Tree-first、唯一需求樹、詳細資訊查詢、XMind 主節點輸出 |
 | `v0.3` | 開發中 | 全文分批擷取、OCR、弱電來源包、舊版式 AI 轉譯、固定需求樹與輕量 Harness |
+| `v0.4` | 目前版本 | Docling 完整來源 Markdown、AI 全文語意轉譯、readable-v2 固定版面、可調整需求樹與詳情欄寬 |
 
 ## Repository 結構
 
@@ -37,7 +38,8 @@
 ├─ .gitignore
 ├─ v0.1/
 ├─ v0.2/
-└─ v0.3/
+├─ v0.3/
+└─ v0.4/
    ├─ 00_使用說明.md
    ├─ 01_智慧建築2024_HTML對應總覽.md
    ├─ 02_智慧建築六大指標_弱電關聯摘要.md
@@ -63,18 +65,20 @@
 
 ## GPTS 使用方式
 
-1. 在 GPT Builder 的 Instructions 中貼入：
-   - `v0.3/gpt_instructions_weak_current_html.txt`
-2. 將 `v0.3/` 內的正式規則、模板與執行腳本上傳到 Knowledge。
+1. 使用 Docling 來源轉換器，將原始 PDF 轉成完整頁碼化的 `source_document_clean.md`。
+2. 在 GPT Builder 的 Instructions 中貼入 `v0.4/gpts_prompt_human_html.txt`。
+3. 將 `v0.4/` 內的正式規則、模板與執行腳本上傳到 Knowledge。
 3. 若 GPT Builder 對中文檔名上傳不穩定，可先將檔名改為英文，但保留中文內容。
-4. 使用者上傳統包需求書 PDF；若有審查意見書，應一併上傳。
+4. 使用者上傳 `source_document_clean.md`；若有審查意見書，應一併轉換或上傳可讀檔案。
 5. GPTS 依規則輸出 `demand_map.html`、`to_xmind.md`、`todo_handoff.md`。
 
-## v0.3 設計重點
+## v0.4 設計重點
 
 - 預設開啟 `需求樹核心`，不是摘要或 Dashboard。
-- 第一階段從大型 PDF 建立可追溯的弱電來源包，第二階段再由 AI 依舊版方法轉譯。
+- Docling 負責 PDF 文字、表格、OCR 與頁碼保存；GPTS 不再於單一回合內執行長時間 PDF OCR。
+- GPTS 直接閱讀完整來源 Markdown，以全文語意判斷弱電業務範圍，不依固定章節或關鍵字白名單。
 - HTML 需求樹、`to_xmind.md` 與詳細資訊查詢區共用同一份唯一需求樹。
+- 需求樹與右側詳情可調整欄寬；畫面顯示 PDF 頁碼，不重複顯示 Docling 中間檔名。
 - `to_xmind.md` 只複製需求樹主節點，不帶來源頁碼、狀態標籤、審查意見或短摘錄。
 - 詳細資訊查詢區負責統需書頁碼、短摘錄、審查意見、設備規格與待辦釐清。
 
