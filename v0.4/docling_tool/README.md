@@ -16,7 +16,7 @@
 1. 雙擊 `install_docling.cmd`。不要直接開啟 `install_docling.ps1`；該檔是由 CMD 啟動器在內部呼叫。
 2. 第一次執行會檢查系統架構、資料夾權限、磁碟空間，再下載專用 Python、建立 `.venv`，並安裝 Docling／RapidOCR。
 3. 安裝器會實際載入 Torch、OCR 與 Docling。若缺少 Microsoft Visual C++ Runtime，請允許 Windows 顯示的安裝核准視窗。
-4. 安裝完成後執行 `launch_docling_ui.cmd`。
+4. 安裝完成後雙擊 `開啟_Docling解析器.cmd`。
 5. 瀏覽器會開啟本機介面 `http://127.0.0.1:8765/`。
 
 首次安裝下載量較大，所需時間取決於網路速度。若中途中斷，可重新執行同一安裝器；已完成的下載會盡量從本機快取續用。

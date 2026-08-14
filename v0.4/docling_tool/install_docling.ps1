@@ -164,4 +164,4 @@ if ($diagnosticExitCode -ne 0) {
     throw "Environment verification failed with diagnostic exit code $diagnosticExitCode. Review the DOC_ERR line above."
 }
 
-Write-Host "Installation is ready. Run launch_docling_ui.cmd."
+Write-Host "Installation is ready. Run 開啟_Docling解析器.cmd."

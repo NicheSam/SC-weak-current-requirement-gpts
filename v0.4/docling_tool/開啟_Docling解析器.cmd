@@ -1,5 +1,6 @@
 @echo off
 setlocal
+title Docling PDF Source Converter
 set "ROOT=%~dp0"
 set "PYTHON=%ROOT%.venv\Scripts\pythonw.exe"
 set "APP=%ROOT%docling\docling_web_ui.py"
