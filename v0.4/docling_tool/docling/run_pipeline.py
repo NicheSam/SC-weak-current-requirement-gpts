@@ -13,6 +13,17 @@ from pathlib import Path
 from typing import Any
 
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from runtime_diagnostics import (  # noqa: E402
+    EXIT_CODES,
+    classify_exception,
+    is_fatal_environment_error,
+)
+
+
 os.environ.setdefault("PYTHONUTF8", "1")
 os.environ.setdefault("DOCLING_INFERENCE_COMPILE_TORCH_MODELS", "false")
 
@@ -203,7 +214,12 @@ def main() -> int:
             "pages": {},
         }
 
-    aware_converter = None
+    try:
+        aware_converter = make_converter("pdf_aware")
+    except BaseException as exc:
+        diagnostic = classify_exception(exc)
+        print(diagnostic.to_line(), file=sys.stderr, flush=True)
+        return EXIT_CODES.get(diagnostic.code, 99)
     full_converter = None
     for page_no in range(args.page_start, page_end + 1):
         aware_md_path, aware_json_path = page_paths(output_dir, page_no, "pdf_aware")
@@ -230,8 +246,6 @@ def main() -> int:
             native_text_chars=len(native_text.strip()),
         )
         try:
-            if aware_converter is None:
-                aware_converter = make_converter("pdf_aware")
             aware_md, aware_json = convert_page(aware_converter, source, page_no)
             write_text_atomic(aware_md_path, aware_md)
             write_json_atomic(aware_json_path, aware_json)
@@ -247,13 +261,22 @@ def main() -> int:
 
             if record.needs_ai_review:
                 if full_converter is None:
-                    full_converter = make_converter("full_page")
+                    try:
+                        full_converter = make_converter("full_page")
+                    except BaseException as exc:
+                        diagnostic = classify_exception(exc)
+                        print(diagnostic.to_line(), file=sys.stderr, flush=True)
+                        return EXIT_CODES.get(diagnostic.code, 99)
                 full_md, full_json = convert_page(full_converter, source, page_no)
                 write_text_atomic(full_md_path, full_md)
                 write_json_atomic(full_json_path, full_json)
                 record.full_page_status = "complete"
                 record.full_page_chars = len(full_md.strip())
         except Exception as exc:
+            if is_fatal_environment_error(exc):
+                diagnostic = classify_exception(exc)
+                print(diagnostic.to_line(), file=sys.stderr, flush=True)
+                return EXIT_CODES.get(diagnostic.code, 99)
             record.error = f"{type(exc).__name__}: {exc}"
             if record.pdf_aware_status != "complete":
                 record.pdf_aware_status = "failed"

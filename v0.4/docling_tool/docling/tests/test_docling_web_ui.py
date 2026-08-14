@@ -17,6 +17,15 @@ SPEC.loader.exec_module(MODULE)
 
 
 class DoclingWebUiHelperTests(unittest.TestCase):
+    def test_parse_diagnostic_log_line(self):
+        parsed = MODULE.parse_diagnostic_log_line(
+            "DOC_ERR|E_TORCH_RUNTIME|Torch failed|Install Visual C++"
+        )
+
+        self.assertEqual(parsed["code"], "E_TORCH_RUNTIME")
+        self.assertEqual(parsed["message"], "Torch failed")
+        self.assertEqual(parsed["action"], "Install Visual C++")
+
     def test_safe_stem_removes_path_unsafe_characters(self):
         self.assertEqual(MODULE.safe_stem("中央 市場(測試).pdf"), "pdf_source")
 

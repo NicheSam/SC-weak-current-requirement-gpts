@@ -142,6 +142,21 @@ def append_log(job_id: str, line: str) -> None:
             JOBS[job_id]["log"].append(line.rstrip())
 
 
+def parse_diagnostic_log_line(line: str) -> dict[str, str] | None:
+    parts = line.strip().split("|", 3)
+    if len(parts) != 4 or parts[0] != "DOC_ERR":
+        return None
+    return {"code": parts[1], "message": parts[2], "action": parts[3]}
+
+
+def diagnostic_failure_message(job_id: str, fallback: str) -> str:
+    with JOBS_LOCK:
+        diagnostic = JOBS.get(job_id, {}).get("last_diagnostic")
+    if not diagnostic:
+        return fallback
+    return f"{diagnostic['code']}：{diagnostic['message']} {diagnostic['action']}"
+
+
 def set_job(job_id: str, *, state: str | None = None, message: str | None = None) -> None:
     with JOBS_LOCK:
         job = JOBS[job_id]
@@ -171,6 +186,10 @@ def run_process(job_id: str, command: list[str]) -> int:
     assert process.stdout is not None
     for line in process.stdout:
         append_log(job_id, line)
+        diagnostic = parse_diagnostic_log_line(line)
+        if diagnostic:
+            with JOBS_LOCK:
+                JOBS[job_id]["last_diagnostic"] = diagnostic
     return process.wait()
 
 
@@ -186,6 +205,14 @@ def process_job(job_id: str) -> None:
         documents = list(job["documents"])
     try:
         set_job(job_id, state="running", message="正在逐份轉換來源文件；可關閉頁面，稍後重新開啟查看。")
+        code = run_process(job_id, command("runtime_diagnostics.py"))
+        if code != 0:
+            raise RuntimeError(
+                diagnostic_failure_message(
+                    job_id,
+                    "Docling 執行環境檢查失敗，請重新執行 install_docling.cmd。",
+                )
+            )
         for index, document in enumerate(documents, start=1):
             source = Path(document["source"])
             document_output = Path(document["output"])
@@ -204,7 +231,12 @@ def process_job(job_id: str) -> None:
                 ),
             )
             if code != 0:
-                raise RuntimeError(f"PDF 轉換失敗：{document['original_name']}，結束碼 {code}")
+                raise RuntimeError(
+                    diagnostic_failure_message(
+                        job_id,
+                        f"PDF 轉換失敗：{document['original_name']}，結束碼 {code}",
+                    )
+                )
             set_job(job_id, message=f"正在建立第 {index}/{len(documents)} 份文件的唯一正式來源。")
             code = run_process(
                 job_id,
@@ -425,6 +457,7 @@ class Handler(BaseHTTPRequestHandler):
                 "message": f"準備啟動 Docling，共 {len(documents)} 份文件。",
                 "log": deque(maxlen=240),
                 "process": None,
+                "last_diagnostic": None,
             }
             ACTIVE_JOB = job_id
         threading.Thread(target=process_job, args=(job_id,), daemon=True).start()

@@ -2,11 +2,11 @@
 
 本專案是用於「統包需求書 / 審查意見」弱電內容解析的 GPTS Knowledge 與提示詞套件。目標是協助弱電設計、估算與繪圖人員快速整理需求，減少重複翻查文件、釐清責任界面與建立初步待辦。
 
-目前版本為 `v0.4`。此版本把 PDF 解析移到隨版本提供的 Docling 來源轉換器；工具支援一份主需求書與選填的審查／補充 PDF，並合併成保留文件角色、原檔名與獨立頁碼的 `source_document_clean.md`。GPTS 再由此完成弱電範圍判斷、需求拆分、工程轉譯與固定版面輸出。`v0.3` 保留為 GPTS 內直接處理大型 PDF 的實驗版本，`v0.2` 保留為 Tree-first 基準版本。
+目前版本為 `v0.4.1`。此版本把 PDF 解析移到隨版本提供的 Docling 來源轉換器；工具支援一份主需求書與選填的審查／補充 PDF，並合併成保留文件角色、原檔名與獨立頁碼的 `source_document_clean.md`。GPTS 再由此完成弱電範圍判斷、需求拆分、工程轉譯與固定版面輸出。`v0.4.1` 補強 Windows 安裝前檢查、Visual C++／Torch 實際載入驗證與錯誤分類。`v0.3` 保留為 GPTS 內直接處理大型 PDF 的實驗版本，`v0.2` 保留為 Tree-first 基準版本。
 
 ## 直接下載
 
-[**下載 Docling Windows 使用者套件 v0.4**](https://github.com/NicheSam/SC-weak-current-requirement-gpts/releases/download/v0.4/SC-Docling-Source-Converter-v0.4.zip)
+[**下載 Docling Windows 使用者套件 v0.4.1**](https://github.com/NicheSam/SC-weak-current-requirement-gpts/releases/download/v0.4.1/SC-Docling-Source-Converter-v0.4.1.zip)
 
 下載後解壓縮，第一次使用雙擊 `install_docling.cmd`；不需要預先安裝 Python。需要查看原始碼或自行維護 GPTS 的使用者，再下載完整 repository。
 
@@ -97,15 +97,16 @@ Docling 只負責把 PDF 轉成保留來源、頁碼、表格與上下文的 Mar
 - 大型或掃描型 PDF 需要較長處理時間，並應保留足夠記憶體與磁碟空間。
 - 可使用本專案 GPTS 的 ChatGPT 帳號；自行建立 GPTS 時則需具備 GPT Builder 編輯權限。
 
-> 不需要事先安裝 Python，也不需要管理員權限。安裝器會在 `v0.4/docling_tool/` 內建立 Docling 專用的 `uv`、Python 3.12 與 `.venv`，不會修改系統 PATH 或取代電腦既有的 Python。
+> 不需要事先安裝 Python。安裝器會在 `v0.4/docling_tool/` 內建立 Docling 專用的 `uv`、Python 3.12 與 `.venv`，不會修改系統 PATH 或取代電腦既有的 Python。一般安裝不需管理員權限；若系統缺少 Microsoft Visual C++ Runtime，Windows 會要求一次安裝核准。
 
 ### 2. 下載與安裝 Docling
 
 1. 從 GitHub 下載本專案 ZIP 並解壓縮，或使用 Git clone 取得專案。
 2. 開啟 `v0.4/docling_tool/` 資料夾。
-3. 雙擊 `install_docling.cmd`。
-4. 等待安裝器自動下載專用 Python、建立隔離環境並安裝 Docling／OCR 套件。
-5. 視窗顯示 `Docling installation completed.` 即完成。
+3. 雙擊 `install_docling.cmd`；不要直接開啟 `install_docling.ps1`。
+4. 等待安裝器檢查架構、資料夾權限與磁碟空間，自動下載專用 Python、建立隔離環境並安裝 Docling／OCR 套件。
+5. 安裝器會實際載入 Torch、OCR 與 Docling。若 Windows 詢問是否允許安裝 Microsoft Visual C++ Runtime，請核准。
+6. 視窗顯示 `Docling installation completed.` 才代表完整環境驗證通過。
 
 首次安裝下載量較大，時間取決於網路速度。若中途中斷，可重新執行同一安裝器；已完成的下載會盡量從本機快取續用。
 
@@ -147,6 +148,9 @@ Docling 只負責把 PDF 轉成保留來源、頁碼、表格與上下文的 Mar
 | 狀況 | 處理方式 |
 |---|---|
 | `install_docling.cmd` 無法下載執行環境 | 確認網路可連線至 `astral.sh`、GitHub 與 Python 套件來源，之後重新執行安裝器。 |
+| 直接開啟 `install_docling.ps1` 出現「選擇應用程式」 | 不要直接開啟 PS1；回到資料夾雙擊 `install_docling.cmd`。 |
+| 出現 `E_VC_RUNTIME`、`E_TORCH_RUNTIME` 或 `WinError 126` | 重新執行 `install_docling.cmd`，允許安裝 Microsoft Visual C++ Runtime；公司電腦若阻擋，請交由資訊人員處理。 |
+| 出現其他 `E_...` 錯誤代碼 | 依畫面中的原因與建議處理；完整代碼表見 `v0.4/docling_tool/README.md`。 |
 | 第一次安裝或第一次轉換很久 | Docling 可能正在下載套件或模型；大型、掃描型 PDF 的 OCR 本來也會花較長時間。 |
 | 雙擊啟動器後沒有看到介面 | 手動開啟 `http://127.0.0.1:8765/`；若仍無法開啟，再檢查是否已完成安裝。 |
 | 處理途中關閉視窗 | 重新執行 `launch_docling_ui.cmd`，載入同一案件後按「開始／續跑」。 |
